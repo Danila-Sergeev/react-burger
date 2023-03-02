@@ -1,32 +1,40 @@
 .header {
-	background: #1c1c21;
-	max-width: 1920px;
-	display: flex;
-	align-items: center;
-	justify-content: space-around;
+  background: #1c1c21;
+  max-width: 1920px;
+  margin: auto;
 }
-.logo {
+.main_info {
+  display: flex;
+  margin: auto;
+  justify-content: space-around;
+  max-width: 1240px;
+  align-items: center;
+  min-height: 88px;
 }
 .navigation_elements {
-	display: flex;
+  display: flex;
 }
 .navigation_element {
-	display: flex;
-	align-items: center;
-	padding: auto;
-	border: none;
-	font: inherit;
-	color: inherit;
-	background-color: transparent;
-	cursor: pointer;
+  display: flex;
+  align-items: center;
+  /*  сброс стиля кнопки */
+  padding: auto;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+  /*  сброс стиля кнопки  ^*/
 }
 .profile_button {
-	display: flex;
-	padding: 0;
-	border: none;
-	font: inherit;
-	color: inherit;
-	background-color: transparent;
-	cursor: pointer;
-	align-items: center;
+  display: flex;
+  align-items: center;
+  /*  сброс стиля кнопки */
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+  /*  сброс стиля кнопки  ^*/
 }
