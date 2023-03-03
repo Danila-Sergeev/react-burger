@@ -12,34 +12,52 @@ function BurgerIngredients(props) {
         >
           {props.title}
         </h1>
-        <div className={IngredientsStiles.Ingredients_box}>
-          <Tab
-            value={props.firstNavText}
-            active={current === props.firstNavText}
-            onClick={setCurrent}
-          >
-            {props.firstNavText}
-          </Tab>
-          <Tab
-            value={props.secNavText}
-            active={current === props.secNavText}
-            onClick={setCurrent}
-          >
-            {props.secNavText}
-          </Tab>
-          <Tab
-            value={props.thrdNavText}
-            active={current === props.thrdNavText}
-            onClick={setCurrent}
-          >
-            {props.thrdNavText}
-          </Tab>
-        </div>
+        <nav className={IngredientsStiles.Ingredients_box}>
+          <a href={`#${props.frstElement}`} className={IngredientsStiles.link}>
+            <Tab
+              value={props.firstNavText}
+              active={current === props.firstNavText}
+              onClick={setCurrent}
+            >
+              {props.firstNavText}
+            </Tab>
+          </a>
+          <a href={`#${props.sndElement}`} className={IngredientsStiles.link}>
+            <Tab
+              value={props.secNavText}
+              active={current === props.secNavText}
+              onClick={setCurrent}
+            >
+              {props.secNavText}
+            </Tab>
+          </a>
+          <a href={`#${props.thrdElement}`} className={IngredientsStiles.link}>
+            <Tab
+              value={props.thrdNavText}
+              active={current === props.thrdNavText}
+              onClick={setCurrent}
+            >
+              {props.thrdNavText}
+            </Tab>
+          </a>
+        </nav>
       </div>
       <div className={IngredientsStiles.components}>
-        <IngredientElements ElementName={props.frstElement} type={"bun"} />
-        <IngredientElements ElementName={props.sndElement} type={"sauce"} />
-        <IngredientElements ElementName={props.thrdElement} type={"main"} />
+        <IngredientElements
+          _id={props.frstElement}
+          ElementName={props.frstElement}
+          type={"bun"}
+        />
+        <IngredientElements
+          _id={props.sndElement}
+          ElementName={props.sndElement}
+          type={"sauce"}
+        />
+        <IngredientElements
+          _id={props.thrdElement}
+          ElementName={props.thrdElement}
+          type={"main"}
+        />
       </div>
     </section>
   );

@@ -1,0 +1,35 @@
+.BurgerConstructor {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+.list_box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-height: 460px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  margin-right: -20px;
+  padding-right: 10px;
+}
+.list_element {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.order_box {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+.all_price {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

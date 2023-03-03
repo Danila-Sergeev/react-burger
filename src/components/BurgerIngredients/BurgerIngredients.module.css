@@ -19,6 +19,12 @@
   display: flex;
   justify-content: center;
 }
+.components {
+  max-height: 720px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  padding-right: 20px;
+}
 .box_of_types {
   max-width: 600px;
   margin: auto;
@@ -36,6 +42,15 @@
 }
 .element {
   list-style-type: none;
+  position: relative;
+  /*  сброс стиля кнопки */
+  padding: auto;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+  /*  сброс стиля кнопки  ^*/
 }
 .price_box {
   display: flex;
@@ -44,4 +59,10 @@
 .name {
   max-width: 272px;
   min-height: 40px;
+}
+.link {
+  /*  сбросс стилей ссылки */
+  color: inherit;
+  text-decoration: inherit;
+  /*  сброс силей сслыки */
 }

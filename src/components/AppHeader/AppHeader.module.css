@@ -6,7 +6,7 @@
 .main_info {
   display: flex;
   margin: auto;
-  justify-content: space-around;
+  justify-content: space-between;
   max-width: 1240px;
   align-items: center;
   min-height: 88px;

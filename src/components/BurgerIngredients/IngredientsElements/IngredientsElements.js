@@ -5,7 +5,7 @@ import IngredientElement from "../IngredientElement/IngredientElement";
 
 function IngredientElements(props) {
   return (
-    <div className={`${IngredientsStiles.box_of_types} pb-10`}>
+    <div id={props._id} className={`${IngredientsStiles.box_of_types} pb-10`}>
       <h2
         className={`${IngredientsStiles.name_of_type} text text_type_main-medium`}
       >
