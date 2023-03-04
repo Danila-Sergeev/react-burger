@@ -1,4 +1,3 @@
-import React from "react";
 import data from "../utils/data";
 import BurgerCosructorStiles from "./BurgerConstructor.module.css";
 import {
@@ -14,39 +13,56 @@ function BurgerConstructor(props) {
   return (
     <section className={`${BurgerCosructorStiles.BurgerConstructor} mt-25`}>
       <div className={BurgerCosructorStiles.list_box}>
-        <ConstructorElement
-          type="top"
-          isLocked={true}
-          price={1255}
-          text={"Краторная булка N-200i"}
-          thumbnail={"https://code.s3.yandex.net/react/code/bun-02.png"}
-        />
+        {data.map((obj) => {
+          if (obj._id === "60666c42cc7b410027a1a9b1") {
+            return (
+              <div className={BurgerCosructorStiles.list_element} key={obj._id}>
+                <BurgerConstructorRenderElement
+                  type={"top"}
+                  price={obj.price}
+                  text={obj.name}
+                  thumbnail={obj.image}
+                  isLocked={true}
+                />
+              </div>
+            );
+          }
+        })}
         <ul className={BurgerCosructorStiles.list}>
           {data.map((obj) => {
             if (obj.type === "main" || obj.type === "sauce") {
               return (
-                <div className={BurgerCosructorStiles.list_element}>
+                <div
+                  className={BurgerCosructorStiles.list_element}
+                  key={obj._id}
+                >
                   <DragIcon />
                   <BurgerConstructorRenderElement
-                    type={"bottom"}
-                    key={obj._id}
+                    _id={obj._id}
                     price={obj.price}
                     text={obj.name}
                     thumbnail={obj.image}
-                    {...obj}
                   />
                 </div>
               );
             }
           })}
         </ul>
-        <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          price={1255}
-          text={"Краторная булка N-200i"}
-          thumbnail={"https://code.s3.yandex.net/react/code/bun-02.png"}
-        />
+        {data.map((obj) => {
+          if (obj._id === "60666c42cc7b410027a1a9b1") {
+            return (
+              <div className={BurgerCosructorStiles.list_element} key={obj._id}>
+                <BurgerConstructorRenderElement
+                  type={"bottom"}
+                  _id={obj._id}
+                  price={obj.price}
+                  text={obj.name}
+                  thumbnail={obj.image}
+                />
+              </div>
+            );
+          }
+        })}
       </div>
       <div className={`${BurgerCosructorStiles.order_box} pt-10`}>
         <div className={BurgerCosructorStiles.all_price}>

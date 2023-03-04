@@ -1,5 +1,4 @@
 import data from "../../utils/data";
-import React from "react";
 import IngredientsStiles from "../BurgerIngredients.module.css";
 import IngredientElement from "../IngredientElement/IngredientElement";
 
