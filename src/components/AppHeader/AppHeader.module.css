@@ -2,10 +2,14 @@
   background: #1c1c21;
   max-width: 1920px;
   margin: auto;
+  padding-top: 16px;
 }
 .main_info {
+  margin-top: -72px;
   display: flex;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
+
   justify-content: space-between;
   max-width: 1240px;
   align-items: center;
@@ -28,6 +32,7 @@
 }
 .profile_button {
   display: flex;
+
   align-items: center;
   /*  сброс стиля кнопки */
   padding: 0;

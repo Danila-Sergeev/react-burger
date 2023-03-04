@@ -12,6 +12,7 @@ import Navigation from "./Navigation/Navigation";
 function Header(props) {
   return (
     <header className={`${headerStiles.header}`}>
+      <Logo />
       <div className={headerStiles.main_info}>
         <nav className={`${headerStiles.navigation_elements}`}>
           {/* Компонент Navigation */}
@@ -22,7 +23,7 @@ function Header(props) {
           />
           <Navigation icon={ListIcon} textElement={props.navText_thread} />
         </nav>
-        <Logo />
+
         <button className={headerStiles.profile_button}>
           <ProfileIcon />
           <p className="pl-2 text text_type_main-default">{props.profile}</p>

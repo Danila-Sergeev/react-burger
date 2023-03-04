@@ -10,6 +10,7 @@ import {
 import BurgerConstructorRenderElement from "./BurgerConstructorRenderElement/BurgerConstructorRenderElement";
 
 function BurgerConstructor(props) {
+  let k = 0;
   return (
     <section className={`${BurgerCosructorStiles.BurgerConstructor} mt-25`}>
       <div className={BurgerCosructorStiles.list_box}>
@@ -22,11 +23,12 @@ function BurgerConstructor(props) {
         />
         <ul className={BurgerCosructorStiles.list}>
           {data.map((obj) => {
-            if (obj.type === "main" || obj.type === "souse") {
+            if (obj.type === "main" || obj.type === "sauce") {
               return (
                 <div className={BurgerCosructorStiles.list_element}>
                   <DragIcon />
                   <BurgerConstructorRenderElement
+                    type={"bottom"}
                     key={obj._id}
                     price={obj.price}
                     text={obj.name}
@@ -48,7 +50,10 @@ function BurgerConstructor(props) {
       </div>
       <div className={`${BurgerCosructorStiles.order_box} pt-10`}>
         <div className={BurgerCosructorStiles.all_price}>
-          <p className="text text_type_digits-medium">5000</p>
+          {data.map((obj) => {
+            k += obj.price;
+          })}
+          <p className="text text_type_digits-medium">{k}</p>
           <CurrencyIcon />
         </div>
         <Button htmlType="button" type="primary" size="large">
@@ -58,5 +63,4 @@ function BurgerConstructor(props) {
     </section>
   );
 }
-
 export default BurgerConstructor;
