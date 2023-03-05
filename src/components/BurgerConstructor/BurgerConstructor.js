@@ -1,14 +1,14 @@
-import data from "../utils/data";
+import data from "../../utils/data";
 import BurgerCosructorStiles from "./BurgerConstructor.module.css";
+import PropTypes from "prop-types";
 import {
-  ConstructorElement,
   DragIcon,
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerConstructorRenderElement from "./BurgerConstructorRenderElement/BurgerConstructorRenderElement";
 
-function BurgerConstructor(props) {
+function BurgerConstructor() {
   let k = 0;
   return (
     <section className={`${BurgerCosructorStiles.BurgerConstructor} mt-25`}>
@@ -20,7 +20,7 @@ function BurgerConstructor(props) {
                 <BurgerConstructorRenderElement
                   type={"top"}
                   price={obj.price}
-                  text={obj.name}
+                  text={`${obj.name} (верх)`}
                   thumbnail={obj.image}
                   isLocked={true}
                 />
@@ -38,7 +38,6 @@ function BurgerConstructor(props) {
                 >
                   <DragIcon />
                   <BurgerConstructorRenderElement
-                    _id={obj._id}
                     price={obj.price}
                     text={obj.name}
                     thumbnail={obj.image}
@@ -56,7 +55,7 @@ function BurgerConstructor(props) {
                   type={"bottom"}
                   _id={obj._id}
                   price={obj.price}
-                  text={obj.name}
+                  text={`${obj.name} (низ)`}
                   thumbnail={obj.image}
                 />
               </div>
@@ -73,10 +72,13 @@ function BurgerConstructor(props) {
           <CurrencyIcon />
         </div>
         <Button htmlType="button" type="primary" size="large">
-          {props.button}
+          Оформить заказ
         </Button>
       </div>
     </section>
   );
 }
+BurgerConstructorRenderElement.propTypes = {
+  BurgerConstructor: PropTypes.element,
+};
 export default BurgerConstructor;

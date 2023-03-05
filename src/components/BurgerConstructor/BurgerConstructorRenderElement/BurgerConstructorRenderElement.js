@@ -1,17 +1,21 @@
 import PropTypes from "prop-types";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-function BurgerConstructorRenderElement(obj) {
+function BurgerConstructorRenderElement(props) {
   return (
     <ConstructorElement
-      type={obj.type}
-      price={obj.price}
-      text={obj.text}
-      thumbnail={obj.thumbnail}
-      isLocked={obj.isLocked}
+      type={props.type}
+      price={props.price}
+      text={props.text}
+      thumbnail={props.thumbnail}
+      isLocked={props.isLocked}
     />
   );
 }
 BurgerConstructorRenderElement.propTypes = {
   type: PropTypes.string,
+  price: PropTypes.number.isRequired,
+  text: PropTypes.string.isRequired,
+  thumbnail: PropTypes.string.isRequired,
+  isLocked: PropTypes.bool,
 };
 export default BurgerConstructorRenderElement;

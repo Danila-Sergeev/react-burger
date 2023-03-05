@@ -1,4 +1,4 @@
-import data from "../../utils/data";
+import data from "../../../utils/data";
 import IngredientsStiles from "../BurgerIngredients.module.css";
 import IngredientElement from "../IngredientElement/IngredientElement";
 

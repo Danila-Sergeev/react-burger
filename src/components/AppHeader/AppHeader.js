@@ -19,14 +19,25 @@ function Header(props) {
           <Navigation
             className="mr-5"
             icon={BurgerIcon}
-            textElement={props.navText_constuctor}
+            textElement={props.headerData.map((el) => {
+              return el.navText_constuctor;
+            })}
           />
-          <Navigation icon={ListIcon} textElement={props.navText_thread} />
+          <Navigation
+            icon={ListIcon}
+            textElement={props.headerData.map((el) => {
+              return el.navText_thread;
+            })}
+          />
         </nav>
 
         <button className={headerStiles.profile_button}>
           <ProfileIcon />
-          <p className="pl-2 text text_type_main-default">{props.profile}</p>
+          <p className="pl-2 text text_type_main-default">
+            {props.headerData.map((el) => {
+              return el.profile;
+            })}
+          </p>
         </button>
       </div>
     </header>
