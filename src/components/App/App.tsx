@@ -3,7 +3,6 @@ import React, { useCallback, useState, useEffect } from "react";
 import Header from "../AppHeader/AppHeader";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
-import Modal from "../Modal/Modal";
 
 function App() {
   const [state, setState] = useState({
@@ -27,10 +26,13 @@ function App() {
     ],
   });
 
+  /* Обработчик состояния данных с API */
   const [data, setData] = useState([]);
 
+  /* Ссылка на API */
   const url = "https://norma.nomoreparties.space/api/ingredients";
 
+  /* Асинхронная функция для получения данных с API */
   async function getData() {
     return await fetch(url)
       .then((res) => res.json())
@@ -44,18 +46,6 @@ function App() {
     getData();
   }, []);
 
-  const [modal, setModal] = useState({ visible: false });
-
-  const handleOpenModal = () => {
-    setModal({ visible: true });
-  };
-
-  const handleCloseModal = () => {
-    setModal({ visible: false });
-  };
-
-  const modals = <Modal header="Внимание!" onClose={handleCloseModal}></Modal>;
-
   return (
     <main className={AppStyles.App}>
       <Header headerData={state.headerData} />
@@ -66,10 +56,6 @@ function App() {
         />
         <BurgerConstructor items={data} />
       </section>
-      <div style={{ overflow: "hidden" }}>
-        <button onClick={handleOpenModal}>Открыть модальное окно</button>
-        {modal.visible && modals}
-      </div>
     </main>
   );
 }

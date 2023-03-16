@@ -1,0 +1,25 @@
+.mainBox {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  align-items: center;
+}
+.title {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+}
+.list {
+  /* сброс стиля списка */
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  /* сброс стиля списка */
+  display: flex;
+  gap: 30px;
+}
+.listItem {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
