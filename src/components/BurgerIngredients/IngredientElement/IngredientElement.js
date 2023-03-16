@@ -6,7 +6,7 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import IngredientDitales from "../../Details/IngredientDetails";
+import IngredientDitales from "../../IngredientDetails/IngredientDetails";
 function IngredientElement(props) {
   /* Обработчик состояния попапа */
   const [modal, setModal] = useState({ visible: false });

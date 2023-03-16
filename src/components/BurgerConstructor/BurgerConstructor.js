@@ -8,7 +8,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerConstructorRenderElement from "./BurgerConstructorRenderElement/BurgerConstructorRenderElement";
 import Modal from "../Modal/Modal";
-import OrderDetails from "../Details/OrderDetails";
+import OrderDetails from "../OrderDetails/OrderDetails";
 
 function BurgerConstructor({ items }) {
   /* счетчик общей стоимости заказа */

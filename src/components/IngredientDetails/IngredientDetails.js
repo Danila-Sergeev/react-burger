@@ -1,4 +1,5 @@
 import IngredientStyle from "./IngredientDetails.module.css";
+import PropTypes from "prop-types";
 function IngredientDitales({ items }) {
   return (
     <div className={IngredientStyle.mainBox}>
@@ -44,4 +45,5 @@ function IngredientDitales({ items }) {
     </div>
   );
 }
+
 export default IngredientDitales;
