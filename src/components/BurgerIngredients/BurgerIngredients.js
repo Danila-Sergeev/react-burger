@@ -135,6 +135,7 @@ BurgerIngredients.propTypes = {
       thrdElement: PropTypes.string.isRequired,
     })
   ).isRequired,
+  items: PropTypes.object.isRequired,
 };
 
 export default BurgerIngredients;

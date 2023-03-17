@@ -1,6 +1,6 @@
 import BurgerCosructorStiles from "./BurgerConstructor.module.css";
 import PropTypes from "prop-types";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   DragIcon,
   Button,
@@ -26,22 +26,11 @@ function BurgerConstructor({ items }) {
     setModal({ visible: false });
   };
 
-  /* Обработчик закрытия попапа на Esc */
-  useEffect(() => {
-    function handleEscapeKey(event) {
-      if (event.code === "Escape") {
-        setModal({ visible: false });
-      }
-    }
-
-    document.addEventListener("keydown", handleEscapeKey);
-    return () => document.removeEventListener("keydown", handleEscapeKey);
-  }, []);
   /*  Обработчики открытия/закрытия попапа */
 
   /* Добавляем содежимое в модальное окно конструктора */
   const modals = (
-    <Modal onClose={handleCloseModal}>
+    <Modal onClose={handleCloseModal} setModal={setModal}>
       <OrderDetails />
     </Modal>
   );
@@ -109,10 +98,7 @@ function BurgerConstructor({ items }) {
           })}
       </div>
       <div className={`${BurgerCosructorStiles.order_box} pt-10`}>
-        <div
-          className={BurgerCosructorStiles.all_price}
-          style={{ overflow: "hidden" }}
-        >
+        <div className={BurgerCosructorStiles.all_price}>
           {items.data !== undefined &&
             items.data.map((obj) => {
               fullPrice += obj.price;
@@ -133,7 +119,8 @@ function BurgerConstructor({ items }) {
     </section>
   );
 }
-BurgerConstructorRenderElement.propTypes = {
+BurgerConstructor.propTypes = {
   BurgerConstructor: PropTypes.element,
+  items: PropTypes.object.isRequired,
 };
 export default BurgerConstructor;

@@ -1,5 +1,6 @@
 import IngredientsStiles from "../BurgerIngredients.module.css";
 import IngredientElement from "../IngredientElement/IngredientElement";
+import PropTypes from "prop-types";
 
 function IngredientElements({ _id, type, data, ElementName }) {
   return (
@@ -20,5 +21,12 @@ function IngredientElements({ _id, type, data, ElementName }) {
     </div>
   );
 }
+
+IngredientElements.propTypes = {
+  _id: PropTypes.array.isRequired,
+  type: PropTypes.string.isRequired,
+  data: PropTypes.object.isRequired,
+  ElementName: PropTypes.array.isRequired,
+};
 
 export default IngredientElements;

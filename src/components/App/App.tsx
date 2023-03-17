@@ -27,7 +27,7 @@ function App() {
   });
 
   /* Обработчик состояния данных с API */
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
 
   /* Ссылка на API */
   const url = "https://norma.nomoreparties.space/api/ingredients";
@@ -35,7 +35,12 @@ function App() {
   /* Асинхронная функция для получения данных с API */
   async function getData() {
     return await fetch(url)
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка ${res.status}`);
+      })
       .then((data) => setData(data))
       .catch((error) => {
         console.log(error);
@@ -47,16 +52,18 @@ function App() {
   }, []);
 
   return (
-    <main className={AppStyles.App}>
+    <div className={AppStyles.App}>
       <Header headerData={state.headerData} />
-      <section className={AppStyles.main_section}>
-        <BurgerIngredients
-          ingredientsData={state.ingredientsData}
-          items={data}
-        />
-        <BurgerConstructor items={data} />
-      </section>
-    </main>
+      <main>
+        <section className={AppStyles.main_section}>
+          <BurgerIngredients
+            ingredientsData={state.ingredientsData}
+            items={data}
+          />
+          <BurgerConstructor items={data} />
+        </section>
+      </main>
+    </div>
   );
 }
 

@@ -1,20 +1,20 @@
 import IngredientStyle from "./IngredientDetails.module.css";
 import PropTypes from "prop-types";
-function IngredientDitales({ items }) {
+function IngredientDetails({ item }) {
   return (
     <div className={IngredientStyle.mainBox}>
       <h1 className={`${IngredientStyle.title} text text_type_main-large`}>
         Детали ингредиента
       </h1>
-      <img className="mt-25" src={items.image_large} alt={items.name}></img>
-      <p className="text text_type_main-medium mb-8 mt-6">{items.name}</p>
+      <img className="mt-25" src={item.image_large} alt={item.name}></img>
+      <p className="text text_type_main-medium mb-8 mt-6">{item.name}</p>
       <ul className={`${IngredientStyle.list}`}>
         <li className={`${IngredientStyle.listItem} mb-15`}>
           <p className="text text_type_main-default text_color_inactive ">
             Калории,ккал
           </p>
           <p className="text text_type_digits-default text_color_inactive mt-2 ">
-            {items.calories}
+            {item.calories}
           </p>
         </li>
         <li className={IngredientStyle.listItem}>
@@ -22,7 +22,7 @@ function IngredientDitales({ items }) {
             Белки, г
           </p>
           <p className="text text_type_digits-default text_color_inactive mt-2">
-            {items.proteins}
+            {item.proteins}
           </p>
         </li>
         <li className={IngredientStyle.listItem}>
@@ -30,7 +30,7 @@ function IngredientDitales({ items }) {
             Жиры, г
           </p>
           <p className="text text_type_digits-default text_color_inactive mt-2">
-            {items.fat}
+            {item.fat}
           </p>
         </li>
         <li className={IngredientStyle.listItem}>
@@ -38,7 +38,7 @@ function IngredientDitales({ items }) {
             Углеводы, г
           </p>
           <p className="text text_type_digits-default text_color_inactive mt-2">
-            {items.carbohydrates}
+            {item.carbohydrates}
           </p>
         </li>
       </ul>
@@ -46,4 +46,14 @@ function IngredientDitales({ items }) {
   );
 }
 
-export default IngredientDitales;
+IngredientDetails.propTypes = {
+  item: PropTypes.shape({
+    image_large: PropTypes.string,
+    name: PropTypes.string,
+    calories: PropTypes.number,
+    proteins: PropTypes.number,
+    fat: PropTypes.number,
+    carbohydrates: PropTypes.number,
+  }).isRequired,
+};
+export default IngredientDetails;

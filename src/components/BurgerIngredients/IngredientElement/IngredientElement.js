@@ -1,12 +1,12 @@
 import IngredientsStiles from "../BurgerIngredients.module.css";
 import Modal from "../../Modal/Modal";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import IngredientDitales from "../../IngredientDetails/IngredientDetails";
+import IngredientDetails from "../../IngredientDetails/IngredientDetails";
 function IngredientElement(props) {
   /* Обработчик состояния попапа */
   const [modal, setModal] = useState({ visible: false });
@@ -19,35 +19,22 @@ function IngredientElement(props) {
   const handleCloseModal = () => {
     setModal({ visible: false });
   };
-
-  /*  Обработчики открытия/закрытия попапа */
-  useEffect(() => {
-    function handleEscapeKey(event) {
-      if (event.code === "Escape") {
-        setModal({ visible: false });
-      }
-    }
-
-    document.addEventListener("keydown", handleEscapeKey);
-    return () => document.removeEventListener("keydown", handleEscapeKey);
-  }, []);
   /*  Обработчики открытия/закрытия попапа */
 
   /* Добавляем содежимое в модальное окно конструктора */
   const modals = (
-    <Modal onClose={handleCloseModal}>
+    <Modal onClose={handleCloseModal} setModal={setModal}>
       {" "}
-      <IngredientDitales items={props} />
+      <IngredientDetails item={props} />
     </Modal>
   );
   return (
     <>
       <button
-        style={{ overflow: "hidden" }}
         onClick={handleOpenModal}
         className={`${IngredientsStiles.element}`}
       >
-        <Counter className="counter" />
+        {<Counter count={1} className="counter" />}
         <img src={props.image} alt={props.name} />
         <div className={`${IngredientsStiles.price_box} mt-1 mb-2`}>
           <p
@@ -67,6 +54,9 @@ function IngredientElement(props) {
 }
 IngredientElement.propTypes = {
   IngredientElement: PropTypes.element,
+  name: PropTypes.string,
+  price: PropTypes.number,
+  image: PropTypes.string,
 };
 
 export default IngredientElement;
