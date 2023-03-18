@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import ingredientType from "../../../utils/types";
 function BurgerConstructorRenderElement(props) {
   return (
     <ConstructorElement
@@ -13,9 +12,9 @@ function BurgerConstructorRenderElement(props) {
   );
 }
 BurgerConstructorRenderElement.propTypes = {
-  type: ingredientType.type,
-  price: ingredientType.price,
-  name: ingredientType.name,
+  type: PropTypes.string,
+  price: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
   thumbnail: PropTypes.string.isRequired,
   isLocked: PropTypes.bool,
 };

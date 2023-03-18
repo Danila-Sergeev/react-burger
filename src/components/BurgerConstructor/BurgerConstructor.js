@@ -9,6 +9,7 @@ import {
 import BurgerConstructorRenderElement from "./BurgerConstructorRenderElement/BurgerConstructorRenderElement";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
+import ingredientType from "../../utils/types";
 
 function BurgerConstructor({ items }) {
   /* счетчик общей стоимости заказа */
@@ -27,7 +28,7 @@ function BurgerConstructor({ items }) {
   };
 
   /*  Обработчики открытия/закрытия попапа */
-
+  //console.log(items);
   /* Добавляем содежимое в модальное окно конструктора */
   const modals = (
     <Modal onClose={handleCloseModal}>
@@ -37,8 +38,8 @@ function BurgerConstructor({ items }) {
   return (
     <section className={`${BurgerCosructorStiles.BurgerConstructor} mt-25`}>
       <div className={BurgerCosructorStiles.list_box}>
-        {items.data !== undefined &&
-          items.data.map((obj) => {
+        {items !== undefined &&
+          items.map((obj) => {
             if (obj._id === "60d3b41abdacab0026a733c6") {
               return (
                 <div
@@ -57,8 +58,8 @@ function BurgerConstructor({ items }) {
             }
           })}
         <ul className={BurgerCosructorStiles.list}>
-          {items.data !== undefined &&
-            items.data.map((obj) => {
+          {items !== undefined &&
+            items.map((obj) => {
               if (obj.type === "main" || obj.type === "sauce") {
                 return (
                   <div
@@ -76,8 +77,8 @@ function BurgerConstructor({ items }) {
               }
             })}
         </ul>
-        {items.data !== undefined &&
-          items.data.map((obj) => {
+        {items !== undefined &&
+          items.map((obj) => {
             if (obj._id === "60d3b41abdacab0026a733c6") {
               return (
                 <div
@@ -98,8 +99,8 @@ function BurgerConstructor({ items }) {
       </div>
       <div className={`${BurgerCosructorStiles.order_box} pt-10`}>
         <div className={BurgerCosructorStiles.all_price}>
-          {items.data !== undefined &&
-            items.data.map((obj) => {
+          {items !== undefined &&
+            items.map((obj) => {
               fullPrice += obj.price;
             })}
           <p className="name name_type_digits-medium">{fullPrice}</p>
@@ -119,6 +120,6 @@ function BurgerConstructor({ items }) {
   );
 }
 BurgerConstructor.propTypes = {
-  items: PropTypes.object.isRequired,
+  items: PropTypes.arrayOf(ingredientType).isRequired,
 };
 export default BurgerConstructor;

@@ -48,13 +48,6 @@ function IngredientDetails({ item }) {
 }
 
 IngredientDetails.propTypes = {
-  item: PropTypes.shape({
-    image_large: ingredientType.image_large,
-    name: ingredientType.name,
-    calories: ingredientType.calories,
-    proteins: ingredientType.proteins,
-    fat: ingredientType.fat,
-    carbohydrates: ingredientType.carbohydrates,
-  }).isRequired,
+  item: ingredientType.isRequired,
 };
 export default IngredientDetails;

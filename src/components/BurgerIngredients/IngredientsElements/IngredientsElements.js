@@ -12,8 +12,8 @@ function IngredientElements({ Id, type, data, ElementName }) {
         {ElementName}
       </h2>
       <ul className={`${IngredientsStiles.elements} `}>
-        {data.data !== undefined &&
-          data.data.map((obj) => {
+        {data !== undefined &&
+          data.map((obj) => {
             if (obj.type === type) {
               return <IngredientElement key={obj._id} {...obj} />;
             }
@@ -24,9 +24,9 @@ function IngredientElements({ Id, type, data, ElementName }) {
 }
 
 IngredientElements.propTypes = {
+  type: PropTypes.string.isRequired,
   Id: PropTypes.array.isRequired,
-  type: ingredientType.type,
-  data: PropTypes.object.isRequired,
+  data: PropTypes.arrayOf(ingredientType).isRequired,
   ElementName: PropTypes.array.isRequired,
 };
 

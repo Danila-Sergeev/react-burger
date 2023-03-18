@@ -2,12 +2,13 @@ import IngredientsStiles from "../BurgerIngredients.module.css";
 import Modal from "../../Modal/Modal";
 import React, { useState } from "react";
 import ingredientType from "../../../utils/types";
+import PropTypes from "prop-types";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientDetails from "../../IngredientDetails/IngredientDetails";
-function IngredientElement(props) {
+function IngredientElement(item) {
   /* Обработчик состояния попапа */
   const [modal, setModal] = useState({ visible: false });
 
@@ -25,7 +26,7 @@ function IngredientElement(props) {
   const modals = (
     <Modal onClose={handleCloseModal} setModal={setModal}>
       {" "}
-      <IngredientDetails item={props} />
+      <IngredientDetails item={item} />
     </Modal>
   );
   return (
@@ -35,17 +36,17 @@ function IngredientElement(props) {
         className={`${IngredientsStiles.element}`}
       >
         {<Counter count={1} className="counter" />}
-        <img src={props.image} alt={props.name} />
+        <img src={item.image} alt={item.name} />
         <div className={`${IngredientsStiles.price_box} mt-1 mb-2`}>
           <p
             className={`${IngredientsStiles.price} text text_type_main-default mr-2`}
           >
-            {props.price}
+            {item.price}
           </p>
           <CurrencyIcon />
         </div>
         <p className={`${IngredientsStiles.name} text text_type_main-default`}>
-          {props.name}
+          {item.name}
         </p>
       </button>
       {modal.visible && modals}
@@ -53,9 +54,7 @@ function IngredientElement(props) {
   );
 }
 IngredientElement.propTypes = {
-  name: ingredientType.name,
-  price: ingredientType.price,
-  image: ingredientType.image,
+  item: ingredientType,
 };
 
 export default IngredientElement;

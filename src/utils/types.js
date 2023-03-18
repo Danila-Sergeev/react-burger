@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-const ingredientType = {
+const ingredientType = PropTypes.shape({
   _id: PropTypes.string,
   name: PropTypes.string,
   type: PropTypes.string,
@@ -12,5 +12,5 @@ const ingredientType = {
   image_mobile: PropTypes.string,
   image_large: PropTypes.string,
   __v: PropTypes.number,
-};
+});
 export default ingredientType;
