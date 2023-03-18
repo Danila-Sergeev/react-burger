@@ -27,7 +27,7 @@ function App() {
   });
 
   /* Обработчик состояния данных с API */
-  const [data, setData] = useState([,]);
+  const [data, setData] = useState([]);
 
   /* Ссылка на API */
   const url = "https://norma.nomoreparties.space/api/ingredients";
