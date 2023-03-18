@@ -1,10 +1,11 @@
 import IngredientsStiles from "../BurgerIngredients.module.css";
 import IngredientElement from "../IngredientElement/IngredientElement";
 import PropTypes from "prop-types";
+import ingredientType from "../../../utils/types";
 
-function IngredientElements({ _id, type, data, ElementName }) {
+function IngredientElements({ Id, type, data, ElementName }) {
   return (
-    <div id={_id} className={`${IngredientsStiles.box_of_types} pb-10`}>
+    <div id={Id} className={`${IngredientsStiles.box_of_types} pb-10`}>
       <h2
         className={`${IngredientsStiles.name_of_type} text text_type_main-medium`}
       >
@@ -23,8 +24,8 @@ function IngredientElements({ _id, type, data, ElementName }) {
 }
 
 IngredientElements.propTypes = {
-  _id: PropTypes.array.isRequired,
-  type: PropTypes.string.isRequired,
+  Id: PropTypes.array.isRequired,
+  type: ingredientType.type,
   data: PropTypes.object.isRequired,
   ElementName: PropTypes.array.isRequired,
 };

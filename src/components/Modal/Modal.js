@@ -6,12 +6,12 @@ import ReactDOM from "react-dom";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 const modalRoot = document.getElementById("react-modals");
 
-function Modal({ onClose, children, setModal }) {
+function Modal({ onClose, children }) {
   /* Обработчик закрытия попапа на Esc */
   useEffect(() => {
     function handleEscapeKey(event) {
       if (event.code === "Escape") {
-        setModal({ visible: false });
+        onClose();
       }
     }
 
@@ -37,7 +37,6 @@ function Modal({ onClose, children, setModal }) {
 
 Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
-  setModal: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };
 

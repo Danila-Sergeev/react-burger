@@ -54,14 +54,12 @@ function App() {
   return (
     <div className={AppStyles.App}>
       <Header headerData={state.headerData} />
-      <main>
-        <section className={AppStyles.main_section}>
-          <BurgerIngredients
-            ingredientsData={state.ingredientsData}
-            items={data}
-          />
-          <BurgerConstructor items={data} />
-        </section>
+      <main className={AppStyles.main_section}>
+        <BurgerIngredients
+          ingredientsData={state.ingredientsData}
+          items={data}
+        />
+        <BurgerConstructor items={data} />
       </main>
     </div>
   );

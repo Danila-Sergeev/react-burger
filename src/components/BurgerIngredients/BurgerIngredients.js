@@ -90,7 +90,7 @@ function BurgerIngredients({ ingredientsData, items }) {
       <div className={IngredientsStiles.components}>
         <IngredientElements
           data={items}
-          _id={ingredientsData.map((el) => {
+          Id={ingredientsData.map((el) => {
             return el.frstElement;
           })}
           ElementName={ingredientsData.map((el) => {
@@ -100,7 +100,7 @@ function BurgerIngredients({ ingredientsData, items }) {
         />
         <IngredientElements
           data={items}
-          _id={ingredientsData.map((el) => {
+          Id={ingredientsData.map((el) => {
             return el.sndElement;
           })}
           ElementName={ingredientsData.map((el) => {
@@ -110,7 +110,7 @@ function BurgerIngredients({ ingredientsData, items }) {
         />
         <IngredientElements
           data={items}
-          _id={ingredientsData.map((el) => {
+          Id={ingredientsData.map((el) => {
             return el.thrdElement;
           })}
           ElementName={ingredientsData.map((el) => {

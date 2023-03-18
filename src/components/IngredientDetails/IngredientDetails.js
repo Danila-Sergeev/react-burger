@@ -1,5 +1,6 @@
 import IngredientStyle from "./IngredientDetails.module.css";
 import PropTypes from "prop-types";
+import ingredientType from "../../utils/types";
 function IngredientDetails({ item }) {
   return (
     <div className={IngredientStyle.mainBox}>
@@ -48,12 +49,12 @@ function IngredientDetails({ item }) {
 
 IngredientDetails.propTypes = {
   item: PropTypes.shape({
-    image_large: PropTypes.string,
-    name: PropTypes.string,
-    calories: PropTypes.number,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number,
+    image_large: ingredientType.image_large,
+    name: ingredientType.name,
+    calories: ingredientType.calories,
+    proteins: ingredientType.proteins,
+    fat: ingredientType.fat,
+    carbohydrates: ingredientType.carbohydrates,
   }).isRequired,
 };
 export default IngredientDetails;

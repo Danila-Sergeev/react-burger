@@ -1,11 +1,11 @@
 import IngredientsStiles from "../BurgerIngredients.module.css";
 import Modal from "../../Modal/Modal";
 import React, { useState } from "react";
+import ingredientType from "../../../utils/types";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import IngredientDetails from "../../IngredientDetails/IngredientDetails";
 function IngredientElement(props) {
   /* Обработчик состояния попапа */
@@ -53,10 +53,9 @@ function IngredientElement(props) {
   );
 }
 IngredientElement.propTypes = {
-  IngredientElement: PropTypes.element,
-  name: PropTypes.string,
-  price: PropTypes.number,
-  image: PropTypes.string,
+  name: ingredientType.name,
+  price: ingredientType.price,
+  image: ingredientType.image,
 };
 
 export default IngredientElement;

@@ -30,11 +30,10 @@ function BurgerConstructor({ items }) {
 
   /* Добавляем содежимое в модальное окно конструктора */
   const modals = (
-    <Modal onClose={handleCloseModal} setModal={setModal}>
+    <Modal onClose={handleCloseModal}>
       <OrderDetails />
     </Modal>
   );
-
   return (
     <section className={`${BurgerCosructorStiles.BurgerConstructor} mt-25`}>
       <div className={BurgerCosructorStiles.list_box}>
@@ -49,7 +48,7 @@ function BurgerConstructor({ items }) {
                   <BurgerConstructorRenderElement
                     type={"top"}
                     price={obj.price}
-                    text={`${obj.name} (верх)`}
+                    name={`${obj.name} (верх)`}
                     thumbnail={obj.image}
                     isLocked={true}
                   />
@@ -69,7 +68,7 @@ function BurgerConstructor({ items }) {
                     <DragIcon />
                     <BurgerConstructorRenderElement
                       price={obj.price}
-                      text={obj.name}
+                      name={obj.name}
                       thumbnail={obj.image}
                     />
                   </div>
@@ -89,7 +88,7 @@ function BurgerConstructor({ items }) {
                     type={"bottom"}
                     _id={obj._id}
                     price={obj.price}
-                    text={`${obj.name} (низ)`}
+                    name={`${obj.name} (низ)`}
                     thumbnail={obj.image}
                   />
                 </div>
@@ -103,7 +102,7 @@ function BurgerConstructor({ items }) {
             items.data.map((obj) => {
               fullPrice += obj.price;
             })}
-          <p className="text text_type_digits-medium">{fullPrice}</p>
+          <p className="name name_type_digits-medium">{fullPrice}</p>
           <CurrencyIcon />
         </div>
         <Button
@@ -120,7 +119,6 @@ function BurgerConstructor({ items }) {
   );
 }
 BurgerConstructor.propTypes = {
-  BurgerConstructor: PropTypes.element,
   items: PropTypes.object.isRequired,
 };
 export default BurgerConstructor;
