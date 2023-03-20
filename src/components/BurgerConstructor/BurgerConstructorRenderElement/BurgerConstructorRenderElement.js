@@ -5,7 +5,7 @@ function BurgerConstructorRenderElement(props) {
     <ConstructorElement
       type={props.type}
       price={props.price}
-      text={props.text}
+      text={props.name}
       thumbnail={props.thumbnail}
       isLocked={props.isLocked}
     />
@@ -14,7 +14,7 @@ function BurgerConstructorRenderElement(props) {
 BurgerConstructorRenderElement.propTypes = {
   type: PropTypes.string,
   price: PropTypes.number.isRequired,
-  text: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   thumbnail: PropTypes.string.isRequired,
   isLocked: PropTypes.bool,
 };

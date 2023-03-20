@@ -7,6 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import headerStiles from "./AppHeader.module.css";
 import Navigation from "./Navigation/Navigation";
+import PropTypes from "prop-types";
 
 //Компонент header
 function Header(props) {
@@ -43,5 +44,15 @@ function Header(props) {
     </header>
   );
 }
+
+Header.propTypes = {
+  headerData: PropTypes.arrayOf(
+    PropTypes.shape({
+      navText_constuctor: PropTypes.string.isRequired,
+      profile: PropTypes.string.isRequired,
+      navText_thread: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};
 
 export default Header;

@@ -1,0 +1,30 @@
+.box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.modal {
+  transform: 0.3s;
+  width: 720px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  background-color: #131316;
+  border-radius: 5%;
+  position: relative;
+}
+.close {
+  /*  сброс стиля кнопки */
+  padding: auto;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+  /*  сброс стиля кнопки  ^*/
+  position: absolute;
+  top: 50px;
+  right: 30px;
+  transition: 0.5s;
+}
