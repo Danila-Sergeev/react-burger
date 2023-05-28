@@ -1,8 +1,9 @@
 import IngredientsStiles from "../BurgerIngredients.module.css";
 import Modal from "../../Modal/Modal";
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import ingredientType from "../../../utils/types";
 import PropTypes from "prop-types";
+import {  IngredientsData1 } from "../../../services/apiContext";
 import {
   CurrencyIcon,
   Counter,
@@ -11,12 +12,11 @@ import IngredientDetails from "../../IngredientDetails/IngredientDetails";
 function IngredientElement(item) {
   /* Обработчик состояния попапа */
   const [modal, setModal] = useState({ visible: false });
-
+  const {data1,setData1} = useContext(IngredientsData1)
   /*  Обработчики открытия/закрытия попапа */
   const handleOpenModal = () => {
     setModal({ visible: true });
   };
-
   const handleCloseModal = () => {
     setModal({ visible: false });
   };
@@ -29,10 +29,16 @@ function IngredientElement(item) {
       <IngredientDetails item={item} />
     </Modal>
   );
+const setter = () => {
+  setData1([...data1, item]);
+  console.log(data1)
+}
+  
+  
   return (
     <>
       <button
-        onClick={handleOpenModal}
+        onClick={setter}
         className={`${IngredientsStiles.element}`}
       >
         {<Counter count={1} className="counter" />}
