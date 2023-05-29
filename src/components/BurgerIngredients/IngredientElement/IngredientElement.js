@@ -3,7 +3,7 @@ import Modal from "../../Modal/Modal";
 import React, { useState, useContext, useEffect } from "react";
 import ingredientType from "../../../utils/types";
 import PropTypes from "prop-types";
-import { IngredientsData } from "../../../services/apiContext";
+import { IngredientsData, idContext } from "../../../services/apiContext";
 import {
   CurrencyIcon,
   Counter,
@@ -13,6 +13,7 @@ function IngredientElement(item) {
   /* Обработчик состояния попапа */
   const [modal, setModal] = useState({ visible: false });
   const { ingredients, setIngredients } = useContext(IngredientsData);
+  const {id, setId} = useContext(idContext);
   /*  Обработчики открытия/закрытия попапа */
   const handleOpenModal = () => {
     setModal({ visible: true });
@@ -31,7 +32,7 @@ function IngredientElement(item) {
   );
   const setter = () => {
     setIngredients([...ingredients, item]);
-    console.log(ingredients);
+    setId([...id, item._id]);
   };
 
   return (

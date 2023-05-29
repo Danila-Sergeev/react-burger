@@ -3,7 +3,7 @@ import React, { useReducer, useState, useEffect } from "react";
 import Header from "../AppHeader/AppHeader";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
-import { IngredientsData } from "../../services/apiContext";
+import { IngredientsData, idContext, orderContext } from "../../services/apiContext";
 
 function App() {
   const [state, setState] = useState({
@@ -29,6 +29,8 @@ function App() {
   /* Обработчик состояния данных с API */
   const [data, setData] = useState([]);
   const [ingredients, setIngredients] = useState([]);
+  const [id, setId] = useState([]);
+  const [order, setOrder] = useState(0);
   /* Ссылка на API */
   const url = "https://norma.nomoreparties.space/api/ingredients";
 
@@ -59,11 +61,17 @@ function App() {
       {data.length !== 0 && (
         <main className={AppStyles.main_section}>
           <IngredientsData.Provider value={{ ingredients, setIngredients }}>
-            <BurgerIngredients
-              items={data}
-              ingredientsData={state.ingredientsData}
-            />
-            <BurgerConstructor />
+            <idContext.Provider value={{id, setId}}>
+              <orderContext.Provider value={{order, setOrder}}>
+                <BurgerIngredients
+                  items={data}
+                  ingredientsData={state.ingredientsData}
+                />
+
+                <BurgerConstructor />
+            </orderContext.Provider>
+            </idContext.Provider>
+            
           </IngredientsData.Provider>
         </main>
       )}
