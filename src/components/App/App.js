@@ -1,9 +1,9 @@
 import AppStyles from "./App.module.css";
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useReducer, useState, useEffect } from "react";
 import Header from "../AppHeader/AppHeader";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
-import {IngredientsData1} from "../../services/apiContext";
+import { IngredientsData } from "../../services/apiContext";
 
 function App() {
   const [state, setState] = useState({
@@ -26,10 +26,9 @@ function App() {
       },
     ],
   });
-
   /* Обработчик состояния данных с API */
   const [data, setData] = useState([]);
-  const [data1, setData1] = useState([])
+  const [ingredients, setIngredients] = useState([]);
   /* Ссылка на API */
   const url = "https://norma.nomoreparties.space/api/ingredients";
 
@@ -42,7 +41,9 @@ function App() {
         }
         return Promise.reject(`Ошибка ${res.status}`);
       })
-      .then((data) => {setData(data.data)})
+      .then((data) => {
+        setData(data.data);
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -52,16 +53,18 @@ function App() {
     getData();
   }, []);
 
-
   return (
     <div className={AppStyles.App}>
       <Header headerData={state.headerData} />
       {data.length !== 0 && (
         <main className={AppStyles.main_section}>
-            <IngredientsData1.Provider value = {{data1, setData1}}>
-              <BurgerIngredients items = {data} ingredientsData={state.ingredientsData} />
-              <BurgerConstructor/>  
-            </IngredientsData1.Provider>
+          <IngredientsData.Provider value={{ ingredients, setIngredients }}>
+            <BurgerIngredients
+              items={data}
+              ingredientsData={state.ingredientsData}
+            />
+            <BurgerConstructor />
+          </IngredientsData.Provider>
         </main>
       )}
     </div>

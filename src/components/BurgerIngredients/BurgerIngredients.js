@@ -1,4 +1,4 @@
-import React, {useContext,useEffect} from "react";
+import React, { useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import IngredientsStiles from "./BurgerIngredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";

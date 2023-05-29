@@ -1,7 +1,7 @@
 import BurgerCosructorStiles from "./BurgerConstructor.module.css";
 import PropTypes from "prop-types";
-import React, { useContext, useState,useEffect } from "react";
-import {  IngredientsData1 } from "../../services/apiContext";
+import React, { useContext, useState, useReducer, useEffect } from "react";
+import { IngredientsData, PriceContext } from "../../services/apiContext";
 import {
   DragIcon,
   Button,
@@ -12,20 +12,32 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import ingredientType from "../../utils/types";
 
+const priceInitialState = { price: 0 };
+function reducer(state, action) {
+  switch (action.type) {
+    case "set":
+      return { ...state, price: action.payload };
+    case "reset":
+      return priceInitialState;
+    default:
+      throw new Error(`Wrong type of action: ${action.type}`);
+  }
+}
+
 function BurgerConstructor() {
   /* счетчик общей стоимости заказа */
-  let fullPrice = 0;
-
+  const [priceState, priceDispatcher] = useReducer(
+    reducer,
+    priceInitialState,
+    undefined
+  );
+  priceState.price = 0;
   /* Обработчик состояния попапа */
   const [modal, setModal] = useState({ visible: false });
-  const {data1,setData1} = useContext(IngredientsData1)
-/*   useEffect(() => {
-    //setData1(data);
-    console.log('1')
-    setData1(data);  
-    console.log(data1)
-   // setData(data)
-  }, [data]); */
+  const { ingredients } = useContext(IngredientsData);
+
+  //priceDispatcher({ type: "set", payload: 10 });
+  console.log(priceState);
 
   /*  Обработчики открытия/закрытия попапа */
   const handleOpenModal = () => {
@@ -35,6 +47,12 @@ function BurgerConstructor() {
   const handleCloseModal = () => {
     setModal({ visible: false });
   };
+  useEffect(() => {
+    priceDispatcher({
+      type: "set",
+      payload: priceState.price,
+    });
+  }, [ingredients]);
 
   /*  Обработчики открытия/закрытия попапа */
   /* Добавляем содежимое в модальное окно конструктора */
@@ -48,10 +66,11 @@ function BurgerConstructor() {
   return (
     <section className={`${BurgerCosructorStiles.BurgerConstructor} mt-25`}>
       <div className={BurgerCosructorStiles.list_box}>
-        {data1 !== undefined &&
-          data1.map((obj) => {
-            if (obj._id === "643d69a5c3f7b9001cfa093c" && count < 1) {
+        {ingredients !== undefined &&
+          ingredients.map((obj) => {
+            if (obj.type === "bun" && count < 1) {
               count++;
+              priceState.price += obj.price;
               return (
                 <div
                   className={BurgerCosructorStiles.list_element}
@@ -69,8 +88,8 @@ function BurgerConstructor() {
             }
           })}
         <ul className={BurgerCosructorStiles.list}>
-          {data1 !== undefined &&
-            data1.map((obj) => {
+          {ingredients !== undefined &&
+            ingredients.map((obj) => {
               if (obj.type === "main" || obj.type === "sauce") {
                 return (
                   <div
@@ -88,10 +107,11 @@ function BurgerConstructor() {
               }
             })}
         </ul>
-        {data1 !== undefined &&
-          data1.map((obj) => {
-            if (obj._id === "643d69a5c3f7b9001cfa093c" && count1 < 1) {
+        {ingredients !== undefined &&
+          ingredients.map((obj) => {
+            if (obj.type === "bun" && count1 < 1) {
               count1++;
+              priceState.price += obj.price;
               return (
                 <div
                   className={BurgerCosructorStiles.list_element}
@@ -103,6 +123,7 @@ function BurgerConstructor() {
                     price={obj.price}
                     name={`${obj.name} (низ)`}
                     thumbnail={obj.image}
+                    isLocked={true}
                   />
                 </div>
               );
@@ -111,11 +132,13 @@ function BurgerConstructor() {
       </div>
       <div className={`${BurgerCosructorStiles.order_box} pt-10`}>
         <div className={BurgerCosructorStiles.all_price}>
-          {data1 !== undefined &&
-            data1.map((obj) => {
-              fullPrice += obj.price;
+          {ingredients !== undefined &&
+            ingredients.map((obj) => {
+              if (obj.type !== "bun") {
+                priceState.price += obj.price;
+              }
             })}
-          <p className="name name_type_digits-medium">{fullPrice}</p>
+          <p className="text text_type_digits-medium">{priceState.price}</p>
           <CurrencyIcon />
         </div>
         <Button

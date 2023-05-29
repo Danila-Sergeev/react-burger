@@ -1,2 +1,3 @@
 import React from "react";
-export const IngredientsData1 = React.createContext([]);
+export const IngredientsData = React.createContext([]);
+export const PriceContext = React.createContext(null);

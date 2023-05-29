@@ -3,7 +3,7 @@ import Modal from "../../Modal/Modal";
 import React, { useState, useContext, useEffect } from "react";
 import ingredientType from "../../../utils/types";
 import PropTypes from "prop-types";
-import {  IngredientsData1 } from "../../../services/apiContext";
+import { IngredientsData } from "../../../services/apiContext";
 import {
   CurrencyIcon,
   Counter,
@@ -12,7 +12,7 @@ import IngredientDetails from "../../IngredientDetails/IngredientDetails";
 function IngredientElement(item) {
   /* Обработчик состояния попапа */
   const [modal, setModal] = useState({ visible: false });
-  const {data1,setData1} = useContext(IngredientsData1)
+  const { ingredients, setIngredients } = useContext(IngredientsData);
   /*  Обработчики открытия/закрытия попапа */
   const handleOpenModal = () => {
     setModal({ visible: true });
@@ -29,18 +29,14 @@ function IngredientElement(item) {
       <IngredientDetails item={item} />
     </Modal>
   );
-const setter = () => {
-  setData1([...data1, item]);
-  console.log(data1)
-}
-  
-  
+  const setter = () => {
+    setIngredients([...ingredients, item]);
+    console.log(ingredients);
+  };
+
   return (
     <>
-      <button
-        onClick={setter}
-        className={`${IngredientsStiles.element}`}
-      >
+      <button onClick={setter} className={`${IngredientsStiles.element}`}>
         {<Counter count={1} className="counter" />}
         <img src={item.image} alt={item.name} />
         <div className={`${IngredientsStiles.price_box} mt-1 mb-2`}>
