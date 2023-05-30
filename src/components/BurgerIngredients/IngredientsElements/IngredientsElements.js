@@ -1,10 +1,13 @@
 import IngredientsStiles from "../BurgerIngredients.module.css";
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import IngredientElement from "../IngredientElement/IngredientElement";
 import PropTypes from "prop-types";
 import ingredientType from "../../../utils/types";
-import { IngredientsData, IngredientsData1 } from "../../../services/apiContext";
-function IngredientElements({Id, ElementName, data, type}) {
+import {
+  IngredientsData,
+  IngredientsData1,
+} from "../../../services/apiContext";
+function IngredientElements({ Id, ElementName, data, type }) {
   return (
     <div id={Id} className={`${IngredientsStiles.box_of_types} pb-10`}>
       <h2

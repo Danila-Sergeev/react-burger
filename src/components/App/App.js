@@ -1,9 +1,14 @@
 import AppStyles from "./App.module.css";
-import React, { useReducer, useState, useEffect } from "react";
+import React, { useReducer, useState, useEffect, useMemo } from "react";
 import Header from "../AppHeader/AppHeader";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
-import { IngredientsData, idContext, orderContext } from "../../services/apiContext";
+import {
+  IngredientsData,
+  idContext,
+  orderContext,
+  AllIngredientsData,
+} from "../../services/apiContext";
 
 function App() {
   const [state, setState] = useState({
@@ -29,6 +34,9 @@ function App() {
   /* Обработчик состояния данных с API */
   const [data, setData] = useState([]);
   const [ingredients, setIngredients] = useState([]);
+  const contextValue = useMemo(() => {
+    return { ingredients, setIngredients };
+  }, [ingredients, setIngredients]);
   const [id, setId] = useState([]);
   const [order, setOrder] = useState(0);
   /* Ссылка на API */
@@ -60,19 +68,17 @@ function App() {
       <Header headerData={state.headerData} />
       {data.length !== 0 && (
         <main className={AppStyles.main_section}>
-          <IngredientsData.Provider value={{ ingredients, setIngredients }}>
-            <idContext.Provider value={{id, setId}}>
-              <orderContext.Provider value={{order, setOrder}}>
-                <BurgerIngredients
-                  items={data}
-                  ingredientsData={state.ingredientsData}
-                />
+          <AllIngredientsData.Provider value={{ data }}>
+            <IngredientsData.Provider value={contextValue}>
+              <idContext.Provider value={{ id, setId }}>
+                <orderContext.Provider value={{ order, setOrder }}>
+                  <BurgerIngredients ingredientsData={state.ingredientsData} />
 
-                <BurgerConstructor />
-            </orderContext.Provider>
-            </idContext.Provider>
-            
-          </IngredientsData.Provider>
+                  <BurgerConstructor />
+                </orderContext.Provider>
+              </idContext.Provider>
+            </IngredientsData.Provider>
+          </AllIngredientsData.Provider>
         </main>
       )}
     </div>

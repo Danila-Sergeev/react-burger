@@ -13,7 +13,7 @@ function IngredientElement(item) {
   /* Обработчик состояния попапа */
   const [modal, setModal] = useState({ visible: false });
   const { ingredients, setIngredients } = useContext(IngredientsData);
-  const {id, setId} = useContext(idContext);
+  const { id, setId } = useContext(idContext);
   /*  Обработчики открытия/закрытия попапа */
   const handleOpenModal = () => {
     setModal({ visible: true });

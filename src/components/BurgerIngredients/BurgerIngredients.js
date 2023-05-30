@@ -4,9 +4,11 @@ import IngredientsStiles from "./BurgerIngredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientElements from "./IngredientsElements/IngredientsElements";
 import ingredientType from "../../utils/types";
+import { AllIngredientsData } from "../../services/apiContext";
 
-function BurgerIngredients({ ingredientsData, items }) {
+function BurgerIngredients({ ingredientsData }) {
   const [current, setCurrent] = React.useState("one");
+  const { data } = useContext(AllIngredientsData);
   return (
     <section className={IngredientsStiles.ingredients}>
       <div className={`${IngredientsStiles.header_box} mt-10 mb-10`}>
@@ -91,7 +93,7 @@ function BurgerIngredients({ ingredientsData, items }) {
       </div>
       <div className={IngredientsStiles.components}>
         <IngredientElements
-          data={items}
+          data={data}
           Id={ingredientsData.map((el) => {
             return el.frstElement;
           })}
@@ -101,7 +103,7 @@ function BurgerIngredients({ ingredientsData, items }) {
           type={"bun"}
         />
         <IngredientElements
-          data={items}
+          data={data}
           Id={ingredientsData.map((el) => {
             return el.sndElement;
           })}
@@ -111,7 +113,7 @@ function BurgerIngredients({ ingredientsData, items }) {
           type={"sauce"}
         />
         <IngredientElements
-          data={items}
+          data={data}
           Id={ingredientsData.map((el) => {
             return el.thrdElement;
           })}

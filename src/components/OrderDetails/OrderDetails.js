@@ -1,9 +1,9 @@
 import OrderStyles from "./OrderDetails.module.css";
 import logo from "../../images/order accpeted/graphics.svg";
-import { useContext} from "react";
-import {  orderContext } from "../../services/apiContext";
+import { useContext } from "react";
+import { orderContext } from "../../services/apiContext";
 function OrderDetails() {
-  const {order} = useContext(orderContext);
+  const { order } = useContext(orderContext);
   return (
     <div className={OrderStyles.mainBox}>
       <h1 className={`${OrderStyles.number} text text_type_digits-large mt-30`}>

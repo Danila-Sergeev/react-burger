@@ -1,7 +1,11 @@
 import BurgerCosructorStiles from "./BurgerConstructor.module.css";
 import PropTypes from "prop-types";
 import React, { useContext, useState, useReducer, useEffect } from "react";
-import { IngredientsData, idContext, orderContext } from "../../services/apiContext";
+import {
+  IngredientsData,
+  idContext,
+  orderContext,
+} from "../../services/apiContext";
 import {
   DragIcon,
   Button,
@@ -35,8 +39,8 @@ function BurgerConstructor() {
   /* Обработчик состояния попапа */
   const [modal, setModal] = useState({ visible: false });
   const { ingredients } = useContext(IngredientsData);
-  const {order, setOrder} = useContext(orderContext);
-  const {id} = useContext(idContext);
+  const { order, setOrder } = useContext(orderContext);
+  const { id } = useContext(idContext);
 
   /*  Обработчики открытия/закрытия попапа */
   const handleOpenModal = () => {
@@ -53,31 +57,28 @@ function BurgerConstructor() {
     });
   }, [ingredients]);
 
-
-const postApi = () => {
+  const postApi = () => {
     // POST request using fetch inside useEffect React hook
-    if (id.length === ingredients.length){
+    if (id.length === ingredients.length) {
       const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({  "ingredients": id })
-    };
-    fetch('https://norma.nomoreparties.space/api/orders', requestOptions)
-        .then(response => response.json())
-        .then(data => setOrder(data.order.number));
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ingredients: id }),
+      };
+      fetch("https://norma.nomoreparties.space/api/orders", requestOptions)
+        .then((response) => response.json())
+        .then((data) => setOrder(data.order.number))
+        .catch((error) => {
+          console.log(error);
+        });
     }
-}
-function onClick(){
-  postApi();
-  handleOpenModal()
-}
-    
-// empty dependency array means this effect will only run once (like componentDidMount in classes)
+  };
+  function onClick() {
+    postApi();
+    handleOpenModal();
+  }
 
-/*   console.log('ingr')
-  console.log(ingredients)
-  console.log('oreder')
-  console.log(order); */
+  // empty dependency array means this effect will only run once (like componentDidMount in classes)
 
   /*  Обработчики открытия/закрытия попапа */
   /* Добавляем содежимое в модальное окно конструктора */
@@ -96,7 +97,7 @@ function onClick(){
             if (obj.type === "bun" && count < 1) {
               count++;
               priceState.price += obj.price;
-            //  setId(() => [...id, obj._id])
+              //  setId(() => [...id, obj._id])
               return (
                 <div
                   className={BurgerCosructorStiles.list_element}
@@ -117,7 +118,7 @@ function onClick(){
           {ingredients !== undefined &&
             ingredients.map((obj) => {
               if (obj.type === "main" || obj.type === "sauce") {
-               // setId(() => [...id, obj._id])
+                // setId(() => [...id, obj._id])
                 return (
                   <div
                     className={BurgerCosructorStiles.list_element}
@@ -139,7 +140,7 @@ function onClick(){
             if (obj.type === "bun" && count1 < 1) {
               count1++;
               priceState.price += obj.price;
-             // setId(() => [...id, obj._id])
+              // setId(() => [...id, obj._id])
               return (
                 <div
                   className={BurgerCosructorStiles.list_element}
@@ -169,12 +170,7 @@ function onClick(){
           <p className="text text_type_digits-medium">{priceState.price}</p>
           <CurrencyIcon />
         </div>
-        <Button
-          onClick={onClick}
-          htmlType="button"
-          type="primary"
-          size="large"
-        >
+        <Button onClick={onClick} htmlType="button" type="primary" size="large">
           Оформить заказ
         </Button>
         {modal.visible && modals}
