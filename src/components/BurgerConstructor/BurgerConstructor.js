@@ -56,7 +56,9 @@ function BurgerConstructor() {
       payload: priceState.price,
     });
   }, [ingredients]);
-
+  const checkReponse = (res) => {
+    return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+  };
   const postApi = () => {
     // POST request using fetch inside useEffect React hook
     if (id.length === ingredients.length) {
@@ -66,7 +68,7 @@ function BurgerConstructor() {
         body: JSON.stringify({ ingredients: id }),
       };
       fetch("https://norma.nomoreparties.space/api/orders", requestOptions)
-        .then((response) => response.json())
+        .then((response) => checkReponse(response))
         .then((data) => setOrder(data.order.number))
         .catch((error) => {
           console.log(error);

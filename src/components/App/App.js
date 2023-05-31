@@ -34,11 +34,15 @@ function App() {
   /* Обработчик состояния данных с API */
   const [data, setData] = useState([]);
   const [ingredients, setIngredients] = useState([]);
-  const contextValue = useMemo(() => {
+  const contextIngredientsValue = useMemo(() => {
     return { ingredients, setIngredients };
   }, [ingredients, setIngredients]);
+  const contextDataValue = useMemo(() => {
+    return { data, setData };
+  }, [data, setData]);
   const [id, setId] = useState([]);
   const [order, setOrder] = useState(0);
+
   /* Ссылка на API */
   const url = "https://norma.nomoreparties.space/api/ingredients";
 
@@ -68,8 +72,8 @@ function App() {
       <Header headerData={state.headerData} />
       {data.length !== 0 && (
         <main className={AppStyles.main_section}>
-          <AllIngredientsData.Provider value={{ data }}>
-            <IngredientsData.Provider value={contextValue}>
+          <AllIngredientsData.Provider value={contextDataValue}>
+            <IngredientsData.Provider value={contextIngredientsValue}>
               <idContext.Provider value={{ id, setId }}>
                 <orderContext.Provider value={{ order, setOrder }}>
                   <BurgerIngredients ingredientsData={state.ingredientsData} />
