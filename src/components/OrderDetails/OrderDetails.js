@@ -1,10 +1,13 @@
 import OrderStyles from "./OrderDetails.module.css";
 import logo from "../../images/order accpeted/graphics.svg";
+import { useContext } from "react";
+import { orderContext } from "../../services/apiContext";
 function OrderDetails() {
+  const { order } = useContext(orderContext);
   return (
     <div className={OrderStyles.mainBox}>
       <h1 className={`${OrderStyles.number} text text_type_digits-large mt-30`}>
-        034536
+        {order}
       </h1>
       <h2 className={`${OrderStyles.id} text text_type_main-medium mt-6 mb-10`}>
         идентификатор заказа

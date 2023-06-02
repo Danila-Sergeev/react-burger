@@ -1,8 +1,14 @@
 import AppStyles from "./App.module.css";
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useReducer, useState, useEffect, useMemo } from "react";
 import Header from "../AppHeader/AppHeader";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
+import {
+  IngredientsData,
+  idContext,
+  orderContext,
+  AllIngredientsData,
+} from "../../services/apiContext";
 
 function App() {
   const [state, setState] = useState({
@@ -25,9 +31,17 @@ function App() {
       },
     ],
   });
-
   /* Обработчик состояния данных с API */
   const [data, setData] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
+  const contextIngredientsValue = useMemo(() => {
+    return { ingredients, setIngredients };
+  }, [ingredients, setIngredients]);
+  const contextDataValue = useMemo(() => {
+    return { data, setData };
+  }, [data, setData]);
+  const [id, setId] = useState([]);
+  const [order, setOrder] = useState(0);
 
   /* Ссылка на API */
   const url = "https://norma.nomoreparties.space/api/ingredients";
@@ -41,7 +55,9 @@ function App() {
         }
         return Promise.reject(`Ошибка ${res.status}`);
       })
-      .then((data) => setData(data.data))
+      .then((data) => {
+        setData(data.data);
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -50,16 +66,23 @@ function App() {
   useEffect(() => {
     getData();
   }, []);
+
   return (
     <div className={AppStyles.App}>
       <Header headerData={state.headerData} />
       {data.length !== 0 && (
         <main className={AppStyles.main_section}>
-          <BurgerIngredients
-            ingredientsData={state.ingredientsData}
-            items={data}
-          />
-          <BurgerConstructor items={data} />
+          <AllIngredientsData.Provider value={contextDataValue}>
+            <IngredientsData.Provider value={contextIngredientsValue}>
+              <idContext.Provider value={{ id, setId }}>
+                <orderContext.Provider value={{ order, setOrder }}>
+                  <BurgerIngredients ingredientsData={state.ingredientsData} />
+
+                  <BurgerConstructor />
+                </orderContext.Provider>
+              </idContext.Provider>
+            </IngredientsData.Provider>
+          </AllIngredientsData.Provider>
         </main>
       )}
     </div>

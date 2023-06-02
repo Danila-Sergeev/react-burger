@@ -1,6 +1,11 @@
 import BurgerCosructorStiles from "./BurgerConstructor.module.css";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useContext, useState, useReducer, useEffect } from "react";
+import {
+  IngredientsData,
+  idContext,
+  orderContext,
+} from "../../services/apiContext";
 import {
   DragIcon,
   Button,
@@ -11,12 +16,31 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import ingredientType from "../../utils/types";
 
-function BurgerConstructor({ items }) {
-  /* счетчик общей стоимости заказа */
-  let fullPrice = 0;
+const priceInitialState = { price: 0 };
+function reducer(state, action) {
+  switch (action.type) {
+    case "set":
+      return { ...state, price: action.payload };
+    case "reset":
+      return priceInitialState;
+    default:
+      throw new Error(`Wrong type of action: ${action.type}`);
+  }
+}
 
+function BurgerConstructor() {
+  /* счетчик общей стоимости заказа */
+  const [priceState, priceDispatcher] = useReducer(
+    reducer,
+    priceInitialState,
+    undefined
+  );
+  priceState.price = 0;
   /* Обработчик состояния попапа */
   const [modal, setModal] = useState({ visible: false });
+  const { ingredients } = useContext(IngredientsData);
+  const { order, setOrder } = useContext(orderContext);
+  const { id } = useContext(idContext);
 
   /*  Обработчики открытия/закрытия попапа */
   const handleOpenModal = () => {
@@ -26,25 +50,60 @@ function BurgerConstructor({ items }) {
   const handleCloseModal = () => {
     setModal({ visible: false });
   };
+  useEffect(() => {
+    priceDispatcher({
+      type: "set",
+      payload: priceState.price,
+    });
+  }, [ingredients]);
+  const checkReponse = (res) => {
+    return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+  };
+  const postApi = () => {
+    // POST request using fetch inside useEffect React hook
+    if (id.length === ingredients.length) {
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ingredients: id }),
+      };
+      fetch("https://norma.nomoreparties.space/api/orders", requestOptions)
+        .then((response) => checkReponse(response))
+        .then((data) => setOrder(data.order.number))
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+  function onClick() {
+    postApi();
+    handleOpenModal();
+  }
+
+  // empty dependency array means this effect will only run once (like componentDidMount in classes)
 
   /*  Обработчики открытия/закрытия попапа */
-  //console.log(items);
   /* Добавляем содежимое в модальное окно конструктора */
   const modals = (
     <Modal onClose={handleCloseModal}>
       <OrderDetails />
     </Modal>
   );
+  let count = 0;
+  let count1 = 0;
   return (
     <section className={`${BurgerCosructorStiles.BurgerConstructor} mt-25`}>
       <div className={BurgerCosructorStiles.list_box}>
-        {items !== undefined &&
-          items.map((obj) => {
-            if (obj._id === "60d3b41abdacab0026a733c6") {
+        {ingredients !== undefined &&
+          ingredients.map((obj) => {
+            if (obj.type === "bun" && count < 1) {
+              count++;
+              priceState.price += obj.price;
+              //  setId(() => [...id, obj._id])
               return (
                 <div
                   className={BurgerCosructorStiles.list_element}
-                  key={obj._id}
+                  key={Math.random()}
                 >
                   <BurgerConstructorRenderElement
                     type={"top"}
@@ -58,13 +117,14 @@ function BurgerConstructor({ items }) {
             }
           })}
         <ul className={BurgerCosructorStiles.list}>
-          {items !== undefined &&
-            items.map((obj) => {
+          {ingredients !== undefined &&
+            ingredients.map((obj) => {
               if (obj.type === "main" || obj.type === "sauce") {
+                // setId(() => [...id, obj._id])
                 return (
                   <div
                     className={BurgerCosructorStiles.list_element}
-                    key={obj._id}
+                    key={Math.random()}
                   >
                     <DragIcon />
                     <BurgerConstructorRenderElement
@@ -77,13 +137,16 @@ function BurgerConstructor({ items }) {
               }
             })}
         </ul>
-        {items !== undefined &&
-          items.map((obj) => {
-            if (obj._id === "60d3b41abdacab0026a733c6") {
+        {ingredients !== undefined &&
+          ingredients.map((obj) => {
+            if (obj.type === "bun" && count1 < 1) {
+              count1++;
+              priceState.price += obj.price;
+              // setId(() => [...id, obj._id])
               return (
                 <div
                   className={BurgerCosructorStiles.list_element}
-                  key={obj._id}
+                  key={Math.random()}
                 >
                   <BurgerConstructorRenderElement
                     type={"bottom"}
@@ -91,6 +154,7 @@ function BurgerConstructor({ items }) {
                     price={obj.price}
                     name={`${obj.name} (низ)`}
                     thumbnail={obj.image}
+                    isLocked={true}
                   />
                 </div>
               );
@@ -99,19 +163,16 @@ function BurgerConstructor({ items }) {
       </div>
       <div className={`${BurgerCosructorStiles.order_box} pt-10`}>
         <div className={BurgerCosructorStiles.all_price}>
-          {items !== undefined &&
-            items.map((obj) => {
-              fullPrice += obj.price;
+          {ingredients !== undefined &&
+            ingredients.map((obj) => {
+              if (obj.type !== "bun") {
+                priceState.price += obj.price;
+              }
             })}
-          <p className="name name_type_digits-medium">{fullPrice}</p>
+          <p className="text text_type_digits-medium">{priceState.price}</p>
           <CurrencyIcon />
         </div>
-        <Button
-          onClick={handleOpenModal}
-          htmlType="button"
-          type="primary"
-          size="large"
-        >
+        <Button onClick={onClick} htmlType="button" type="primary" size="large">
           Оформить заказ
         </Button>
         {modal.visible && modals}
@@ -119,7 +180,5 @@ function BurgerConstructor({ items }) {
     </section>
   );
 }
-BurgerConstructor.propTypes = {
-  items: PropTypes.arrayOf(ingredientType).isRequired,
-};
+
 export default BurgerConstructor;
