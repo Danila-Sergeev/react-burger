@@ -15,6 +15,8 @@ import BurgerConstructorRenderElement from "./BurgerConstructorRenderElement/Bur
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import ingredientType from "../../utils/types";
+import { useDispatch, useSelector } from "react-redux";
+import { getIngredients } from "../../services/actions/Ingredients";
 
 const priceInitialState = { price: 0 };
 function reducer(state, action) {
@@ -38,9 +40,9 @@ function BurgerConstructor() {
   priceState.price = 0;
   /* Обработчик состояния попапа */
   const [modal, setModal] = useState({ visible: false });
-  const { ingredients } = useContext(IngredientsData);
-  const { order, setOrder } = useContext(orderContext);
-  const { id } = useContext(idContext);
+  const ingredients = useSelector((store) => store.ingredients.ingredients);
+  // const { order, setOrder } = useContext(orderContext);
+  //const { id } = useContext(idContext);
 
   /*  Обработчики открытия/закрытия попапа */
   const handleOpenModal = () => {
@@ -56,7 +58,7 @@ function BurgerConstructor() {
       payload: priceState.price,
     });
   }, [ingredients]);
-  const checkReponse = (res) => {
+  /*  const checkReponse = (res) => {
     return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
   };
   const postApi = () => {
@@ -74,9 +76,9 @@ function BurgerConstructor() {
           console.log(error);
         });
     }
-  };
+  }; */
   function onClick() {
-    postApi();
+    //postApi();
     handleOpenModal();
   }
 
@@ -99,7 +101,6 @@ function BurgerConstructor() {
             if (obj.type === "bun" && count < 1) {
               count++;
               priceState.price += obj.price;
-              //  setId(() => [...id, obj._id])
               return (
                 <div
                   className={BurgerCosructorStiles.list_element}
@@ -120,7 +121,6 @@ function BurgerConstructor() {
           {ingredients !== undefined &&
             ingredients.map((obj) => {
               if (obj.type === "main" || obj.type === "sauce") {
-                // setId(() => [...id, obj._id])
                 return (
                   <div
                     className={BurgerCosructorStiles.list_element}
@@ -142,7 +142,6 @@ function BurgerConstructor() {
             if (obj.type === "bun" && count1 < 1) {
               count1++;
               priceState.price += obj.price;
-              // setId(() => [...id, obj._id])
               return (
                 <div
                   className={BurgerCosructorStiles.list_element}

@@ -1,7 +1,9 @@
 import IngredientStyle from "./IngredientDetails.module.css";
 import PropTypes from "prop-types";
 import ingredientType from "../../utils/types";
-function IngredientDetails({ item }) {
+import { useSelector } from "react-redux";
+function IngredientDetails() {
+  const item = useSelector((store) => store.ingredients.ingredients);
   return (
     <div className={IngredientStyle.mainBox}>
       <h1 className={`${IngredientStyle.title} text text_type_main-large`}>
@@ -47,7 +49,4 @@ function IngredientDetails({ item }) {
   );
 }
 
-IngredientDetails.propTypes = {
-  item: ingredientType.isRequired,
-};
 export default IngredientDetails;

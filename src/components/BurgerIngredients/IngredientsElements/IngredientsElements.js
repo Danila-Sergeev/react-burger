@@ -1,13 +1,17 @@
 import IngredientsStiles from "../BurgerIngredients.module.css";
-import React, { useContext } from "react";
+import React, { useEffect } from "react";
 import IngredientElement from "../IngredientElement/IngredientElement";
 import PropTypes from "prop-types";
 import ingredientType from "../../../utils/types";
-import {
-  IngredientsData,
-  IngredientsData1,
-} from "../../../services/apiContext";
-function IngredientElements({ Id, ElementName, data, type }) {
+
+import { useDispatch, useSelector } from "react-redux";
+import { getIngredients } from "../../../services/actions/Ingredients";
+function IngredientElements({ Id, ElementName, type }) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
+  const data = useSelector((store) => store.ingredients.ingredients);
   return (
     <div id={Id} className={`${IngredientsStiles.box_of_types} pb-10`}>
       <h2

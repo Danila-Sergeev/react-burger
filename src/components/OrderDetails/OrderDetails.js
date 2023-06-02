@@ -3,7 +3,7 @@ import logo from "../../images/order accpeted/graphics.svg";
 import { useContext } from "react";
 import { orderContext } from "../../services/apiContext";
 function OrderDetails() {
-  const { order } = useContext(orderContext);
+  const order = 1000;
   return (
     <div className={OrderStyles.mainBox}>
       <h1 className={`${OrderStyles.number} text text_type_digits-large mt-30`}>

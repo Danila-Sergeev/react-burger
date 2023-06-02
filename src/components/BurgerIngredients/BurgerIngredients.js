@@ -8,7 +8,7 @@ import { AllIngredientsData } from "../../services/apiContext";
 
 function BurgerIngredients({ ingredientsData }) {
   const [current, setCurrent] = React.useState("one");
-  const { data } = useContext(AllIngredientsData);
+
   return (
     <section className={IngredientsStiles.ingredients}>
       <div className={`${IngredientsStiles.header_box} mt-10 mb-10`}>
@@ -93,7 +93,6 @@ function BurgerIngredients({ ingredientsData }) {
       </div>
       <div className={IngredientsStiles.components}>
         <IngredientElements
-          data={data}
           Id={ingredientsData.map((el) => {
             return el.frstElement;
           })}
@@ -103,7 +102,6 @@ function BurgerIngredients({ ingredientsData }) {
           type={"bun"}
         />
         <IngredientElements
-          data={data}
           Id={ingredientsData.map((el) => {
             return el.sndElement;
           })}
@@ -113,7 +111,6 @@ function BurgerIngredients({ ingredientsData }) {
           type={"sauce"}
         />
         <IngredientElements
-          data={data}
           Id={ingredientsData.map((el) => {
             return el.thrdElement;
           })}
