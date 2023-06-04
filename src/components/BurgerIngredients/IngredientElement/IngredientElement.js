@@ -1,14 +1,34 @@
 import IngredientsStiles from "../BurgerIngredients.module.css";
 import Modal from "../../Modal/Modal";
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState } from "react";
 import ingredientType from "../../../utils/types";
 import PropTypes from "prop-types";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  SET_INGREDIENT_DETAILS,
+  DELETE_INGREDIENT_DETAILS,
+} from "../../../services/actions/Ingredients";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientDetails from "../../IngredientDetails/IngredientDetails";
 function IngredientElement(item) {
+  const dispatch = useDispatch();
+  const setData = (item) => {
+    dispatch({
+      type: SET_INGREDIENT_DETAILS,
+      item,
+    });
+  };
+  const deleteData = () => {
+    dispatch({
+      type: DELETE_INGREDIENT_DETAILS,
+    });
+  };
+
+  const data = useSelector((store) => store.ingredient.currentIngredient);
+  //console.log(data);
   /* Обработчик состояния попапа */
   const [modal, setModal] = useState({ visible: false });
   //const { ingredients, setIngredients } = useContext(IngredientsData);
@@ -16,17 +36,18 @@ function IngredientElement(item) {
   /*  Обработчики открытия/закрытия попапа */
   const handleOpenModal = () => {
     setModal({ visible: true });
+    setData(item);
   };
   const handleCloseModal = () => {
     setModal({ visible: false });
+    deleteData();
   };
   /*  Обработчики открытия/закрытия попапа */
 
   /* Добавляем содежимое в модальное окно конструктора */
   const modals = (
     <Modal onClose={handleCloseModal} setModal={setModal}>
-      {" "}
-      <IngredientDetails />
+      return <IngredientDetails item={data} />;
     </Modal>
   );
 

@@ -2,12 +2,13 @@ import OrderStyles from "./OrderDetails.module.css";
 import logo from "../../images/order accpeted/graphics.svg";
 import { useContext } from "react";
 import { orderContext } from "../../services/apiContext";
+import { useDispatch, useSelector } from "react-redux";
 function OrderDetails() {
-  const order = 1000;
+  const orderNumder = useSelector((store) => store.order.orderNumber);
   return (
     <div className={OrderStyles.mainBox}>
       <h1 className={`${OrderStyles.number} text text_type_digits-large mt-30`}>
-        {order}
+        {orderNumder}
       </h1>
       <h2 className={`${OrderStyles.id} text text_type_main-medium mt-6 mb-10`}>
         идентификатор заказа

@@ -8,7 +8,6 @@ const initialState = {
   ingredientsRequest: false,
   ingredientsFailed: false,
   constructorIngredients: [],
-  currentIngredient: {},
   order: {},
 };
 

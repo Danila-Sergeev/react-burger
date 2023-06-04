@@ -17,6 +17,7 @@ import OrderDetails from "../OrderDetails/OrderDetails";
 import ingredientType from "../../utils/types";
 import { useDispatch, useSelector } from "react-redux";
 import { getIngredients } from "../../services/actions/Ingredients";
+import { getOrder } from "../../services/actions/Ingredients";
 
 const priceInitialState = { price: 0 };
 function reducer(state, action) {
@@ -43,9 +44,12 @@ function BurgerConstructor() {
   const ingredients = useSelector((store) => store.ingredients.ingredients);
   // const { order, setOrder } = useContext(orderContext);
   //const { id } = useContext(idContext);
-
+  const dispatch = useDispatch();
   /*  Обработчики открытия/закрытия попапа */
   const handleOpenModal = () => {
+    const cartItems = [];
+    ingredients.forEach((item) => cartItems.push(item._id));
+    dispatch(getOrder(cartItems));
     setModal({ visible: true });
   };
 
@@ -58,6 +62,7 @@ function BurgerConstructor() {
       payload: priceState.price,
     });
   }, [ingredients]);
+
   /*  const checkReponse = (res) => {
     return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
   };
@@ -77,6 +82,7 @@ function BurgerConstructor() {
         });
     }
   }; */
+
   function onClick() {
     //postApi();
     handleOpenModal();
