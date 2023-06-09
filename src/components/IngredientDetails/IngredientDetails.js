@@ -2,7 +2,8 @@ import IngredientStyle from "./IngredientDetails.module.css";
 import PropTypes from "prop-types";
 import ingredientType from "../../utils/types";
 import { useSelector, useDispatch } from "react-redux";
-function IngredientDetails({ item }) {
+function IngredientDetails() {
+  const item = useSelector((store) => store.ingredient.currentIngredient);
   return (
     <div className={IngredientStyle.mainBox}>
       <h1 className={`${IngredientStyle.title} text text_type_main-large`}>

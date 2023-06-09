@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import ingredientType from "../../../utils/types";
 import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   SET_INGREDIENT_DETAILS,
   DELETE_INGREDIENT_DETAILS,
@@ -15,7 +15,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientDetails from "../../IngredientDetails/IngredientDetails";
 function IngredientElement(props) {
-  const { item } = props;
+  const { item, count } = props;
   const dispatch = useDispatch();
   const setData = (item) => {
     dispatch({
@@ -29,19 +29,16 @@ function IngredientElement(props) {
     });
   };
 
-  const data = useSelector((store) => store.ingredient.currentIngredient);
-  //console.log(data);
   /* Обработчик состояния попапа */
-  const [modal, setModal] = useState({ visible: false });
-  //const { ingredients, setIngredients } = useContext(IngredientsData);
-  // const { id, setId } = useContext(idContext);
+  const [modal, setModal] = useState(false);
+
   /*  Обработчики открытия/закрытия попапа */
   const handleOpenModal = () => {
-    setModal({ visible: true });
+    setModal(true);
     setData(item);
   };
   const handleCloseModal = () => {
-    setModal({ visible: false });
+    setModal(false);
     deleteData();
   };
 
@@ -54,27 +51,34 @@ function IngredientElement(props) {
       isDragging: monitor.isDragging(),
     }),
   });
-
   return (
-    <li
-      className={`${IngredientsStiles.element} mb-8`}
-      onClick={props.openModal}
-      ref={dragRef}
-    >
-      {props.count !== 0 ? (
-        <Counter count={props.count} size="default" extraClass="m-1" />
-      ) : (
-        ""
+    <div>
+      <li
+        className={`${IngredientsStiles.element} mb-8`}
+        onClick={handleOpenModal}
+        ref={dragRef}
+      >
+        {count !== 0 ? (
+          <Counter count={count} size="default" extraClass="m-1" />
+        ) : (
+          ""
+        )}
+        <img className="mb-1" src={item.image} alt={item.name} />
+        <div className={IngredientsStiles.price}>
+          <p className="text text_type_digits-default mb-1">{item.price}</p>
+          <CurrencyIcon type="primary" />
+        </div>
+        <p className={`${IngredientsStiles.title} text text_type_main-default`}>
+          {item.name}
+        </p>
+      </li>
+      {modal && (
+        <Modal onClose={handleCloseModal} setModal={setModal}>
+          {" "}
+          <IngredientDetails />
+        </Modal>
       )}
-      <img className="mb-1" src={props.item.image} alt={props.item.name} />
-      <div className={IngredientsStiles.price}>
-        <p className="text text_type_digits-default mb-1">{props.item.price}</p>
-        <CurrencyIcon type="primary" />
-      </div>
-      <p className={`${IngredientsStiles.title} text text_type_main-default`}>
-        {props.item.name}
-      </p>
-    </li>
+    </div>
   );
 }
 IngredientElement.propTypes = {

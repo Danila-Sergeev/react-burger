@@ -1,10 +1,7 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import IngredientsStiles from "./BurgerIngredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import IngredientElements from "./IngredientsElements/IngredientsElements";
-import ingredientType from "../../utils/types";
-import { AllIngredientsData } from "../../services/apiContext";
 import { useDispatch, useSelector } from "react-redux";
 import { getIngredients } from "../../services/actions/Ingredients";
 import { useInView } from "react-intersection-observer";
@@ -17,9 +14,25 @@ function BurgerIngredients({ ingredientsData }) {
     dispatch(getIngredients());
   }, [dispatch]);
   const ingredients = useSelector((store) => store.ingredients.ingredients);
+  /* Определяем зону просмотра */
   const [bunRef, bunView] = useInView({ threshold: 0.1 });
   const [sauceRef, sauceView] = useInView({ threshold: 0.1 });
   const [mainRef, mainView] = useInView({ threshold: 0.1 });
+  const ingredientScroll = () => {
+    switch (true) {
+      case bunView:
+        setCurrent("bun");
+        break;
+      case sauceView:
+        setCurrent("sauce");
+        break;
+      case mainView:
+        setCurrent("main");
+        break;
+      default:
+        break;
+    }
+  };
   useEffect(() => {
     ingredientScroll();
   }, [bunView, sauceView, mainView]);
@@ -39,21 +52,6 @@ function BurgerIngredients({ ingredientsData }) {
   const bunCart = [useSelector((store) => store.constr.bun)];
   const mainsCart = useSelector((store) => store.constr.items);
 
-  const ingredientScroll = () => {
-    switch (true) {
-      case bunView:
-        setCurrent("bun");
-        break;
-      case sauceView:
-        setCurrent("sauce");
-        break;
-      case mainView:
-        setCurrent("main");
-        break;
-      default:
-        break;
-    }
-  };
   const tabClick = (type) => {
     setCurrent(type);
     const section = document.getElementById(type);

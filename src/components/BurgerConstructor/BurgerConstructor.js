@@ -1,58 +1,26 @@
 import BurgerCosructorStiles from "./BurgerConstructor.module.css";
-import PropTypes from "prop-types";
-import React, { useContext, useState, useReducer, useEffect } from "react";
+import React, { useState } from "react";
 import {
-  IngredientsData,
-  idContext,
-  orderContext,
-} from "../../services/apiContext";
-import {
-  DragIcon,
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import BurgerConstructorRenderElement from "./BurgerConstructorRenderElement/BurgerConstructorRenderElement";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import ingredientType from "../../utils/types";
 import { useDispatch, useSelector } from "react-redux";
 import { getIngredients } from "../../services/actions/Ingredients";
 import { getOrder } from "../../services/actions/Ingredients";
 import BurgerConstructorMains from "./BurgerConstructorMains/BurgerConstructorMains";
 import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
-
 import { ADD_ITEM, RESET_ITEM } from "../../services/actions/constructor";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-const priceInitialState = { price: 0 };
-function reducer(state, action) {
-  switch (action.type) {
-    case "set":
-      return { ...state, price: action.payload };
-    case "reset":
-      return priceInitialState;
-    default:
-      throw new Error(`Wrong type of action: ${action.type}`);
-  }
-}
 
 function BurgerConstructor() {
-  /* счетчик общей стоимости заказа */
   const bunLocked = useSelector((store) => store.constr.bun);
-
   const mains = useSelector((store) => store.constr.items);
-
-  const [priceState, priceDispatcher] = useReducer(
-    reducer,
-    priceInitialState,
-    undefined
-  );
-  priceState.price = 0;
   /* Обработчик состояния попапа */
   const [modal, setModal] = useState(false);
   const ingredients = useSelector((store) => store.ingredients.ingredients);
-  // const { order, setOrder } = useContext(orderContext);
-  //const { id } = useContext(idContext);
   const dispatch = useDispatch();
   /*  Обработчики открытия/закрытия попапа */
   const handleOpenModal = () => {
@@ -65,41 +33,30 @@ function BurgerConstructor() {
       setModal(true);
     }
   };
-
   const handleCloseModal = () => {
     setModal(false);
     dispatch({
       type: RESET_ITEM,
     });
   };
+  const onClick = () => {
+    handleOpenModal();
+  };
+  /*  Добавление перетаскиваемого элемента в конструктор */
   const [, dropTarget] = useDrop({
     accept: "ingredient",
     drop(item) {
       dispatch({ type: ADD_ITEM, item: { ...item, id4: uuidv4() } });
-      console.log(mains);
     },
   });
-  useEffect(() => {
-    priceDispatcher({
-      type: "set",
-      payload: priceState.price,
-    });
-  }, [ingredients]);
 
-  function onClick() {
-    handleOpenModal();
-  }
+  /* счетчик общей стоимости заказа */
   const orderSum = () => {
     let sum = 0;
     mains.forEach((item) => (sum += item.price));
     sum += bunLocked?.price * 2;
     return sum ? sum : 0;
   };
-
-  // empty dependency array means this effect will only run once (like componentDidMount in classes)
-
-  /*  Обработчики открытия/закрытия попапа */
-  /* Добавляем содежимое в модальное окно конструктора */
 
   return (
     <section className="pt-25 pl-4" ref={dropTarget}>

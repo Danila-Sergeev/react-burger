@@ -17,6 +17,7 @@ export default function BurgerConstructorMains({ ingredient, index }) {
     dispatch({ type: REMOVE_ITEM, id4 });
   };
 
+  /* Захват элемента для перетаскивания внутри конструктора */
   const [, drag] = useDrag({
     type: "mains",
     item: { ingredient, index },
@@ -24,7 +25,7 @@ export default function BurgerConstructorMains({ ingredient, index }) {
       isDragging: monitor.isDragging(),
     }),
   });
-
+  /* Отпускаем элемент */
   const [, drop] = useDrop({
     accept: "mains",
     drop(item) {
@@ -32,6 +33,10 @@ export default function BurgerConstructorMains({ ingredient, index }) {
     },
   });
 
+  const moveIngredient = (dragIndex, hoverIndex) => {
+    const dragIngredient = ingredients[dragIndex];
+    dispatch({ type: MOVE_ITEM, dragIndex, hoverIndex, dragIngredient });
+  };
   const dropItem = (item) => {
     const dragIndex = item.index;
     const hoverIndex = index;
@@ -40,11 +45,6 @@ export default function BurgerConstructorMains({ ingredient, index }) {
     }
     moveIngredient(dragIndex, hoverIndex);
     item.index = hoverIndex;
-  };
-
-  const moveIngredient = (dragIndex, hoverIndex) => {
-    const dragIngredient = ingredients[dragIndex];
-    dispatch({ type: MOVE_ITEM, dragIndex, hoverIndex, dragIngredient });
   };
 
   drag(drop(ref));
