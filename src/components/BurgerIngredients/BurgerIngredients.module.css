@@ -2,6 +2,7 @@
   max-width: 800px;
 }
 .header_box {
+  display: flex;
 }
 .title {
 }
@@ -19,38 +20,44 @@
   display: flex;
   justify-content: center;
 }
-.components {
-  max-height: 720px;
-  overflow-y: auto;
-  scroll-behavior: smooth;
-  padding-right: 20px;
+
+.ingredients {
+  width: 600px;
+  height: 726px;
+  overflow-y: scroll;
 }
+
+.ingredients::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ingredients::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
+
+.ingredients::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
+
 .box_of_types {
   max-width: 600px;
   margin: auto;
 }
-.name_of_type {
-  display: flex;
-}
+
 .elements {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 24px;
   margin: 0;
-  padding-inline-start: 0;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 24px;
+  list-style: none;
 }
 .element {
-  list-style-type: none;
   position: relative;
-  /*  сброс стиля кнопки */
-  padding: auto;
-  border: none;
-  font: inherit;
-  color: inherit;
-  background-color: transparent;
-  cursor: pointer;
-  /*  сброс стиля кнопки  ^*/
+  width: 272px;
+  height: 208px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .price_box {
   display: flex;

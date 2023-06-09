@@ -4,6 +4,9 @@ import Header from "../AppHeader/AppHeader";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
 import { useDispatch, useSelector } from "react-redux";
 import { getIngredients } from "../../services/actions/Ingredients";
 
@@ -52,8 +55,10 @@ function App() {
     <div className={AppStyles.App}>
       <Header headerData={state.headerData} />
       <main className={AppStyles.main_section}>
-        <BurgerIngredients ingredientsData={state.ingredientsData} />
-        <BurgerConstructor />
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients ingredientsData={state.ingredientsData} />
+          <BurgerConstructor />
+        </DndProvider>
       </main>
     </div>
   );
