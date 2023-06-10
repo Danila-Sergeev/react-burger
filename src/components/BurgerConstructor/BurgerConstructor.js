@@ -1,5 +1,5 @@
 import BurgerCosructorStiles from "./BurgerConstructor.module.css";
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   Button,
   CurrencyIcon,
@@ -7,12 +7,12 @@ import {
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import { useDispatch, useSelector } from "react-redux";
-import { getIngredients } from "../../services/actions/Ingredients";
 import { getOrder } from "../../services/actions/Ingredients";
 import BurgerConstructorMains from "./BurgerConstructorMains/BurgerConstructorMains";
 import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
 import { ADD_ITEM, RESET_ITEM } from "../../services/actions/constructor";
+import { RESET_ORDER } from "../../services/actions/Ingredients";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 
 function BurgerConstructor() {
@@ -33,11 +33,15 @@ function BurgerConstructor() {
       setModal(true);
     }
   };
+  const resetOrder = () => {
+    dispatch({ type: RESET_ORDER });
+  };
   const handleCloseModal = () => {
     setModal(false);
     dispatch({
       type: RESET_ITEM,
     });
+    resetOrder();
   };
   const onClick = () => {
     handleOpenModal();
@@ -51,12 +55,13 @@ function BurgerConstructor() {
   });
 
   /* счетчик общей стоимости заказа */
-  const orderSum = () => {
+
+  const orderSum = useMemo(() => {
     let sum = 0;
     mains.forEach((item) => (sum += item.price));
     sum += bunLocked?.price * 2;
     return sum ? sum : 0;
-  };
+  }, [mains, bunLocked]);
 
   return (
     <section className="pt-25 pl-4" ref={dropTarget}>
@@ -99,7 +104,7 @@ function BurgerConstructor() {
       </div>
       <div className={`${BurgerCosructorStiles.price} mt-10 mr-4`}>
         <p className="text text_type_digits-medium">
-          {orderSum()} <CurrencyIcon type="primary" />
+          {orderSum} <CurrencyIcon type="primary" />
         </p>
         <Button htmlType="button" type="primary" size="large" onClick={onClick}>
           Оформить заказ

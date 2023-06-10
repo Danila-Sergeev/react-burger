@@ -82,7 +82,12 @@ function IngredientElement(props) {
   );
 }
 IngredientElement.propTypes = {
-  item: ingredientType,
+  item: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    id: PropTypes.string,
+  }).isRequired,
+  count: PropTypes.number.isRequired,
 };
-
 export default IngredientElement;

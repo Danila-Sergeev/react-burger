@@ -1,7 +1,7 @@
 import IngredientStyle from "./IngredientDetails.module.css";
 import PropTypes from "prop-types";
 import ingredientType from "../../utils/types";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 function IngredientDetails() {
   const item = useSelector((store) => store.ingredient.currentIngredient);
   return (

@@ -1,8 +1,8 @@
 import {
-  SET_ORDER_NUMBER,
   GET_ORDER_REQUEST,
   GET_ORDER_SUCCESS,
   GET_ORDER_FAILED,
+  RESET_ORDER,
 } from "../actions/Ingredients.js";
 const initialState = {
   orderNumber: 0,
@@ -29,6 +29,14 @@ export const orderReducer = (state = initialState, action) => {
     }
     case GET_ORDER_FAILED: {
       return { ...state, orderFailed: true, orderRequest: false };
+    }
+    case RESET_ORDER: {
+      return {
+        orderNumber: 0,
+        status: "",
+        orderFailed: false,
+        orderRequest: false,
+      };
     }
     default: {
       return state;

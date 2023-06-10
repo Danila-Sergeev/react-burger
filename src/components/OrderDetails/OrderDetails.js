@@ -1,7 +1,6 @@
 import OrderStyles from "./OrderDetails.module.css";
 import logo from "../../images/order accpeted/graphics.svg";
-import { useContext } from "react";
-import { orderContext } from "../../services/apiContext";
+
 import { useDispatch, useSelector } from "react-redux";
 function OrderDetails() {
   const orderNumder = useSelector((store) => store.order.orderNumber);

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { REMOVE_ITEM, MOVE_ITEM } from "../../../services/actions/constructor";
+import PropTypes from "prop-types";
 export default function BurgerConstructorMains({ ingredient, index }) {
   const dispatch = useDispatch();
   const ref = useRef(null);
@@ -61,3 +62,8 @@ export default function BurgerConstructorMains({ ingredient, index }) {
     </li>
   );
 }
+
+BurgerConstructorMains.propTypes = {
+  ingredient: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+};
