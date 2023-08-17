@@ -1,6 +1,7 @@
 import AppStyles from "./App.module.css";
 import React, { useReducer, useState, useEffect, useMemo } from "react";
 import Header from "../AppHeader/AppHeader";
+import { Routes, Route } from "react-router-dom";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 
@@ -54,11 +55,19 @@ function App() {
   return (
     <div className={AppStyles.App}>
       <Header headerData={state.headerData} />
+
       <main className={AppStyles.main_section}>
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients ingredientsData={state.ingredientsData} />
-          <BurgerConstructor />
-        </DndProvider>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <DndProvider backend={HTML5Backend}>
+                <BurgerIngredients ingredientsData={state.ingredientsData} />
+                <BurgerConstructor />
+              </DndProvider>
+            }
+          ></Route>
+        </Routes>
       </main>
     </div>
   );
