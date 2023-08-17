@@ -3,12 +3,12 @@ import React, { useReducer, useState, useEffect, useMemo } from "react";
 import Header from "../AppHeader/AppHeader";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
-import {
-  IngredientsData,
-  idContext,
-  orderContext,
-  AllIngredientsData,
-} from "../../services/apiContext";
+
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
+import { useDispatch, useSelector } from "react-redux";
+import { getIngredients } from "../../services/actions/Ingredients";
 
 function App() {
   const [state, setState] = useState({
@@ -33,10 +33,10 @@ function App() {
   });
   /* Обработчик состояния данных с API */
   const [data, setData] = useState([]);
-  const [ingredients, setIngredients] = useState([]);
-  const contextIngredientsValue = useMemo(() => {
+  //const [ingredients, setIngredients] = useState([]);
+  /* const contextIngredientsValue = useMemo(() => {
     return { ingredients, setIngredients };
-  }, [ingredients, setIngredients]);
+  }, [ingredients, setIngredients]); */
   const contextDataValue = useMemo(() => {
     return { data, setData };
   }, [data, setData]);
@@ -44,47 +44,22 @@ function App() {
   const [order, setOrder] = useState(0);
 
   /* Ссылка на API */
-  const url = "https://norma.nomoreparties.space/api/ingredients";
 
-  /* Асинхронная функция для получения данных с API */
-  async function getData() {
-    return await fetch(url)
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка ${res.status}`);
-      })
-      .then((data) => {
-        setData(data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  /* Асинхронная функция для получения данных с API
 
-  useEffect(() => {
+  /*  useEffect(() => {
     getData();
-  }, []);
+  }, []); */
 
   return (
     <div className={AppStyles.App}>
       <Header headerData={state.headerData} />
-      {data.length !== 0 && (
-        <main className={AppStyles.main_section}>
-          <AllIngredientsData.Provider value={contextDataValue}>
-            <IngredientsData.Provider value={contextIngredientsValue}>
-              <idContext.Provider value={{ id, setId }}>
-                <orderContext.Provider value={{ order, setOrder }}>
-                  <BurgerIngredients ingredientsData={state.ingredientsData} />
-
-                  <BurgerConstructor />
-                </orderContext.Provider>
-              </idContext.Provider>
-            </IngredientsData.Provider>
-          </AllIngredientsData.Provider>
-        </main>
-      )}
+      <main className={AppStyles.main_section}>
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients ingredientsData={state.ingredientsData} />
+          <BurgerConstructor />
+        </DndProvider>
+      </main>
     </div>
   );
 }

@@ -1,63 +1,93 @@
 import IngredientsStiles from "../BurgerIngredients.module.css";
 import Modal from "../../Modal/Modal";
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState } from "react";
 import ingredientType from "../../../utils/types";
 import PropTypes from "prop-types";
-import { IngredientsData, idContext } from "../../../services/apiContext";
+import { useDrag } from "react-dnd";
+import { useDispatch } from "react-redux";
+import {
+  SET_INGREDIENT_DETAILS,
+  DELETE_INGREDIENT_DETAILS,
+} from "../../../services/actions/Ingredients";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientDetails from "../../IngredientDetails/IngredientDetails";
-function IngredientElement(item) {
+function IngredientElement(props) {
+  const { item, count } = props;
+  const dispatch = useDispatch();
+  const setData = (item) => {
+    dispatch({
+      type: SET_INGREDIENT_DETAILS,
+      item,
+    });
+  };
+  const deleteData = () => {
+    dispatch({
+      type: DELETE_INGREDIENT_DETAILS,
+    });
+  };
+
   /* Обработчик состояния попапа */
-  const [modal, setModal] = useState({ visible: false });
-  const { ingredients, setIngredients } = useContext(IngredientsData);
-  const { id, setId } = useContext(idContext);
+  const [modal, setModal] = useState(false);
+
   /*  Обработчики открытия/закрытия попапа */
   const handleOpenModal = () => {
-    setModal({ visible: true });
+    setModal(true);
+    setData(item);
   };
   const handleCloseModal = () => {
-    setModal({ visible: false });
+    setModal(false);
+    deleteData();
   };
+
   /*  Обработчики открытия/закрытия попапа */
 
-  /* Добавляем содежимое в модальное окно конструктора */
-  const modals = (
-    <Modal onClose={handleCloseModal} setModal={setModal}>
-      {" "}
-      <IngredientDetails item={item} />
-    </Modal>
-  );
-  const setter = () => {
-    setIngredients([...ingredients, item]);
-    setId([...id, item._id]);
-  };
-
+  const [, dragRef] = useDrag({
+    type: "ingredient",
+    item: item,
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
   return (
-    <>
-      <button onClick={setter} className={`${IngredientsStiles.element}`}>
-        {<Counter count={1} className="counter" />}
-        <img src={item.image} alt={item.name} />
-        <div className={`${IngredientsStiles.price_box} mt-1 mb-2`}>
-          <p
-            className={`${IngredientsStiles.price} text text_type_main-default mr-2`}
-          >
-            {item.price}
-          </p>
-          <CurrencyIcon />
+    <div>
+      <li
+        className={`${IngredientsStiles.element} mb-8`}
+        onClick={handleOpenModal}
+        ref={dragRef}
+      >
+        {count !== 0 ? (
+          <Counter count={count} size="default" extraClass="m-1" />
+        ) : (
+          ""
+        )}
+        <img className="mb-1" src={item.image} alt={item.name} />
+        <div className={IngredientsStiles.price}>
+          <p className="text text_type_digits-default mb-1">{item.price}</p>
+          <CurrencyIcon type="primary" />
         </div>
-        <p className={`${IngredientsStiles.name} text text_type_main-default`}>
+        <p className={`${IngredientsStiles.title} text text_type_main-default`}>
           {item.name}
         </p>
-      </button>
-      {modal.visible && modals}
-    </>
+      </li>
+      {modal && (
+        <Modal onClose={handleCloseModal} setModal={setModal}>
+          {" "}
+          <IngredientDetails />
+        </Modal>
+      )}
+    </div>
   );
 }
 IngredientElement.propTypes = {
-  item: ingredientType,
+  item: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    id: PropTypes.string,
+  }).isRequired,
+  count: PropTypes.number.isRequired,
 };
-
 export default IngredientElement;
