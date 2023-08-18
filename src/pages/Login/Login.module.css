@@ -1,0 +1,17 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  align-items: center;
+}
+.btn {
+  max-width: 128px;
+}
+.link {
+  text-decoration: none;
+  color: #4c4cff;
+}

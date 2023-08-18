@@ -1,0 +1,24 @@
+.main {
+  display: flex;
+  position: fixed;
+  top: 35%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: 60px;
+}
+.link {
+  text-decoration: none;
+}
+.info {
+  max-width: 320px;
+  text-align: start;
+}
+.activeLink {
+  color: inherit;
+  text-decoration: none;
+}

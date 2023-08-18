@@ -8,6 +8,7 @@ import {
 import headerStiles from "./AppHeader.module.css";
 import Navigation from "./Navigation/Navigation";
 import PropTypes from "prop-types";
+import { NavLink } from "react-router-dom";
 
 //Компонент header
 function Header(props) {
@@ -19,12 +20,14 @@ function Header(props) {
           {/* Компонент Navigation */}
           <Navigation
             className="mr-5"
+            path={""}
             icon={BurgerIcon}
             textElement={props.headerData.map((el) => {
               return el.navText_constuctor;
             })}
           />
           <Navigation
+            path={""}
             icon={ListIcon}
             textElement={props.headerData.map((el) => {
               return el.navText_thread;
@@ -32,14 +35,14 @@ function Header(props) {
           />
         </nav>
 
-        <button className={headerStiles.profile_button}>
+        <NavLink className={headerStiles.profile_button} to="/profile">
           <ProfileIcon />
           <p className="pl-2 text text_type_main-default">
             {props.headerData.map((el) => {
               return el.profile;
             })}
           </p>
-        </button>
+        </NavLink>
       </div>
     </header>
   );
