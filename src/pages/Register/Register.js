@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import registerStyles from "../Login/Login.module.css";
 import { NavLink } from "react-router-dom";
+import { getRegister } from "../../services/actions/register";
 import {
   EmailInput,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch, useSelector } from "react-redux";
 export default function Register() {
+  const dispatch = useDispatch();
+
   const [login, setLogin] = React.useState("");
   const onChangeLogin = (e) => {
     setLogin(e.target.value);
@@ -19,6 +23,9 @@ export default function Register() {
   const [name, setName] = React.useState("");
   const onChangeName = (e) => {
     setName(e.target.value);
+  };
+  const onClick = () => {
+    dispatch(getRegister(login, password, name));
   };
 
   return (
@@ -46,6 +53,7 @@ export default function Register() {
         extraClass="mb-6"
       />
       <Button
+        onClick={onClick}
         htmlType="button"
         type="primary"
         size="medium"

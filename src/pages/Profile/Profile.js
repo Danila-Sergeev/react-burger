@@ -2,24 +2,30 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import profiledStyles from "./Profile.module.css";
 import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../../services/reducers/rootReducer";
 import {
   EmailInput,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 export default function Profile() {
-  const [login, setLogin] = React.useState("danilasergeev2003@icloud.com");
+  const login = useSelector((store) => store.register.email);
+  const password = useSelector((store) => store.register.password);
+  const name = useSelector((store) => store.register.name);
+  console.log(login);
+  /* const [login, setLogin] = React.useState("danilasergeev2003@icloud.com");
   const onChangeLogin = (e) => {
     setLogin(e.target.value);
-  };
-  const [password, setPassword] = React.useState("denchic12");
+  }; */
+  /*  const [password, setPassword] = React.useState("denchic12");
   const onChangePassword = (e) => {
     setPassword(e.target.value);
   };
   const [name, setName] = React.useState("Danila");
   const onChangeName = (e) => {
     setName(e.target.value);
-  };
+  }; */
 
   return (
     <div className={profiledStyles.main}>
@@ -62,7 +68,7 @@ export default function Profile() {
       </ul>
       <div>
         <EmailInput
-          onChange={onChangeName}
+          //onChange={onChangeName}
           value={name}
           name={"name"}
           placeholder="Имя"
@@ -70,7 +76,7 @@ export default function Profile() {
           extraClass=" mt-6"
         />
         <EmailInput
-          onChange={onChangeLogin}
+          // onChange={onChangeLogin}
           value={login}
           name={"email"}
           placeholder="Логин"
@@ -78,7 +84,7 @@ export default function Profile() {
           extraClass="mb-6 mt-6"
         />
         <PasswordInput
-          onChange={onChangePassword}
+          // onChange={onChangePassword}
           value={password}
           name={"password"}
           extraClass="mb-6"
