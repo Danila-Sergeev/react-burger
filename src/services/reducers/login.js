@@ -5,10 +5,11 @@ import {
 } from "../actions/login.js";
 
 const initialState = {
-  email: "",
-  password: "",
+  email: [],
+
   loginRequest: false,
   loginFailed: false,
+  loginSuccess: undefined,
 };
 
 export const loginReducer = (state = initialState, action) => {
@@ -22,14 +23,19 @@ export const loginReducer = (state = initialState, action) => {
     case GET_LOGIN_SUCCESS: {
       return {
         ...state,
-        email: action.email,
-        password: action.password,
+        email: action.data.user.email,
         loginFailed: false,
         loginRequest: false,
+        loginSuccess: action.data.success,
       };
     }
     case GET_LOGIN_FAILED: {
-      return { ...state, loginFailed: true, loginRequest: false };
+      return {
+        ...state,
+        loginFailed: true,
+        loginRequest: false,
+        loginSuccess: action.error.success,
+      };
     }
     default: {
       return state;

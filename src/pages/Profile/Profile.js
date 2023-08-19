@@ -10,22 +10,18 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 export default function Profile() {
-  const login = useSelector((store) => store.register.email);
-  const password = useSelector((store) => store.register.password);
-  const name = useSelector((store) => store.register.name);
-  console.log(login);
-  /* const [login, setLogin] = React.useState("danilasergeev2003@icloud.com");
+  const [login, setLogin] = React.useState("danilasergeev2003@icloud.com");
   const onChangeLogin = (e) => {
     setLogin(e.target.value);
-  }; */
-  /*  const [password, setPassword] = React.useState("denchic12");
+  };
+  const [password, setPassword] = React.useState("denchic12");
   const onChangePassword = (e) => {
     setPassword(e.target.value);
   };
   const [name, setName] = React.useState("Danila");
   const onChangeName = (e) => {
     setName(e.target.value);
-  }; */
+  };
 
   return (
     <div className={profiledStyles.main}>

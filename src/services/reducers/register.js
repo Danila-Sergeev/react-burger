@@ -5,10 +5,10 @@ import {
 } from "../actions/register";
 
 const initialState = {
-  email: "",
-  password: "",
+  email: [],
+  password: [],
 
-  name: "",
+  name: [],
   registerRequest: false,
   registerFailed: false,
 };
@@ -24,9 +24,8 @@ export const registerReducer = (state = initialState, action) => {
     case GET_REGISTER_SUCCESS: {
       return {
         ...state,
-        email: action.email,
-        password: action.password,
-        name: action.name,
+        email: action.data.user.email,
+        name: action.data.user.name,
         registerFailed: false,
         registerRequest: false,
       };

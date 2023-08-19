@@ -11,7 +11,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 export default function Register() {
   const dispatch = useDispatch();
-
+  const login1 = useSelector((store) => store.register.email);
+  console.log(login1);
   const [login, setLogin] = React.useState("");
   const onChangeLogin = (e) => {
     setLogin(e.target.value);

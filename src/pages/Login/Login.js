@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import loginStyles from "./Login.module.css";
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   EmailInput,
   PasswordInput,
@@ -10,11 +11,14 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { getLogin } from "../../services/actions/login";
 export default function ForgotPassword() {
+  const navigate = useNavigate();
+  function goToNewPage() {
+    navigate("/", { replace: false });
+  }
   const dispatch = useDispatch();
   const login1 = useSelector((store) => store.login.email);
-  const password1 = useSelector((store) => store.login.password);
-  console.log(login1);
-  console.log(password1);
+  const fail = useSelector((store) => store.login.loginSuccess);
+
   const [login, setLogin] = React.useState("");
   const onChangeLogin = (e) => {
     setLogin(e.target.value);
@@ -23,9 +27,19 @@ export default function ForgotPassword() {
   const onChangePassword = (e) => {
     setPassword(e.target.value);
   };
+  console.log(login);
+  console.log(password);
   const onClick = () => {
     dispatch(getLogin(login, password));
   };
+  console.log(login1);
+  console.log(fail);
+  useEffect(() => {
+    if (fail) {
+      goToNewPage();
+    }
+  }, [onClick]);
+
   return (
     <div className={loginStyles.main}>
       <h1 className="text text_type_main-large">Вход</h1>
