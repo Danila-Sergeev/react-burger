@@ -37,7 +37,7 @@ export function getRegister(email, password, name) {
         console.error(error);
         dispatch({
           type: GET_REGISTER_FAILED,
-          type: GET_REGISTER_SUCCESS,
+          error,
         });
       });
   };

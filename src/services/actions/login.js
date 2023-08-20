@@ -1,6 +1,7 @@
 export const GET_LOGIN_REQUEST = "GET_LOGIN_REQUEST";
 export const GET_LOGIN_SUCCESS = "GET_LOGIN_SUCCESS";
 export const GET_LOGIN_FAILED = "GET_LOGIN_FAILED";
+
 function login(email, password) {
   return fetch("https://norma.nomoreparties.space/api/auth/login", {
     method: "POST",

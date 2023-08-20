@@ -10,15 +10,17 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import { getLogin } from "../../services/actions/login";
-export default function ForgotPassword() {
+import { setCookie } from "../../utils/cookie";
+export default function Login() {
   const navigate = useNavigate();
   function goToNewPage() {
     navigate("/", { replace: false });
   }
   const dispatch = useDispatch();
-  const login1 = useSelector((store) => store.login.email);
-  const fail = useSelector((store) => store.login.loginSuccess);
-
+  const success = useSelector((store) => store.login.loginSuccess);
+  const token = useSelector((store) => store.login.token);
+  const reftoken = useSelector((store) => store.login.refreshToken);
+  console.log(reftoken);
   const [login, setLogin] = React.useState("");
   const onChangeLogin = (e) => {
     setLogin(e.target.value);
@@ -27,16 +29,16 @@ export default function ForgotPassword() {
   const onChangePassword = (e) => {
     setPassword(e.target.value);
   };
-  console.log(login);
-  console.log(password);
   const onClick = () => {
     dispatch(getLogin(login, password));
   };
-  console.log(login1);
-  console.log(fail);
   useEffect(() => {
-    if (fail) {
+    if (success) {
       goToNewPage();
+    }
+    if (token && reftoken) {
+      setCookie("token", token);
+      setCookie("reftoken", reftoken);
     }
   }, [onClick]);
 

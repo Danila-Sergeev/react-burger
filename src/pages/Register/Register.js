@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import registerStyles from "../Login/Login.module.css";
 import { NavLink } from "react-router-dom";
 import { getRegister } from "../../services/actions/register";
+import { useNavigate } from "react-router-dom";
 import {
   EmailInput,
   PasswordInput,
@@ -10,9 +11,12 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 export default function Register() {
+  const navigate = useNavigate();
+  function goToNewPage() {
+    navigate("/", { replace: false });
+  }
   const dispatch = useDispatch();
-  const login1 = useSelector((store) => store.register.email);
-  console.log(login1);
+  const success = useSelector((store) => store.register.registerSuccess);
   const [login, setLogin] = React.useState("");
   const onChangeLogin = (e) => {
     setLogin(e.target.value);
@@ -28,6 +32,11 @@ export default function Register() {
   const onClick = () => {
     dispatch(getRegister(login, password, name));
   };
+  useEffect(() => {
+    if (success) {
+      goToNewPage();
+    }
+  }, [onClick]);
 
   return (
     <div className={registerStyles.main}>

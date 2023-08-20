@@ -9,8 +9,10 @@ const initialState = {
   password: [],
 
   name: [],
+  errorMessage: "",
   registerRequest: false,
   registerFailed: false,
+  registerSuccess: undefined,
 };
 
 export const registerReducer = (state = initialState, action) => {
@@ -28,10 +30,17 @@ export const registerReducer = (state = initialState, action) => {
         name: action.data.user.name,
         registerFailed: false,
         registerRequest: false,
+        registerSuccess: action.data.success,
       };
     }
     case GET_REGISTER_FAILED: {
-      return { ...state, registerFailed: true, registerRequest: false };
+      return {
+        ...state,
+        registerFailed: true,
+        registerRequest: false,
+        errorMessage: action.error.message,
+        loginSuccess: action.error.success,
+      };
     }
     default: {
       return state;

@@ -3,13 +3,14 @@ import {
   GET_LOGIN_REQUEST,
   GET_LOGIN_SUCCESS,
 } from "../actions/login.js";
-
 const initialState = {
   email: [],
 
   loginRequest: false,
   loginFailed: false,
   loginSuccess: undefined,
+  token: [],
+  refreshToken: [],
 };
 
 export const loginReducer = (state = initialState, action) => {
@@ -27,8 +28,11 @@ export const loginReducer = (state = initialState, action) => {
         loginFailed: false,
         loginRequest: false,
         loginSuccess: action.data.success,
+        token: action.data.accessToken.split("Bearer ")[1],
+        refreshToken: action.data.refreshToken,
       };
     }
+
     case GET_LOGIN_FAILED: {
       return {
         ...state,

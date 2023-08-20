@@ -9,7 +9,14 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { getCookie } from "../../utils/cookie";
 export default function Profile() {
+  const token = useSelector((store) => store.login.token);
+  console.log(getCookie("token"));
+  console.log(getCookie("reftoken"));
+  console.log(document.cookie);
+  console.log(token);
+
   const [login, setLogin] = React.useState("danilasergeev2003@icloud.com");
   const onChangeLogin = (e) => {
     setLogin(e.target.value);
