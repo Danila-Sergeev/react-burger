@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import PropTypes from "prop-types";
 import profiledStyles from "./Profile.module.css";
 import { NavLink } from "react-router-dom";
@@ -10,26 +10,44 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { getCookie } from "../../utils/cookie";
+import { getUser, setUser } from "../../services/actions/user";
 export default function Profile() {
+  const dispatch = useDispatch();
+
+  const name = useSelector((store) => store.user.name);
+  const email = useSelector((store) => store.user.email);
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
+
   const token = useSelector((store) => store.login.token);
   console.log(getCookie("token"));
   console.log(getCookie("reftoken"));
   console.log(document.cookie);
   console.log(token);
 
-  const [login, setLogin] = React.useState("danilasergeev2003@icloud.com");
-  const onChangeLogin = (e) => {
-    setLogin(e.target.value);
-  };
   const [password, setPassword] = React.useState("denchic12");
   const onChangePassword = (e) => {
     setPassword(e.target.value);
   };
-  const [name, setName] = React.useState("Danila");
-  const onChangeName = (e) => {
-    setName(e.target.value);
-  };
 
+  const [newName, setNewName] = React.useState("");
+  const onChangeName = (e) => {
+    setNewName(e.target.value);
+  };
+  const [newEmail, setNewEmail] = React.useState("");
+  const onChangeEmail = (e) => {
+    setNewEmail(e.target.value);
+  };
+  const onClick = () => {
+    dispatch(setUser(newName, newEmail));
+  };
+  console.log(name);
+  console.log(newName);
+  useMemo(() => {
+    setNewEmail(email);
+    setNewName(name);
+  }, [name, email]);
   return (
     <div className={profiledStyles.main}>
       <ul className={profiledStyles.list}>
@@ -71,16 +89,16 @@ export default function Profile() {
       </ul>
       <div>
         <EmailInput
-          //onChange={onChangeName}
-          value={name}
+          onChange={onChangeName}
+          value={newName}
           name={"name"}
           placeholder="Имя"
           isIcon={true}
           extraClass=" mt-6"
         />
         <EmailInput
-          // onChange={onChangeLogin}
-          value={login}
+          onChange={onChangeEmail}
+          value={newEmail}
           name={"email"}
           placeholder="Логин"
           isIcon={true}
@@ -93,6 +111,14 @@ export default function Profile() {
           extraClass="mb-6"
           icon="EditIcon"
         />
+        <Button
+          onClick={onClick}
+          htmlType="button"
+          type="primary"
+          size="medium"
+        >
+          Сохранить
+        </Button>
       </div>
     </div>
   );
