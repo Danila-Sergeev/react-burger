@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import registerStyles from "../Login/Login.module.css";
+
 import { NavLink } from "react-router-dom";
 import { getRegister } from "../../services/actions/register";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +9,7 @@ import {
   EmailInput,
   PasswordInput,
   Button,
+  Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 export default function Register() {
@@ -41,14 +43,19 @@ export default function Register() {
   return (
     <div className={registerStyles.main}>
       <h1 className="text text_type_main-large">Регистрация</h1>
-      <EmailInput
+      <Input
+        type={"text"}
+        placeholder={"Имя"}
         onChange={onChangeName}
+        icon={"ProfileIcon"}
         value={name}
         name={"name"}
-        placeholder="Имя"
-        isIcon={false}
-        extraClass=" mt-6"
+        error={false}
+        errorText={"Ошибка"}
+        size={"default"}
+        extraClass="ml-1"
       />
+
       <EmailInput
         onChange={onChangeLogin}
         value={login}
@@ -62,14 +69,8 @@ export default function Register() {
         name={"password"}
         extraClass="mb-6"
       />
-      <Button
-        onClick={onClick}
-        htmlType="button"
-        type="primary"
-        size="medium"
-        extraClass={registerStyles.btn}
-      >
-        Войти
+      <Button onClick={onClick} htmlType="button" type="primary" size="medium">
+        Зарегистрироваться
       </Button>
       <p className="mt-20 text text_type_main-small">
         Уже зарегистрированы?{" "}

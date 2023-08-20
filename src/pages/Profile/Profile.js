@@ -8,6 +8,7 @@ import {
   EmailInput,
   PasswordInput,
   Button,
+  Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { getCookie } from "../../utils/cookie";
 import { getUser, setUser } from "../../services/actions/user";
@@ -48,6 +49,7 @@ export default function Profile() {
     setNewEmail(email);
     setNewName(name);
   }, [name, email]);
+
   return (
     <div className={profiledStyles.main}>
       <ul className={profiledStyles.list}>
@@ -88,13 +90,18 @@ export default function Profile() {
         </p>
       </ul>
       <div>
-        <EmailInput
+        <Input
+          type={"text"}
+          placeholder={"Имя"}
           onChange={onChangeName}
+          icon={"ProfileIcon"}
           value={newName}
           name={"name"}
-          placeholder="Имя"
-          isIcon={true}
-          extraClass=" mt-6"
+          error={false}
+          errorText={"Ошибка"}
+          size={"default"}
+          extraClass="ml-1"
+          disabled={false}
         />
         <EmailInput
           onChange={onChangeEmail}

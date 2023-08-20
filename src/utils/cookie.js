@@ -1,3 +1,4 @@
+import { useDispatch, useSelector } from "react-redux";
 export function getCookie(name) {
   const matches = document.cookie.match(
     new RegExp(
@@ -35,32 +36,17 @@ export function setCookie(name, value, props) {
 export function deleteCookie(name) {
   setCookie(name, null, { expires: -1 });
 }
-export const getRefreshCoocie = async () =>
-  await fetch("https://cosmic.nomoreparties.space/api/chat", {
-    method: "GET",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    headers: {
-      "Content-Type": "application/json",
-      // Отправляем токен и схему авторизации в заголовке при запросе данных
-      Authorization: "Bearer " + getCookie("token"),
-    },
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
-  });
 
 function setRefreshToken() {
+  let tok = getCookie("reftoken");
   return fetch("https://norma.nomoreparties.space/api/auth/token", {
     method: "POST",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    headers: { "Content-Type": "application/json" },
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
-      token: getCookie("reftoken"),
+      token: tok,
     }),
   }).then((res) =>
     res.ok ? res.json() : res.json().then((err) => Promise.reject(err))
@@ -68,7 +54,8 @@ function setRefreshToken() {
 }
 
 export const getNewToken = () => {
-  setRefreshToken.then((data) =>
-    setCookie("token", data.accessToken.split("Bearer ")[1])
-  );
+  console.log(getCookie("reftoken"));
+  return setRefreshToken();
 };
+/* let timerId = setInterval(() => getNewToken(), 20 * 600);
+ */

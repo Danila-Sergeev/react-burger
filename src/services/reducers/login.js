@@ -9,7 +9,7 @@ const initialState = {
   loginRequest: false,
   loginFailed: false,
   loginSuccess: undefined,
-  token: [],
+  token: "",
   refreshToken: [],
 };
 
