@@ -7,7 +7,9 @@ export function getCookie(name) {
         "=([^;]*)"
     )
   );
-  return matches ? decodeURIComponent(matches[1]) : undefined;
+  const cookieValue = matches ? decodeURIComponent(matches[1]) : undefined;
+
+  return cookieValue;
 }
 
 export function setCookie(name, value, props) {
@@ -44,9 +46,12 @@ function setRefreshToken() {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      Authorization:
+        "Bearer 3fab0d13ace4352aa1c12ef719648a33bc042215d568815f8b68631b0189015226d2ddd8ddf95962",
     },
     body: JSON.stringify({
-      token: tok,
+      token:
+        "3fab0d13ace4352aa1c12ef719648a33bc042215d568815f8b68631b0189015226d2ddd8ddf95962",
     }),
   }).then((res) =>
     res.ok ? res.json() : res.json().then((err) => Promise.reject(err))
@@ -57,5 +62,4 @@ export const getNewToken = () => {
   console.log(getCookie("reftoken"));
   return setRefreshToken();
 };
-/* let timerId = setInterval(() => getNewToken(), 20 * 600);
- */
+/* let timerId = setInterval(() => getNewToken(), 20 * 60); */

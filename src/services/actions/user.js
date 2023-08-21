@@ -1,11 +1,37 @@
-import { getCookie } from "../../utils/cookie";
+import { getCookie, deleteCookie } from "../../utils/cookie";
+import { fetchWithRefresh, checkResponse } from "../api";
 export const GET_USER_REQUEST = "GET_USER_REQUEST";
 export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
 export const GET_USER_FAILED = "GET_USER_FAILED";
+export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+export const LOGOUT_FAILED = "LOGOUT_FAILED";
+export const ISAUTH_CHECKED = "ISAUTH_CHECKED";
+export const ISAUTH_CHECKED_FAILD = "ISAUTH_CHECKED_FAILD";
+export const logoutRequest = () => ({
+  type: LOGOUT_REQUEST,
+});
 
-function fetchUser() {
-  const url = "https://norma.nomoreparties.space/api/auth/user";
-  return fetch(url, {
+export const logoutSuccess = () => ({
+  type: LOGOUT_SUCCESS,
+});
+
+export const logoutFailed = (err) => ({
+  type: LOGOUT_FAILED,
+  payload: err,
+});
+export const isAuthChecked = (isAuthenticated) => ({
+  type: ISAUTH_CHECKED,
+  payload: isAuthenticated,
+});
+
+export const isAuthFailed = (err) => ({
+  type: ISAUTH_CHECKED_FAILD,
+  payload: err,
+});
+
+async function fetchUser() {
+  return fetchWithRefresh("https://norma.nomoreparties.space/api/auth/user", {
     method: "GET",
     mode: "cors",
     cache: "no-cache",
@@ -17,7 +43,7 @@ function fetchUser() {
     },
     redirect: "follow",
     referrerPolicy: "no-referrer",
-  }).then((response) => Promise.all([response, response.json()]));
+  });
 }
 
 export function getUser() {
@@ -26,10 +52,8 @@ export function getUser() {
       type: GET_USER_REQUEST,
     });
     return fetchUser()
-      .then(([res, json]) => {
-        let data = json;
-        console.log(json);
-        if (res.ok) {
+      .then((data) => {
+        if (data.success) {
           dispatch({
             type: GET_USER_SUCCESS,
             data,
@@ -40,7 +64,7 @@ export function getUser() {
           });
         }
       })
-      .catch((error) => {
+      .catch((err) => {
         dispatch({
           type: GET_USER_FAILED,
         });
@@ -84,3 +108,50 @@ export function setUser(name, email) {
       });
   };
 }
+
+export const logoutApi = () => {
+  return async (dispatch) => {
+    try {
+      dispatch(logoutRequest());
+
+      const refreshToken = getCookie("reftoken");
+      if (!refreshToken) {
+        throw new Error("Refresh token not found");
+      }
+
+      const response = await fetch(
+        "https://norma.nomoreparties.space/api/auth/logout",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            token: refreshToken,
+          }),
+        }
+      );
+      const data = await checkResponse(response);
+
+      if (data.success) {
+        dispatch(logoutSuccess());
+        deleteCookie("reftoken");
+        deleteCookie("token");
+      } else {
+        throw new Error("Failed to logout");
+      }
+    } catch (err) {
+      dispatch(logoutFailed(err));
+    }
+  };
+};
+
+export const checkUserAuth = () => {
+  return function (dispatch) {
+    if (getCookie("token")) {
+      dispatch(isAuthChecked(true));
+    } else {
+      dispatch(isAuthChecked(false));
+    }
+  };
+};

@@ -21,12 +21,6 @@ export default function Profile() {
     dispatch(getUser());
   }, [dispatch]);
 
-  const token = useSelector((store) => store.login.token);
-  console.log(getCookie("token"));
-  console.log(getCookie("reftoken"));
-  console.log(document.cookie);
-  console.log(token);
-
   const [password, setPassword] = React.useState("denchic12");
   const onChangePassword = (e) => {
     setPassword(e.target.value);
@@ -43,8 +37,6 @@ export default function Profile() {
   const onClick = () => {
     dispatch(setUser(newName, newEmail));
   };
-  console.log(name);
-  console.log(newName);
   useMemo(() => {
     setNewEmail(email);
     setNewName(name);

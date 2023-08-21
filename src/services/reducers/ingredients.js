@@ -21,10 +21,11 @@ export const ingredientsReducer = (state = initialState, action) => {
       };
     }
     case GET_INGREDIENTS_SUCCESS: {
+      console.log(action);
       return {
         ...state,
         ingredientsFailed: false,
-        ingredients: action.ingredients,
+        ingredients: action.ingredients.data,
         ingredientsRequest: false,
       };
     }

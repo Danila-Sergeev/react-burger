@@ -7,7 +7,6 @@ import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-
 import { useDispatch, useSelector } from "react-redux";
 import { getIngredients } from "../../services/actions/Ingredients";
 
@@ -16,7 +15,9 @@ import Register from "../../pages/Register/Register";
 import ForgotPassword from "../../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../../pages/ResetPassword/ResetPassword";
 import Profile from "../../pages/Profile/Profile";
-
+import { getCookie, setCookie } from "../../utils/cookie";
+import ProtectedRouteElement from "../ProtectedRouteElement/ProtectedRouteElement";
+import PublicRouteElement from "../PublicRouteElement/PublicRouteElement";
 function App() {
   const [state, setState] = useState({
     headerData: [
@@ -49,14 +50,15 @@ function App() {
   }, [data, setData]);
   const [id, setId] = useState([]);
   const [order, setOrder] = useState(0);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const accessToken = getCookie("token");
+    const refreshToken = getCookie("reftoken");
 
-  /* Ссылка на API */
-
-  /* Асинхронная функция для получения данных с API
-
-  /*  useEffect(() => {
-    getData();
-  }, []); */
+    if (accessToken && refreshToken) {
+      dispatch({ type: "ISAUTH_CHECKED", payload: true });
+    }
+  }, [dispatch]);
 
   return (
     <div className={AppStyles.App}>
@@ -67,17 +69,38 @@ function App() {
           <Route
             path="/"
             element={
-              <DndProvider backend={HTML5Backend}>
-                <BurgerIngredients ingredientsData={state.ingredientsData} />
-                <BurgerConstructor />
-              </DndProvider>
+              <ProtectedRouteElement
+                element={
+                  <DndProvider backend={HTML5Backend}>
+                    <BurgerIngredients
+                      ingredientsData={state.ingredientsData}
+                    />
+                    <BurgerConstructor />
+                  </DndProvider>
+                }
+              />
             }
           ></Route>
-          <Route path="/profile" element={<Profile />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/register" element={<Register />}></Route>
-          <Route path="/forgot-password" element={<ForgotPassword />}></Route>
-          <Route path="/reset-password" element={<ResetPassword />}></Route>
+          <Route
+            path="/profile"
+            element={<ProtectedRouteElement element={<Profile />} />}
+          ></Route>
+          <Route
+            path="/login"
+            element={<PublicRouteElement element={<Login />} />}
+          ></Route>
+          <Route
+            path="/register"
+            element={<PublicRouteElement element={<Register />} />}
+          ></Route>
+          <Route
+            path="/forgot-password"
+            element={<PublicRouteElement element={<ForgotPassword />} />}
+          ></Route>
+          <Route
+            path="/reset-password"
+            element={<PublicRouteElement element={<ResetPassword />} />}
+          ></Route>
         </Routes>
       </main>
     </div>

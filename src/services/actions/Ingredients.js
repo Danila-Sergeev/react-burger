@@ -1,4 +1,5 @@
 import { getCookie } from "../../utils/cookie";
+import { fetchWithRefresh } from "../api";
 export const GET_INGREDIENTS_REQUEST = "GET_INGREDIENTS_REQUEST";
 export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";
 export const GET_INGREDIENTS_FAILED = "GET_INGREDIENTS_FAILED";
@@ -13,7 +14,7 @@ export const RESET_ORDER = "RESET_ORDER";
 
 function fetchIngredients() {
   const url = "https://norma.nomoreparties.space/api/ingredients";
-  return fetch(url, {
+  return fetchWithRefresh(url, {
     method: "GET",
     mode: "cors",
     cache: "no-cache",
@@ -25,20 +26,21 @@ function fetchIngredients() {
     },
     redirect: "follow",
     referrerPolicy: "no-referrer",
-  }).then((response) => Promise.all([response, response.json()]));
+  });
 }
 
 export function getIngredients() {
-  return function (dispatch) {
+  return async (dispatch) => {
     dispatch({
       type: GET_INGREDIENTS_REQUEST,
     });
     return fetchIngredients()
-      .then(([res, json]) => {
-        if (res.ok) {
+      .then((data) => {
+        if (data.success) {
+          console.log(data);
           dispatch({
             type: GET_INGREDIENTS_SUCCESS,
-            ingredients: json.data,
+            ingredients: data,
           });
         } else {
           dispatch({
