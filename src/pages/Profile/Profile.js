@@ -10,11 +10,13 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { getCookie } from "../../utils/cookie";
+import { getCookie, deleteCookie } from "../../utils/cookie";
 import { getUser, setUser } from "../../services/actions/user";
+import { logoutApi, isAuthChecked } from "../../services/actions/user";
+import { logoutStatus } from "../../services/actions/login";
+
 export default function Profile() {
   const dispatch = useDispatch();
-
   const name = useSelector((store) => store.user.name);
   const email = useSelector((store) => store.user.email);
   useEffect(() => {
@@ -36,6 +38,11 @@ export default function Profile() {
   };
   const onClick = () => {
     dispatch(setUser(newName, newEmail));
+  };
+  const onClickExit = () => {
+    dispatch(logoutStatus());
+    dispatch(isAuthChecked(false));
+    dispatch(logoutApi());
   };
   useMemo(() => {
     setNewEmail(email);
@@ -72,6 +79,7 @@ export default function Profile() {
               ? `${profiledStyles.activeLink} mb-4 text text_type_main-medium`
               : `mb-4 text  text_type_main-medium text_color_inactive ${profiledStyles.link}`
           }
+          onClick={onClickExit}
         >
           Выход
         </NavLink>

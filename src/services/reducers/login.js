@@ -2,15 +2,16 @@ import {
   GET_LOGIN_FAILED,
   GET_LOGIN_REQUEST,
   GET_LOGIN_SUCCESS,
+  LOGOUT,
 } from "../actions/login.js";
 const initialState = {
   email: [],
-
+  status: false,
   loginRequest: false,
   loginFailed: false,
   loginSuccess: undefined,
   token: "",
-  refreshToken: [],
+  refreshToken: "",
 };
 
 export const loginReducer = (state = initialState, action) => {
@@ -24,6 +25,7 @@ export const loginReducer = (state = initialState, action) => {
     case GET_LOGIN_SUCCESS: {
       return {
         ...state,
+        status: true,
         email: action.data.user.email,
         loginFailed: false,
         loginRequest: false,
@@ -35,12 +37,20 @@ export const loginReducer = (state = initialState, action) => {
 
     case GET_LOGIN_FAILED: {
       return {
+        status: false,
         ...state,
         loginFailed: true,
         loginRequest: false,
         loginSuccess: action.error.success,
       };
     }
+    case LOGOUT:
+      return {
+        ...state,
+        status: false,
+        token: "",
+        refreshToken: "",
+      };
     default: {
       return state;
     }

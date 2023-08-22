@@ -1,6 +1,10 @@
 export const GET_LOGIN_REQUEST = "GET_LOGIN_REQUEST";
 export const GET_LOGIN_SUCCESS = "GET_LOGIN_SUCCESS";
 export const GET_LOGIN_FAILED = "GET_LOGIN_FAILED";
+export const LOGOUT = "LOGOUT";
+export const logoutStatus = () => ({
+  type: LOGOUT,
+});
 
 function login(email, password) {
   return fetch("https://norma.nomoreparties.space/api/auth/login", {
@@ -27,7 +31,6 @@ export function getLogin(email, password, name) {
     });
     return login(email, password)
       .then((data) => {
-        console.log(data);
         dispatch({
           type: GET_LOGIN_SUCCESS,
           data,

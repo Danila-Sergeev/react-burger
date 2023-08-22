@@ -37,7 +37,6 @@ export function getIngredients() {
     return fetchIngredients()
       .then((data) => {
         if (data.success) {
-          console.log(data);
           dispatch({
             type: GET_INGREDIENTS_SUCCESS,
             ingredients: data,

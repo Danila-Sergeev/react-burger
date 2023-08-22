@@ -11,25 +11,31 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { getLogin } from "../../services/actions/login";
 import { setCookie } from "../../utils/cookie";
+import { Navigate, useLocation } from "react-router-dom";
+import { checkUserAuth } from "../../services/actions/user";
+
 export default function Login() {
   const navigate = useNavigate();
   function goToNewPage() {
     navigate("/", { replace: false });
   }
   const dispatch = useDispatch();
+  const loginDetails = useSelector((store) => store.login);
   const success = useSelector((store) => store.login.loginSuccess);
   const token = useSelector((store) => store.login.token);
   const reftoken = useSelector((store) => store.login.refreshToken);
-  console.log(reftoken);
+  const isLoggedIn = useSelector((store) => store.user.isAuthChecked);
+  const location = useLocation();
   const [login, setLogin] = React.useState("");
   const onChangeLogin = (e) => {
     setLogin(e.target.value);
   };
   const [password, setPassword] = React.useState("");
+
   const onChangePassword = (e) => {
     setPassword(e.target.value);
   };
-  const onClick = () => {
+  /*  const onClick = () => {
     dispatch(getLogin(login, password));
   };
   useEffect(() => {
@@ -40,10 +46,30 @@ export default function Login() {
       setCookie("token", token);
       setCookie("reftoken", reftoken);
     }
-  }, [onClick]);
+  }, [onClick]); */
+
+  function onSubmitFrom(e) {
+    e.preventDefault();
+    dispatch(getLogin(login, password));
+  }
+
+  /* useEffect(() => {
+    if (location.state && location.state.from) {
+      setFromPath(location.state.from);
+    }
+  }, [location.state]); */
+  useEffect(() => {
+    if (loginDetails.status) {
+      setCookie("token", token);
+      setCookie("reftoken", reftoken);
+      setPassword("");
+      setLogin("");
+      dispatch(checkUserAuth());
+    }
+  }, [loginDetails, isLoggedIn, location.state]);
 
   return (
-    <div className={loginStyles.main}>
+    <form onSubmit={onSubmitFrom} className={loginStyles.main}>
       <h1 className="text text_type_main-large">Вход</h1>
       <EmailInput
         onChange={onChangeLogin}
@@ -59,8 +85,7 @@ export default function Login() {
         extraClass="mb-6"
       />
       <Button
-        onClick={onClick}
-        htmlType="button"
+        htmlType="submit"
         type="primary"
         size="medium"
         extraClass={loginStyles.btn}
@@ -79,6 +104,6 @@ export default function Login() {
           Восстановить пароль
         </NavLink>
       </p>
-    </div>
+    </form>
   );
 }

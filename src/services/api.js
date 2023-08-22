@@ -59,17 +59,12 @@ async function refreshTokenApi() {
 export const fetchWithRefresh = async (url, options) => {
   try {
     const res = await fetch(url, options);
-    console.log(res);
 
     const response = await checkResponse(res);
-    console.log(response);
+
     return response;
   } catch (err) {
-    console.log(err);
-    console.log(options.headers.Authorization);
-    console.log(getCookie("token"));
     if (err.message === "jwt expired") {
-      console.log("eee");
       const refreshData = await refreshTokenApi();
       localStorage.setItem("refreshToken", refreshData.refreshToken);
       localStorage.setItem("accessToken", refreshData.accessToken);
