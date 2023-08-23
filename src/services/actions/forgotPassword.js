@@ -1,13 +1,9 @@
-export const GET_LOGIN_REQUEST = "GET_LOGIN_REQUEST";
-export const GET_LOGIN_SUCCESS = "GET_LOGIN_SUCCESS";
-export const GET_LOGIN_FAILED = "GET_LOGIN_FAILED";
-export const LOGOUT = "LOGOUT";
-export const logoutStatus = () => ({
-  type: LOGOUT,
-});
+export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
+export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
+export const FORGOT_PASSWORD_FAILED = "FORGOT_PASSWORD_FAILED";
 
-function login(email, password) {
-  return fetch("https://norma.nomoreparties.space/api/auth/login", {
+function forgotPassword(email) {
+  return fetch("https://norma.nomoreparties.space/api/password-reset", {
     method: "POST",
     mode: "cors",
     cache: "no-cache",
@@ -17,28 +13,28 @@ function login(email, password) {
     referrerPolicy: "no-referrer",
     body: JSON.stringify({
       email: email,
-      password: password,
     }),
   }).then((res) =>
     res.ok ? res.json() : res.json().then((err) => Promise.reject(err))
   );
 }
 
-export function getLogin(email, password, name) {
+export function getPassword(email) {
   return function (dispatch) {
     dispatch({
-      type: GET_LOGIN_REQUEST,
+      type: FORGOT_PASSWORD_REQUEST,
     });
-    return login(email, password)
+    return forgotPassword(email)
       .then((data) => {
+        console.log(data);
         dispatch({
-          type: GET_LOGIN_SUCCESS,
+          type: FORGOT_PASSWORD_SUCCESS,
           data,
         });
       })
       .catch((error) => {
         dispatch({
-          type: GET_LOGIN_FAILED,
+          type: FORGOT_PASSWORD_FAILED,
           error,
         });
       });

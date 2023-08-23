@@ -19,15 +19,17 @@ function Header(props) {
         <nav className={`${headerStiles.navigation_elements}`}>
           {/* Компонент Navigation */}
           <Navigation
-            className="mr-5"
+            className={"mr-5"}
             path={""}
             icon={BurgerIcon}
             textElement={props.headerData.map((el) => {
               return el.navText_constuctor;
             })}
-          />
+          >
+            hjhhjhjhjhjhjhj
+          </Navigation>
           <Navigation
-            path={""}
+            path={"listOrders"}
             icon={ListIcon}
             textElement={props.headerData.map((el) => {
               return el.navText_thread;
@@ -35,14 +37,21 @@ function Header(props) {
           />
         </nav>
 
-        <NavLink className={headerStiles.profile_button} to="/profile">
+        <Navigation
+          path={"profile"}
+          icon={ProfileIcon}
+          textElement={props.headerData.map((el) => {
+            return el.profile;
+          })}
+        />
+        {/* <NavLink className={headerStiles.profile_button} to="/profile">
           <ProfileIcon />
           <p className="pl-2 text text_type_main-default">
             {props.headerData.map((el) => {
               return el.profile;
             })}
           </p>
-        </NavLink>
+        </NavLink> */}
       </div>
     </header>
   );

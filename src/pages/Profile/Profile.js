@@ -36,8 +36,12 @@ export default function Profile() {
   const onChangeEmail = (e) => {
     setNewEmail(e.target.value);
   };
-  const onClick = () => {
+  const onSaveClick = () => {
     dispatch(setUser(newName, newEmail));
+  };
+  const onCancelClick = () => {
+    setNewEmail(email);
+    setNewName(name);
   };
   const onClickExit = () => {
     dispatch(logoutStatus());
@@ -89,7 +93,7 @@ export default function Profile() {
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </ul>
-      <div>
+      <div className={profiledStyles.inputBox}>
         <Input
           type={"text"}
           placeholder={"Имя"}
@@ -118,14 +122,24 @@ export default function Profile() {
           extraClass="mb-6"
           icon="EditIcon"
         />
-        <Button
-          onClick={onClick}
-          htmlType="button"
-          type="primary"
-          size="medium"
-        >
-          Сохранить
-        </Button>
+        <div className={profiledStyles.btnBox}>
+          <Button
+            htmlType="button"
+            type="secondary"
+            size="medium"
+            onClick={onCancelClick}
+          >
+            Отмена
+          </Button>
+          <Button
+            onClick={onSaveClick}
+            htmlType="button"
+            type="primary"
+            size="medium"
+          >
+            Сохранить
+          </Button>
+        </div>
       </div>
     </div>
   );

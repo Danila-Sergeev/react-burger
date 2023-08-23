@@ -1,22 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import forgotPasswordStylesUsual from "../Login/Login.module.css";
 import resetPasswordStyles from "./ResetPassword.module.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   EmailInput,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch, useSelector } from "react-redux";
+import { getResetPassword } from "../../services/actions/resetPassword";
 export default function ResetPassword() {
+  const success = useSelector((store) => store.resetPassword.success);
+  const dispatch = useDispatch();
   const [code, setCode] = React.useState("");
   const onChangeCode = (e) => {
     setCode(e.target.value);
   };
+  const navigate = useNavigate();
+  function goToNewPage() {
+    navigate("/login", { replace: false });
+  }
   const [password, setPassword] = React.useState("");
   const onChangePassword = (e) => {
     setPassword(e.target.value);
   };
+
+  const onClick = () => {
+    dispatch(getResetPassword(password, code));
+  };
+  useEffect(() => {
+    if (success) {
+      goToNewPage();
+    }
+  }, [onClick]);
   return (
     <div className={forgotPasswordStylesUsual.main}>
       <h1 className="text text_type_main-large">восстановить пароль</h1>
@@ -36,6 +53,7 @@ export default function ResetPassword() {
         extraClass=" mt-6 mb-6"
       />
       <Button
+        onClick={onClick}
         htmlType="button"
         type="primary"
         size="medium"
