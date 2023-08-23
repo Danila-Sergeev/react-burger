@@ -4,6 +4,7 @@ import ingredientType from "../../utils/types";
 import { useSelector } from "react-redux";
 function IngredientDetails() {
   const item = useSelector((store) => store.ingredient.currentIngredient);
+
   return (
     <div className={IngredientStyle.mainBox}>
       <h1 className={`${IngredientStyle.title} text text_type_main-large`}>

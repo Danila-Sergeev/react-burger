@@ -1,7 +1,7 @@
 import AppStyles from "./App.module.css";
 import React, { useReducer, useState, useEffect, useMemo } from "react";
 import Header from "../AppHeader/AppHeader";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 
@@ -18,6 +18,8 @@ import Profile from "../../pages/Profile/Profile";
 import { getCookie, setCookie } from "../../utils/cookie";
 import ProtectedRouteElement from "../ProtectedRouteElement/ProtectedRouteElement";
 import PublicRouteElement from "../PublicRouteElement/PublicRouteElement";
+import Modal from "../Modal/Modal";
+import IngredientsDetails from "../IngredientDetails/IngredientDetails";
 function App() {
   const [state, setState] = useState({
     headerData: [
@@ -59,13 +61,20 @@ function App() {
       dispatch({ type: "ISAUTH_CHECKED", payload: true });
     }
   }, [dispatch]);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const background = location.state && location.state.background;
+  const handleModalClose = () => {
+    // Возвращаемся к предыдущему пути при закрытии модалки
+    navigate(-1);
+  };
 
   return (
     <div className={AppStyles.App}>
       <Header headerData={state.headerData} />
 
       <main className={AppStyles.main_section}>
-        <Routes>
+        <Routes location={background || location}>
           <Route
             path="/"
             element={
@@ -81,6 +90,10 @@ function App() {
               />
             }
           ></Route>
+          <Route
+            path="/ingredients/:ingredientId"
+            element={<IngredientsDetails />}
+          />
           <Route
             path="/profile"
             element={<ProtectedRouteElement element={<Profile />} />}
@@ -102,6 +115,18 @@ function App() {
             element={<PublicRouteElement element={<ResetPassword />} />}
           ></Route>
         </Routes>
+        {background && (
+          <Routes>
+            <Route
+              path="/ingredients/:ingredientId"
+              element={
+                <Modal onClose={handleModalClose}>
+                  <IngredientsDetails />
+                </Modal>
+              }
+            />
+          </Routes>
+        )}
       </main>
     </div>
   );
