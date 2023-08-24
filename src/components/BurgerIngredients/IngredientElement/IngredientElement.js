@@ -34,14 +34,7 @@ function IngredientElement(props) {
   const [modal, setModal] = useState(false);
 
   /*  Обработчики открытия/закрытия попапа */
-  const handleOpenModal = () => {
-    setModal(true);
-    setData(item);
-  };
-  const handleCloseModal = () => {
-    setModal(false);
-    deleteData();
-  };
+
   const location = useLocation();
 
   const ingredientId = item["_id"];
@@ -66,11 +59,7 @@ function IngredientElement(props) {
       className={IngredientsStiles.link}
     >
       <div>
-        <li
-          className={`${IngredientsStiles.element} mb-8`}
-          onClick={handleOpenModal}
-          ref={dragRef}
-        >
+        <li className={`${IngredientsStiles.element} mb-8`} ref={dragRef}>
           {count !== 0 ? (
             <Counter count={count} size="default" extraClass="m-1" />
           ) : (

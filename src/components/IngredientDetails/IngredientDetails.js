@@ -1,13 +1,37 @@
 import IngredientStyle from "./IngredientDetails.module.css";
 import PropTypes from "prop-types";
 import ingredientType from "../../utils/types";
-import { useSelector } from "react-redux";
-function IngredientDetails() {
-  const item = useSelector((store) => store.ingredient.currentIngredient);
+import { useSelector, useDispatch } from "react-redux";
+import { useParams, useMatch } from "react-router-dom";
+import { useEffect } from "react";
+import { getIngredients } from "../../services/actions/Ingredients";
+function IngredientDetails(props) {
+  //const item = useSelector((store) => store.ingredient.currentIngredient);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, []);
+
+  const allIngredients = useSelector((store) => store.ingredients.ingredients);
+  const { ingredientId } = useParams();
+
+  const item = allIngredients.find(
+    (ingredient) => ingredient._id === ingredientId
+  );
+
+  if (!item) {
+    return null;
+  }
 
   return (
     <div className={IngredientStyle.mainBox}>
-      <h1 className={`${IngredientStyle.title} text text_type_main-large`}>
+      <h1
+        className={
+          props.fule
+            ? `${IngredientStyle.titleFule} text text_type_main-large`
+            : `${IngredientStyle.title} text text_type_main-large`
+        }
+      >
         Детали ингредиента
       </h1>
       <img className="mt-25" src={item.image_large} alt={item.name}></img>

@@ -19,7 +19,9 @@ import { getCookie, setCookie } from "../../utils/cookie";
 import ProtectedRouteElement from "../ProtectedRouteElement/ProtectedRouteElement";
 import PublicRouteElement from "../PublicRouteElement/PublicRouteElement";
 import Modal from "../Modal/Modal";
-import IngredientsDetails from "../IngredientDetails/IngredientDetails";
+import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import { NotFoundPage } from "../../pages/notFoundPage/notFoundPage";
+import { HomePage } from "../../pages/HomePage/HomePage";
 function App() {
   const [state, setState] = useState({
     headerData: [
@@ -77,25 +79,15 @@ function App() {
         <Routes location={background || location}>
           <Route
             path="/"
-            element={
-              <ProtectedRouteElement
-                element={
-                  <DndProvider backend={HTML5Backend}>
-                    <BurgerIngredients
-                      ingredientsData={state.ingredientsData}
-                    />
-                    <BurgerConstructor />
-                  </DndProvider>
-                }
-              />
-            }
+            element={<HomePage ingredientsData={state.ingredientsData} />}
           ></Route>
+
           <Route
             path="/ingredients/:ingredientId"
-            element={<IngredientsDetails />}
+            element={<IngredientDetails fule={true} />}
           />
           <Route
-            path="/profile"
+            path="/profile/*"
             element={<ProtectedRouteElement element={<Profile />} />}
           ></Route>
           <Route
@@ -114,20 +106,21 @@ function App() {
             path="/reset-password"
             element={<PublicRouteElement element={<ResetPassword />} />}
           ></Route>
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
-        {background && (
-          <Routes>
-            <Route
-              path="/ingredients/:ingredientId"
-              element={
-                <Modal onClose={handleModalClose}>
-                  <IngredientsDetails />
-                </Modal>
-              }
-            />
-          </Routes>
-        )}
       </main>
+      {background && (
+        <Routes>
+          <Route
+            path="/ingredients/:ingredientId"
+            element={
+              <Modal onClose={handleModalClose}>
+                <IngredientDetails fule={false} />
+              </Modal>
+            }
+          />
+        </Routes>
+      )}
     </div>
   );
 }
