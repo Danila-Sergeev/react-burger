@@ -3,29 +3,27 @@ import PropTypes from "prop-types";
 import forgotPasswordStylesUsual from "../Login/Login.module.css";
 import forgotPasswordStyles from "./ForgotPassword.module.css";
 import { NavLink, useNavigate } from "react-router-dom";
+import { getPassword } from "../../services/actions/forgotPassword";
+import { useDispatch, useSelector } from "react-redux";
 import {
   EmailInput,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { getPassword } from "../../services/actions/forgotPassword";
-import { useDispatch, useSelector } from "react-redux";
 export default function ForgotPassword() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const success = useSelector((store) => store.forgotPassword.success);
   const [login, setLogin] = React.useState("");
   const onChangeLogin = (e) => {
     setLogin(e.target.value);
   };
-  const navigate = useNavigate();
-  function goToNewPage() {
-    navigate("/reset-password", { replace: false });
-  }
-
-  console.log(login);
   const onClick = () => {
     dispatch(getPassword(login));
   };
+  function goToNewPage() {
+    navigate("/reset-password", { replace: false });
+  }
   useEffect(() => {
     if (success) {
       goToNewPage();

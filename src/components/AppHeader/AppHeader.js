@@ -1,16 +1,14 @@
 import React from "react";
+import headerStiles from "./AppHeader.module.css";
+import Navigation from "./Navigation/Navigation";
+import PropTypes from "prop-types";
 import {
   BurgerIcon,
   ListIcon,
   Logo,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import headerStiles from "./AppHeader.module.css";
-import Navigation from "./Navigation/Navigation";
-import PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
 
-//Компонент header
 function Header(props) {
   return (
     <header className={`${headerStiles.header}`}>
@@ -44,14 +42,6 @@ function Header(props) {
             return el.profile;
           })}
         />
-        {/* <NavLink className={headerStiles.profile_button} to="/profile">
-          <ProfileIcon />
-          <p className="pl-2 text text_type_main-default">
-            {props.headerData.map((el) => {
-              return el.profile;
-            })}
-          </p>
-        </NavLink> */}
       </div>
     </header>
   );

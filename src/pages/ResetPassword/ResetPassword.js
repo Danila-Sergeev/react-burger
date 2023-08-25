@@ -3,32 +3,31 @@ import PropTypes from "prop-types";
 import forgotPasswordStylesUsual from "../Login/Login.module.css";
 import resetPasswordStyles from "./ResetPassword.module.css";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getResetPassword } from "../../services/actions/resetPassword";
 import {
   EmailInput,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
-import { getResetPassword } from "../../services/actions/resetPassword";
 export default function ResetPassword() {
-  const success = useSelector((store) => store.resetPassword.success);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const success = useSelector((store) => store.resetPassword.success);
   const [code, setCode] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const onChangeCode = (e) => {
     setCode(e.target.value);
   };
-  const navigate = useNavigate();
-  function goToNewPage() {
-    navigate("/login", { replace: false });
-  }
-  const [password, setPassword] = React.useState("");
   const onChangePassword = (e) => {
     setPassword(e.target.value);
   };
-
   const onClick = () => {
     dispatch(getResetPassword(password, code));
   };
+  function goToNewPage() {
+    navigate("/login", { replace: false });
+  }
   useEffect(() => {
     if (success) {
       goToNewPage();

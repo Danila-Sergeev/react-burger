@@ -1,39 +1,38 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import registerStyles from "../Login/Login.module.css";
-
 import { NavLink } from "react-router-dom";
 import { getRegister } from "../../services/actions/register";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
   EmailInput,
   PasswordInput,
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
 export default function Register() {
   const navigate = useNavigate();
-  function goToNewPage() {
-    navigate("/", { replace: false });
-  }
   const dispatch = useDispatch();
   const success = useSelector((store) => store.register.registerSuccess);
   const [login, setLogin] = React.useState("");
+  const [name, setName] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const onChangeLogin = (e) => {
     setLogin(e.target.value);
   };
-  const [password, setPassword] = React.useState("");
   const onChangePassword = (e) => {
     setPassword(e.target.value);
   };
-  const [name, setName] = React.useState("");
   const onChangeName = (e) => {
     setName(e.target.value);
   };
   const onClick = () => {
     dispatch(getRegister(login, password, name));
   };
+  function goToNewPage() {
+    navigate("/", { replace: false });
+  }
   useEffect(() => {
     if (success) {
       goToNewPage();

@@ -3,61 +3,39 @@ import PropTypes from "prop-types";
 import loginStyles from "./Login.module.css";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getLogin } from "../../services/actions/login";
+import { setCookie } from "../../utils/cookie";
+import { useLocation } from "react-router-dom";
+import { checkUserAuth } from "../../services/actions/user";
 import {
   EmailInput,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
-import { getLogin } from "../../services/actions/login";
-import { setCookie } from "../../utils/cookie";
-import { Navigate, useLocation } from "react-router-dom";
-import { checkUserAuth } from "../../services/actions/user";
-
 export default function Login() {
   const navigate = useNavigate();
   function goToNewPage() {
     navigate("/", { replace: false });
   }
   const dispatch = useDispatch();
+  const location = useLocation();
   const loginDetails = useSelector((store) => store.login);
-  const success = useSelector((store) => store.login.loginSuccess);
   const token = useSelector((store) => store.login.token);
   const reftoken = useSelector((store) => store.login.refreshToken);
   const isLoggedIn = useSelector((store) => store.user.isAuthChecked);
-  const location = useLocation();
+  const [password, setPassword] = React.useState("");
   const [login, setLogin] = React.useState("");
   const onChangeLogin = (e) => {
     setLogin(e.target.value);
   };
-  const [password, setPassword] = React.useState("");
-
   const onChangePassword = (e) => {
     setPassword(e.target.value);
   };
-  /*  const onClick = () => {
-    dispatch(getLogin(login, password));
-  };
-  useEffect(() => {
-    if (success) {
-      goToNewPage();
-    }
-    if (token && reftoken) {
-      setCookie("token", token);
-      setCookie("reftoken", reftoken);
-    }
-  }, [onClick]); */
-
   function onSubmitFrom(e) {
     e.preventDefault();
     dispatch(getLogin(login, password));
   }
-
-  /* useEffect(() => {
-    if (location.state && location.state.from) {
-      setFromPath(location.state.from);
-    }
-  }, [location.state]); */
   useEffect(() => {
     if (loginDetails.status) {
       setCookie("token", token);
