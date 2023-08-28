@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { BURGER_API_URL } from "./constants";
 export function getCookie(name) {
   const matches = document.cookie.match(
     new RegExp(
@@ -38,28 +38,3 @@ export function setCookie(name, value, props) {
 export function deleteCookie(name) {
   setCookie(name, null, { expires: -1 });
 }
-
-function setRefreshToken() {
-  let tok = getCookie("reftoken");
-  return fetch("https://norma.nomoreparties.space/api/auth/token", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization:
-        "Bearer 3fab0d13ace4352aa1c12ef719648a33bc042215d568815f8b68631b0189015226d2ddd8ddf95962",
-    },
-    body: JSON.stringify({
-      token:
-        "3fab0d13ace4352aa1c12ef719648a33bc042215d568815f8b68631b0189015226d2ddd8ddf95962",
-    }),
-  }).then((res) =>
-    res.ok ? res.json() : res.json().then((err) => Promise.reject(err))
-  );
-}
-
-export const getNewToken = () => {
-  console.log(getCookie("reftoken"));
-  return setRefreshToken();
-};
-/* let timerId = setInterval(() => getNewToken(), 20 * 60); */

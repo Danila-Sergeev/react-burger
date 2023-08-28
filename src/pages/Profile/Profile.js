@@ -7,7 +7,7 @@ import { NotFoundPage } from "../notFoundPage/notFoundPage";
 import { getUser, setUser } from "../../services/actions/user";
 import { logoutApi, isAuthChecked } from "../../services/actions/user";
 import { logoutStatus } from "../../services/actions/login";
-import { CustomNavLink } from "../../utils/hoc";
+import { CustomNavLink, useForm } from "../../utils/hoc";
 import {
   EmailInput,
   PasswordInput,
@@ -18,30 +18,27 @@ export default function Profile() {
   const dispatch = useDispatch();
   const name = useSelector((store) => store.user.name);
   const email = useSelector((store) => store.user.email);
-  const [password, setPassword] = React.useState("denchic12");
-  const [newName, setNewName] = React.useState("");
-  const [newEmail, setNewEmail] = React.useState("");
 
   let { "*": subpath } = useParams();
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
 
-  const onChangePassword = (e) => {
-    setPassword(e.target.value);
-  };
-  const onChangeName = (e) => {
-    setNewName(e.target.value);
-  };
-  const onChangeEmail = (e) => {
-    setNewEmail(e.target.value);
-  };
+  const { values, handleChange, setValues } = useForm({
+    email: "",
+    password: "",
+    name: "",
+  });
+
   const onSaveClick = () => {
-    dispatch(setUser(newName, newEmail));
+    dispatch(setUser(values.name, values.email));
   };
   const onCancelClick = () => {
-    setNewEmail(email);
-    setNewName(name);
+    setValues({
+      email: email,
+      name: name,
+      password: "denchic12",
+    });
   };
   const onClickExit = () => {
     dispatch(logoutStatus());
@@ -49,8 +46,7 @@ export default function Profile() {
     dispatch(logoutApi());
   };
   useMemo(() => {
-    setNewEmail(email);
-    setNewName(name);
+    setValues({ email: email, password: "denchic12", name: name });
   }, [name, email]);
 
   return (
@@ -90,9 +86,9 @@ export default function Profile() {
             <Input
               type={"text"}
               placeholder={"Имя"}
-              onChange={onChangeName}
+              onChange={handleChange}
               icon={"ProfileIcon"}
-              value={newName}
+              value={values.name}
               name={"name"}
               error={false}
               errorText={"Ошибка"}
@@ -101,16 +97,16 @@ export default function Profile() {
               disabled={false}
             />
             <EmailInput
-              onChange={onChangeEmail}
-              value={newEmail}
+              onChange={handleChange}
+              value={values.email}
               name={"email"}
               placeholder="Логин"
               isIcon={true}
               extraClass="mb-6 mt-6"
             />
             <PasswordInput
-              onChange={onChangePassword}
-              value={password}
+              onChange={handleChange}
+              value={values.password}
               name={"password"}
               extraClass="mb-6"
               icon="EditIcon"

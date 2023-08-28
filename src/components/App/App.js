@@ -15,6 +15,8 @@ import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { NotFoundPage } from "../../pages/notFoundPage/notFoundPage";
 import { HomePage } from "../../pages/HomePage/HomePage";
+import { getIngredients } from "../../services/actions/Ingredients";
+import { ISAUTH_CHECKED } from "../../services/actions/user";
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -28,24 +30,17 @@ function App() {
         navText_thread: "Лента заказов",
       },
     ],
-    ingredientsData: [
-      {
-        title: "Соберите бургер",
-        firstNavText: "Булки",
-        secNavText: "Соусы",
-        thrdNavText: "Начинки",
-        frstElement: "Булки",
-        sndElement: "Соусы",
-        thrdElement: "Начинки",
-      },
-    ],
   });
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, []);
+
   /* Обработчик состояния данных с API */
   useEffect(() => {
     const accessToken = getCookie("token");
     const refreshToken = getCookie("reftoken");
     if (accessToken && refreshToken) {
-      dispatch({ type: "ISAUTH_CHECKED", payload: true });
+      dispatch({ type: ISAUTH_CHECKED, payload: true });
     }
   }, [dispatch]);
   const handleModalClose = () => {
@@ -58,10 +53,7 @@ function App() {
       <Header headerData={state.headerData} />
       <main className={AppStyles.main_section}>
         <Routes location={background || location}>
-          <Route
-            path="/"
-            element={<HomePage ingredientsData={state.ingredientsData} />}
-          ></Route>
+          <Route path="/" element={<HomePage />}></Route>
 
           <Route
             path="/ingredients/:ingredientId"

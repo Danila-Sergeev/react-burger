@@ -9,7 +9,7 @@ export const refreshToken = () => {
   if (!refreshToken) {
     throw new Error("Refresh token is invalid");
   }
-  return fetch("https://norma.nomoreparties.space/api/auth/token", {
+  return fetch(`${BURGER_API_URL}/auth/token`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
@@ -37,10 +37,7 @@ async function refreshTokenApi() {
     }),
   };
 
-  const response = await fetch(
-    "https://norma.nomoreparties.space/api/auth/token",
-    requestOptions
-  );
+  const response = await fetch(`${BURGER_API_URL}/auth/token`, requestOptions);
   if (!response.ok) {
     throw new Error("Failed to refresh token.");
   }

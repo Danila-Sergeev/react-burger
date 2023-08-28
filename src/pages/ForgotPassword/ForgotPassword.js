@@ -10,16 +10,16 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useForm } from "../../utils/hoc";
 export default function ForgotPassword() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const success = useSelector((store) => store.forgotPassword.success);
-  const [login, setLogin] = React.useState("");
-  const onChangeLogin = (e) => {
-    setLogin(e.target.value);
-  };
+  const { values, handleChange, setValues } = useForm({
+    email: "",
+  });
   const onClick = () => {
-    dispatch(getPassword(login));
+    dispatch(getPassword(values.email));
   };
   function goToNewPage() {
     navigate("/reset-password", { replace: false });
@@ -33,8 +33,8 @@ export default function ForgotPassword() {
     <div className={forgotPasswordStylesUsual.main}>
       <h1 className="text text_type_main-large">Восстановление пароля</h1>
       <EmailInput
-        onChange={onChangeLogin}
-        value={login}
+        onChange={handleChange}
+        value={values.email}
         name={"email"}
         isIcon={false}
         placeholder="Укажите e-mail"

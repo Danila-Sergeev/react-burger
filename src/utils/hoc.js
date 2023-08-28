@@ -1,5 +1,6 @@
 import { NavLink, useMatch } from "react-router-dom";
 import styles from "../pages/Profile/Profile.module.css";
+import { useState } from "react";
 
 export function CustomNavLink({ to, activeClass, children, ...props }) {
   const match = useMatch(to);
@@ -11,4 +12,13 @@ export function CustomNavLink({ to, activeClass, children, ...props }) {
       {children}
     </NavLink>
   );
+}
+export function useForm(inputValues = {}) {
+  const [values, setValues] = useState(inputValues);
+
+  const handleChange = (event) => {
+    const { value, name } = event.target;
+    setValues({ ...values, [name]: value });
+  };
+  return { values, handleChange, setValues };
 }

@@ -9,21 +9,21 @@ import {
   EmailInput,
   PasswordInput,
   Button,
+  Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useForm } from "../../utils/hoc";
 export default function ResetPassword() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const success = useSelector((store) => store.resetPassword.success);
-  const [code, setCode] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const onChangeCode = (e) => {
-    setCode(e.target.value);
-  };
-  const onChangePassword = (e) => {
-    setPassword(e.target.value);
-  };
+
+  const { values, handleChange, setValues } = useForm({
+    password: "",
+    code: "",
+  });
+
   const onClick = () => {
-    dispatch(getResetPassword(password, code));
+    dispatch(getResetPassword(values.password, values.code));
   };
   function goToNewPage() {
     navigate("/login", { replace: false });
@@ -38,18 +38,23 @@ export default function ResetPassword() {
       <h1 className="text text_type_main-large">восстановить пароль</h1>
       <PasswordInput
         placeholder="введите новый пароль"
-        onChange={onChangePassword}
-        value={password}
+        onChange={handleChange}
+        value={values.password}
         name={"password"}
         extraClass="mt-6"
       />
-      <EmailInput
-        onChange={onChangeCode}
-        value={code}
+      <Input
+        type={"text"}
+        placeholder={"Введите код из письма"}
+        onChange={handleChange}
+        icon={""}
+        value={values.code}
         name={"code"}
-        placeholder="Введите код из письма"
-        isIcon={true}
+        error={false}
+        errorText={"Ошибка"}
+        size={"default"}
         extraClass=" mt-6 mb-6"
+        disabled={false}
       />
       <Button
         onClick={onClick}

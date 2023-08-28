@@ -7,10 +7,6 @@ import { useEffect } from "react";
 import { getIngredients } from "../../services/actions/Ingredients";
 function IngredientDetails(props) {
   //const item = useSelector((store) => store.ingredient.currentIngredient);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, []);
 
   const allIngredients = useSelector((store) => store.ingredients.ingredients);
   const { ingredientId } = useParams();

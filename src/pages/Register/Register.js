@@ -11,24 +11,20 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useForm } from "../../utils/hoc";
 export default function Register() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const success = useSelector((store) => store.register.registerSuccess);
-  const [login, setLogin] = React.useState("");
-  const [name, setName] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const onChangeLogin = (e) => {
-    setLogin(e.target.value);
-  };
-  const onChangePassword = (e) => {
-    setPassword(e.target.value);
-  };
-  const onChangeName = (e) => {
-    setName(e.target.value);
-  };
+
+  const { values, handleChange, setValues } = useForm({
+    email: "",
+    password: "",
+    name: "",
+  });
+
   const onClick = () => {
-    dispatch(getRegister(login, password, name));
+    dispatch(getRegister(values.email, values.password, values.name));
   };
   function goToNewPage() {
     navigate("/", { replace: false });
@@ -45,9 +41,9 @@ export default function Register() {
       <Input
         type={"text"}
         placeholder={"Имя"}
-        onChange={onChangeName}
+        onChange={handleChange}
         icon={"ProfileIcon"}
-        value={name}
+        value={values.name}
         name={"name"}
         error={false}
         errorText={"Ошибка"}
@@ -56,15 +52,15 @@ export default function Register() {
       />
 
       <EmailInput
-        onChange={onChangeLogin}
-        value={login}
+        onChange={handleChange}
+        value={values.email}
         name={"email"}
         isIcon={false}
         extraClass="mb-6 mt-6"
       />
       <PasswordInput
-        onChange={onChangePassword}
-        value={password}
+        onChange={handleChange}
+        value={values.password}
         name={"password"}
         extraClass="mb-6"
       />
