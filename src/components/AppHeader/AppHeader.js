@@ -23,11 +23,9 @@ function Header(props) {
             textElement={props.headerData.map((el) => {
               return el.navText_constuctor;
             })}
-          >
-            hjhhjhjhjhjhjhj
-          </Navigation>
+          ></Navigation>
           <Navigation
-            path={"listOrders"}
+            path={"feed"}
             icon={ListIcon}
             textElement={props.headerData.map((el) => {
               return el.navText_thread;

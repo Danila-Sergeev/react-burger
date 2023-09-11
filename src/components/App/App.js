@@ -17,6 +17,9 @@ import { NotFoundPage } from "../../pages/notFoundPage/notFoundPage";
 import { HomePage } from "../../pages/HomePage/HomePage";
 import { getIngredients } from "../../services/actions/Ingredients";
 import { ISAUTH_CHECKED } from "../../services/actions/user";
+import { FeedPage } from "../../pages/Feed/Feed";
+import { ModalOrderPage } from "../../pages/ModalOrderPage/ModalOrderPage";
+import { UserOrdersPage } from "../../pages/UserOrdersPage/UserOrdersPage";
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -59,10 +62,16 @@ function App() {
             path="/ingredients/:ingredientId"
             element={<IngredientDetails fule={true} />}
           />
+          <Route path="/feed/:id" element={<ModalOrderPage />} />
+          <Route path="/orders/:id" element={<ModalOrderPage />} />
+          <Route path="/feed" element={<FeedPage />} />
+
           <Route
             path="/profile/*"
             element={<ProtectedRouteElement element={<Profile />} />}
-          ></Route>
+          >
+            <Route path="orders" element={<UserOrdersPage />} />
+          </Route>
           <Route
             path="/login"
             element={<PublicRouteElement element={<Login />} />}
