@@ -10,7 +10,6 @@ import FeedOrder from "../FeedOrder/FeedOrder";
 const OrderFeed = () => {
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.ws.data?.orders);
-  console.log(orders);
 
   useEffect(() => {
     dispatch(startWsConnection("orders"));

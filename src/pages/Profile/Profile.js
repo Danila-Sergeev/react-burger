@@ -14,6 +14,7 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { UserOrdersPage } from "../UserOrdersPage/UserOrdersPage";
 export default function Profile() {
   const dispatch = useDispatch();
   const name = useSelector((store) => store.user.name);
@@ -50,7 +51,7 @@ export default function Profile() {
   }, [name, email]);
 
   return (
-    <div className={profiledStyles.main}>
+    <section className={profiledStyles.main}>
       <ul className={profiledStyles.list}>
         <CustomNavLink
           to="/profile"
@@ -80,7 +81,7 @@ export default function Profile() {
 
       <div className={profiledStyles.inputBox}>
         {subpath === "orders" ? (
-          <NotFoundPage />
+          <UserOrdersPage />
         ) : (
           <form>
             <Input
@@ -132,6 +133,6 @@ export default function Profile() {
           </form>
         )}
       </div>
-    </div>
+    </section>
   );
 }

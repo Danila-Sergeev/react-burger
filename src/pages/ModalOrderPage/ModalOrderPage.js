@@ -16,6 +16,7 @@ export const ModalOrderPage = () => {
   const navigate = useNavigate();
   const background = location.state?.background;
   const { id } = useParams();
+  console.log(id);
   const accessToken = getCookie("accessToken");
   const userOrders = useSelector((state) => state.wsUser.data?.orders);
   const orders = useSelector((state) => state.ws.data?.orders);
@@ -33,10 +34,6 @@ export const ModalOrderPage = () => {
       dispatch(wsConnectionClosed());
     };
   }, [dispatch, location, accessToken]);
-
-  if (!order) {
-    return <div>Loading...</div>;
-  }
 
   const closeModal = () => {
     navigate(-1);
