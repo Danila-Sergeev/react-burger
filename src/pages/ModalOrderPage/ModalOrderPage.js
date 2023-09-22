@@ -9,7 +9,7 @@ import {
   wsConnectionClosed,
 } from "../../services/actions/WebSocket";
 import { getCookie } from "../../utils/cookie";
-
+console.log("fdfd");
 export const ModalOrderPage = () => {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -19,6 +19,7 @@ export const ModalOrderPage = () => {
   console.log(id);
   const accessToken = getCookie("accessToken");
   const userOrders = useSelector((state) => state.wsUser.data?.orders);
+  console.log(userOrders);
   const orders = useSelector((state) => state.ws.data?.orders);
 
   const ordersList = location.pathname.includes("feed") ? orders : userOrders;

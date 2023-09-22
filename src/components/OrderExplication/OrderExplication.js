@@ -13,11 +13,13 @@ const OrderExplication = React.memo(({ inModal }) => {
   const { id } = useParams();
   const location = useLocation();
   const userOrders = useSelector((state) => state.wsUser.data?.orders);
+  console.log(userOrders);
   const orders = useSelector((state) => state.ws.data?.orders);
-
+  console.log(orders);
   const ordersList = location.pathname.includes("feed") ? orders : userOrders;
+  console.log(ordersList);
   const order = ordersList?.find((order) => order._id === id);
-
+  console.log(order);
   let containerStyles = inModal
     ? styles.container
     : `${styles.container} ${styles.page}`;

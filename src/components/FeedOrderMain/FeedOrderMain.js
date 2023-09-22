@@ -13,6 +13,7 @@ const OrderFeed = () => {
 
   useEffect(() => {
     dispatch(startWsConnection("orders"));
+
     return () => {
       dispatch(wsConnectionClosed());
     };

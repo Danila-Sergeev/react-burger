@@ -62,9 +62,9 @@ function App() {
             path="/ingredients/:ingredientId"
             element={<IngredientDetails fule={true} />}
           />
-          <Route path="/feed/:id" element={<ModalOrderPage />} />
           <Route path="/orders/:id" element={<ModalOrderPage />} />
           <Route path="/feed" element={<FeedPage />} />
+          <Route path="/feed/:id" element={<ModalOrderPage />} />
 
           <Route
             path="/profile/*"
