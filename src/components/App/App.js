@@ -1,8 +1,14 @@
 import AppStyles from "./App.module.css";
 import React, { useState, useEffect } from "react";
 import Header from "../AppHeader/AppHeader";
-import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import {
+  Routes,
+  Route,
+  useLocation,
+  useParams,
+  useNavigate,
+} from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Login from "../../pages/Login/Login";
 import Register from "../../pages/Register/Register";
 import ForgotPassword from "../../pages/ForgotPassword/ForgotPassword";
@@ -18,13 +24,15 @@ import { HomePage } from "../../pages/HomePage/HomePage";
 import { getIngredients } from "../../services/actions/Ingredients";
 import { ISAUTH_CHECKED } from "../../services/actions/user";
 import { FeedPage } from "../../pages/Feed/Feed";
-import { ModalOrderPage } from "../../pages/ModalOrderPage/ModalOrderPage";
 import { UserOrdersPage } from "../../pages/UserOrdersPage/UserOrdersPage";
+
+import OrderExplication from "../OrderExplication/OrderExplication";
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const background = location.state && location.state.background;
+  const { id } = useParams();
   const [state, setState] = useState({
     headerData: [
       {
@@ -62,9 +70,15 @@ function App() {
             path="/ingredients/:id"
             element={<IngredientDetails fule={true} />}
           />
-          <Route path="/orders/:id" element={<ModalOrderPage />} />
+          <Route
+            path="/orders/:id"
+            element={<OrderExplication order={id} inModal={false} />}
+          />
           <Route path="/feed" element={<FeedPage />} />
-          <Route path="/feed/:id" element={<ModalOrderPage />} />
+          <Route
+            path="/feed/:id"
+            element={<OrderExplication order={id} inModal={false} />}
+          />
 
           <Route
             path="/profile/*"
@@ -92,8 +106,24 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
-      {/* {background && (
+      {background && (
         <Routes>
+          <Route
+            path="/orders/:id"
+            element={
+              <Modal onClose={handleModalClose}>
+                <OrderExplication order={id} inModal={true} />
+              </Modal>
+            }
+          />
+          <Route
+            path="/feed/:id"
+            element={
+              <Modal onClose={handleModalClose}>
+                <OrderExplication order={id} inModal={true} />
+              </Modal>
+            }
+          />
           <Route
             path="/ingredients/:ingredientId"
             element={
@@ -103,7 +133,7 @@ function App() {
             }
           />
         </Routes>
-      )} */}
+      )}
     </div>
   );
 }

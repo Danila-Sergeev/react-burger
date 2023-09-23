@@ -1,43 +1,41 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import {
   startWsConnection,
   wsConnectionClosed,
 } from "../../services/actions/WebSocket";
-import { useEffect } from "react";
-import { getCookie } from "../../utils/cookie";
 import { formatDate } from "../../utils/constants";
 import OrderImage from "..//OrderImage/OrderImage";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./OrderExplication.module.css";
 import { useParams, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
+import { getCookie } from "../../utils/cookie";
 
 const OrderExplication = React.memo(({ inModal }) => {
   const dispatch = useDispatch();
   const accessToken = getCookie("token");
-
+  dispatch(startWsConnection("user", accessToken));
   const ingredientList = useSelector((state) => state.ingredients.ingredients);
   const { id } = useParams();
   const location = useLocation();
-  const userOrders = useSelector((state) => state.wsUser.data);
-  console.log(userOrders);
+  const userOrders = useSelector((state) => state.wsUser.data?.orders);
   const orders = useSelector((state) => state.ws.data?.orders);
-  console.log(orders);
   const ordersList = location.pathname.includes("feed") ? orders : userOrders;
-  console.log(ordersList);
   const order = ordersList?.find((order) => order._id === id);
-  console.log(order);
+
   useEffect(() => {
-    dispatch(startWsConnection("orders"));
-    console.log(userOrders);
-    console.log("fdfdfdf");
+    if (location.pathname.includes("/orders")) {
+      dispatch(startWsConnection("user", accessToken));
+    } else {
+      dispatch(startWsConnection("orders"));
+    }
     return () => {
       dispatch(wsConnectionClosed());
-      console.log("fdfdfdf");
     };
-  }, []);
+  }, [dispatch, location, accessToken]);
+
   let containerStyles = inModal
     ? styles.container
     : `${styles.container} ${styles.page}`;
@@ -88,7 +86,9 @@ const OrderExplication = React.memo(({ inModal }) => {
   });
   let statusText = "";
   let statusStyle = "";
-
+  if (!order) {
+    return <div>Loading...</div>;
+  }
   if (order.status === "done") {
     statusText = "Выполнен";
     statusStyle = styles.done;

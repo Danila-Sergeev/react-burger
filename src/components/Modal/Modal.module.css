@@ -3,10 +3,11 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 1000000;
 }
 .modal {
   transform: 0.3s;
-  width: 720px;
+  width: 600px;
   margin: auto;
   display: flex;
   align-items: center;
@@ -27,4 +28,5 @@
   top: 50px;
   right: 30px;
   transition: 0.5s;
+  z-index: 100000;
 }
