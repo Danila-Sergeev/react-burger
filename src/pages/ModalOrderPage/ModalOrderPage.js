@@ -9,7 +9,6 @@ import {
   wsConnectionClosed,
 } from "../../services/actions/WebSocket";
 import { getCookie } from "../../utils/cookie";
-console.log("fdfd");
 export const ModalOrderPage = () => {
   const location = useLocation();
   const dispatch = useDispatch();

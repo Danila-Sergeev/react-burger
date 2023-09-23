@@ -35,6 +35,8 @@ export function getIngredients() {
   };
 }
 export function getOrder(itemsId) {
+  const accessTokenWithBearer = getCookie("token");
+  const accessToken = accessTokenWithBearer.replace("Bearer ", "");
   return async (dispatch) => {
     dispatch({
       type: GET_ORDER_REQUEST,
@@ -42,7 +44,10 @@ export function getOrder(itemsId) {
     try {
       const res = await request(`/orders`, fetch, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
         body: JSON.stringify({
           ingredients: itemsId,
         }),

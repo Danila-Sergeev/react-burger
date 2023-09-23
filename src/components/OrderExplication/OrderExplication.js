@@ -1,6 +1,12 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useMemo } from "react";
+import {
+  startWsConnection,
+  wsConnectionClosed,
+} from "../../services/actions/WebSocket";
+import { useEffect } from "react";
+import { getCookie } from "../../utils/cookie";
 import { formatDate } from "../../utils/constants";
 import OrderImage from "..//OrderImage/OrderImage";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -9,10 +15,13 @@ import { useParams, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const OrderExplication = React.memo(({ inModal }) => {
+  const dispatch = useDispatch();
+  const accessToken = getCookie("token");
+
   const ingredientList = useSelector((state) => state.ingredients.ingredients);
   const { id } = useParams();
   const location = useLocation();
-  const userOrders = useSelector((state) => state.wsUser.data?.orders);
+  const userOrders = useSelector((state) => state.wsUser.data);
   console.log(userOrders);
   const orders = useSelector((state) => state.ws.data?.orders);
   console.log(orders);
@@ -20,6 +29,15 @@ const OrderExplication = React.memo(({ inModal }) => {
   console.log(ordersList);
   const order = ordersList?.find((order) => order._id === id);
   console.log(order);
+  useEffect(() => {
+    dispatch(startWsConnection("orders"));
+    console.log(userOrders);
+    console.log("fdfdfdf");
+    return () => {
+      dispatch(wsConnectionClosed());
+      console.log("fdfdfdf");
+    };
+  }, []);
   let containerStyles = inModal
     ? styles.container
     : `${styles.container} ${styles.page}`;

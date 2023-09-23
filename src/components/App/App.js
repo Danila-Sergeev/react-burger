@@ -59,7 +59,7 @@ function App() {
           <Route path="/" element={<HomePage />}></Route>
 
           <Route
-            path="/ingredients/:ingredientId"
+            path="/ingredients/:id"
             element={<IngredientDetails fule={true} />}
           />
           <Route path="/orders/:id" element={<ModalOrderPage />} />
@@ -92,7 +92,7 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
-      {background && (
+      {/* {background && (
         <Routes>
           <Route
             path="/ingredients/:ingredientId"
@@ -103,7 +103,7 @@ function App() {
             }
           />
         </Routes>
-      )}
+      )} */}
     </div>
   );
 }

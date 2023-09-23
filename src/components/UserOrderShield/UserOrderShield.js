@@ -12,9 +12,9 @@ const UserOrderShield = React.memo(({ order }) => {
   const ingredientList = useSelector((state) => state.ingredients.ingredients);
   const navigate = useNavigate();
   const location = useLocation();
-  const match = useMatch("/feed/:id");
+  const match = useMatch("/orders/:id");
   const { id } = match?.params || {};
-
+  console.log(id);
   let totalPrice = 0;
 
   const ingredients = order.ingredients;
