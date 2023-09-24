@@ -6,13 +6,14 @@ import {
   wsConnectionClosed,
 } from "../../services/actions/WebSocket";
 import FeedOrder from "../FeedOrder/FeedOrder";
+import { wsUrl } from "../../utils/constants";
 
 const OrderFeed = () => {
   const dispatch = useDispatch();
-  const orders = useSelector((state) => state.ws.data?.orders);
-  useEffect(() => {
-    dispatch(startWsConnection("orders"));
+  const { orders, total, totalToday } = useSelector((state) => state.ws);
 
+  useEffect(() => {
+    dispatch(startWsConnection(`${wsUrl}/all`));
     return () => {
       dispatch(wsConnectionClosed());
     };

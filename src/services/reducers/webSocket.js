@@ -6,98 +6,43 @@ import {
   WS_CONNECTION_CLOSED,
   CLEAR_WS_DATA,
 } from "../actions/WebSocket";
-const initialWsState = {
-  connected: false,
-  data: null,
-  error: null,
+const initialState = {
+  wsConnected: false,
+  orders: [],
+  total: 0,
+  totalToday: 0,
+  error: false,
+  errMessage: null,
 };
 
-export const wsReducer = (state = initialWsState, action) => {
+export const wsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case WS_CONNECTION_START:
-      return {
-        ...state,
-        connected: false,
-      };
     case WS_CONNECTION_SUCCESS:
       return {
         ...state,
-        connected: true,
+        error: undefined,
+        wsConnected: true,
       };
     case WS_CONNECTION_ERROR:
       return {
         ...state,
-        connected: false,
-        error: action.payload,
+        error: true,
+        errMessage: action.payload,
+        wsConnected: false,
       };
-    case WS_GET_DATA:
-      if (action.serverType === "orders") {
-        return {
-          ...state,
-          data: action.payload,
-          error: null,
-        };
-      } else {
-        return state;
-      }
     case WS_CONNECTION_CLOSED:
       return {
         ...state,
-        connected: false,
-      };
-    case CLEAR_WS_DATA:
-      return {
-        ...state,
-        data: null,
-      };
-    default:
-      return state;
-  }
-};
-
-const initialWsUserState = {
-  connected: false,
-  data: null,
-  error: null,
-};
-
-export const wsUserReducer = (state = initialWsUserState, action) => {
-  switch (action.type) {
-    case WS_CONNECTION_START:
-      return {
-        ...state,
-        connected: false,
-      };
-    case WS_CONNECTION_SUCCESS:
-      return {
-        ...state,
-        connected: true,
-      };
-    case WS_CONNECTION_ERROR:
-      return {
-        ...state,
-        connected: false,
-        error: action.payload,
+        error: undefined,
+        wsConnected: false,
       };
     case WS_GET_DATA:
-      if (action.serverType === "user") {
-        return {
-          ...state,
-          data: action.payload,
-          error: null,
-        };
-      } else {
-        return state;
-      }
-    case WS_CONNECTION_CLOSED:
       return {
         ...state,
-        connected: false,
-      };
-    case CLEAR_WS_DATA:
-      return {
-        ...state,
-        data: null,
+        error: undefined,
+        orders: action.payload.orders,
+        total: action.payload.total,
+        totalToday: action.payload.totalToday,
       };
     default:
       return state;

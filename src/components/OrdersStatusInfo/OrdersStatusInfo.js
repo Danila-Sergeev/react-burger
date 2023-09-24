@@ -1,22 +1,21 @@
 import styles from "./OrdersStatusInfo.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import {
   startWsConnection,
   wsConnectionClosed,
 } from "../../services/actions/WebSocket";
+import { wsUrl } from "../../utils/constants";
 
 const OrderStatusInfo = () => {
   const dispatch = useDispatch();
-  const orders = useSelector((state) => state.ws.data);
-  const total = orders ? orders.total : null;
-  const totalToday = orders ? orders.totalToday : null;
+  const { orders, total, totalToday } = useSelector((state) => state.ws);
 
   const [newOrdersReady, setNewOrdersReady] = useState([]);
   const [newOrdersInProgress, setNewOrdersInProgress] = useState([]);
 
   useEffect(() => {
-    dispatch(startWsConnection("orders"));
+    dispatch(startWsConnection(`${wsUrl}/all`));
     return () => {
       dispatch(wsConnectionClosed());
     };
@@ -48,6 +47,26 @@ const OrderStatusInfo = () => {
     return result;
   }
 
+  const { doneList, preparingList } = useMemo(() => {
+    return orders.reduce(
+      (count, element) => {
+        switch (element.status) {
+          case "done":
+            count.doneList.push(element.number);
+            break;
+          case "pending":
+            count.preparingList.push(element.number);
+            break;
+          case "created":
+            count.preparingList.push(element.number);
+            break;
+        }
+        return count;
+      },
+      { doneList: [], preparingList: [] }
+    );
+  }, [orders]);
+
   const readyChunks = chunkArray(newOrdersReady, 10);
   const inProgressChunks = chunkArray(newOrdersInProgress, 10);
 
@@ -57,40 +76,28 @@ const OrderStatusInfo = () => {
         <li className={styles.container}>
           <div className={styles.status__box}>
             <h3 className="text text_type_main-medium mb-6">Готовы:</h3>
-            <div className={styles.column__container}>
-              {readyChunks.map((chunk, index) => (
-                <ul key={index} className={styles.column}>
-                  {chunk.map((order) => {
-                    return (
-                      <li
-                        className={`${styles.status__ready} text text_type_digits-default`}
-                        key={order._id}
-                      >
-                        {order.number}
-                      </li>
-                    );
-                  })}
-                </ul>
-              ))}
+            <div
+              className={
+                "text text_type_digits-default " + styles.column__container
+              }
+            >
+              {doneList.map((item, index) => {
+                return (
+                  <div className={styles.counts_active} key={index}>
+                    {item}
+                  </div>
+                );
+              })}
             </div>
           </div>
           <div className={styles.status__box}>
             <h3 className="text text_type_main-medium mb-6">В работе:</h3>
             <div className={styles.column__container}>
-              {inProgressChunks.map((chunk, key) => (
-                <ul key={key} className={styles.column}>
-                  {chunk.map((order) => {
-                    return (
-                      <li
-                        className="text text_type_digits-default"
-                        key={order._id}
-                      >
-                        {order.number}
-                      </li>
-                    );
-                  })}
-                </ul>
-              ))}
+              <ul className={styles.column}>
+                {preparingList.map((item, index) => {
+                  return <li key={index}>{item}</li>;
+                })}
+              </ul>
             </div>
           </div>
         </li>

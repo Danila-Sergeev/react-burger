@@ -20,5 +20,4 @@ export const rootReducer = combineReducers({
   forgotPassword: forgotPasswordReducer,
   resetPassword: resetPasswordReducer,
   ws: wsReducer,
-  wsUser: wsUserReducer,
 });

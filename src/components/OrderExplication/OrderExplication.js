@@ -5,7 +5,7 @@ import {
   startWsConnection,
   wsConnectionClosed,
 } from "../../services/actions/WebSocket";
-import { formatDate } from "../../utils/constants";
+import { formatDate, wsUrl } from "../../utils/constants";
 import OrderImage from "..//OrderImage/OrderImage";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./OrderExplication.module.css";
@@ -16,20 +16,18 @@ import { getCookie } from "../../utils/cookie";
 const OrderExplication = React.memo(({ inModal }) => {
   const dispatch = useDispatch();
   const accessToken = getCookie("token");
-  dispatch(startWsConnection("user", accessToken));
   const ingredientList = useSelector((state) => state.ingredients.ingredients);
   const { id } = useParams();
   const location = useLocation();
-  const userOrders = useSelector((state) => state.wsUser.data?.orders);
-  const orders = useSelector((state) => state.ws.data?.orders);
-  const ordersList = location.pathname.includes("feed") ? orders : userOrders;
-  const order = ordersList?.find((order) => order._id === id);
+  const orders = useSelector((state) => state.ws.orders);
+
+  const order = orders?.find((order) => order._id === id);
 
   useEffect(() => {
     if (location.pathname.includes("/orders")) {
-      dispatch(startWsConnection("user", accessToken));
+      dispatch(startWsConnection(`${wsUrl}?token=${accessToken}`));
     } else {
-      dispatch(startWsConnection("orders"));
+      dispatch(startWsConnection(`${wsUrl}/all`));
     }
     return () => {
       dispatch(wsConnectionClosed());
@@ -53,8 +51,6 @@ const OrderExplication = React.memo(({ inModal }) => {
         ingredientCounts[ingredientId] = 1;
       }
     });
-  } else {
-    console.warn("Order ingredients are undefined");
   }
 
   const ingredientsMarkup = useMemo(() => {

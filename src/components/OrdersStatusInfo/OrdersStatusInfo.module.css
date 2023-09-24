@@ -19,13 +19,16 @@
 }
 
 .column__container {
-  box-sizing: border-box;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 20px;
+  flex-direction: column;
+  gap: 8px;
+  height: 226px;
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  list-style: none;
+  overflow-y: hidden;
+  color: #00cccc;
 }
 
 .column {

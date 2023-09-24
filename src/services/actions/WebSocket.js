@@ -6,37 +6,18 @@ export const WS_CONNECTION_CLOSED = "WS_CONNECTION_CLOSED";
 export const WS_SEND_DATA = "WS_SEND_DATA";
 export const CLEAR_WS_DATA = "CLEAR_WS_DATA";
 
-export const startWsConnection = (serverType, accessToken, callback) => ({
+export const startWsConnection = (url) => ({
   type: WS_CONNECTION_START,
-  payload: { serverType, accessToken, callback },
+  payload: url,
 });
 
-export const wsConnectionSuccess = (event) => ({
-  type: WS_CONNECTION_SUCCESS,
-  payload: event,
-});
+export const wsConnectionSuccess = () => ({ type: WS_CONNECTION_SUCCESS });
 
-export const wsConnectionError = (event) => ({
-  type: WS_CONNECTION_ERROR,
-  payload: event,
-});
+export const wsConnectionError = () => ({ type: WS_CONNECTION_ERROR });
 
-export const wsGetData = (data, serverType) => ({
+export const wsConnectionClosed = () => ({ type: WS_CONNECTION_CLOSED });
+
+export const wsGetMessage = (message) => ({
   type: WS_GET_DATA,
-  payload: data,
-  serverType,
-});
-
-export const wsConnectionClosed = (event) => ({
-  type: WS_CONNECTION_CLOSED,
-  payload: event,
-});
-
-export const wsSendData = (data) => ({
-  type: WS_SEND_DATA,
-  payload: data,
-});
-
-export const clearWsData = () => ({
-  type: CLEAR_WS_DATA,
+  payload: message,
 });
