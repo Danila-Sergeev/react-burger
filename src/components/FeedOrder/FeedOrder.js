@@ -2,7 +2,7 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import styles from "./FeedOrder.module.css";
 import React from "react";
 import { useSelector } from "react-redux";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { formatDate } from "../../utils/constants";
 import { useNavigate, useMatch, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -12,7 +12,7 @@ const FeedOrder = ({ order }) => {
   let totalPrice = 0;
   const navigate = useNavigate();
   const location = useLocation();
-  const match = useMatch("/feed/:id");
+  const match = useMatch("/orders/:id");
   const { id } = match?.params || {};
   const ingredients = order.ingredients;
   const ingredientCounts = {};
@@ -52,6 +52,7 @@ const FeedOrder = ({ order }) => {
       });
     }
   };
+
   return (
     <div className={styles.container} onClick={handleClick}>
       <div className={styles.upper__box}>

@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useMemo, useEffect } from "react";
+import { useMemo, useEffect, useMatch } from "react";
 import {
   startWsConnection,
   wsConnectionClosed,
@@ -9,12 +9,13 @@ import { formatDate, wsUrl } from "../../utils/constants";
 import OrderImage from "..//OrderImage/OrderImage";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./OrderExplication.module.css";
-import { useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { getCookie } from "../../utils/cookie";
 
 const OrderExplication = React.memo(({ inModal }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const accessToken = getCookie("token");
   const ingredientList = useSelector((state) => state.ingredients.ingredients);
   const { id } = useParams();
@@ -33,11 +34,9 @@ const OrderExplication = React.memo(({ inModal }) => {
       dispatch(wsConnectionClosed());
     };
   }, [dispatch, location, accessToken]);
-
   let containerStyles = inModal
     ? styles.container
     : `${styles.container} ${styles.page}`;
-
   let totalPrice = 0;
 
   const ingredients = order?.ingredients;

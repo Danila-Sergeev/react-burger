@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 const ProtectedRouteElement = ({ element }) => {
   const isLoggedIn = useSelector((store) => store.user.isAuthChecked);
   const authError = useSelector((store) => store.user.authError);
+
   const location = useLocation();
 
   if (!isLoggedIn || authError === "You should be authorized") {

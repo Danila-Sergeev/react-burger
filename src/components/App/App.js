@@ -70,21 +70,28 @@ function App() {
             path="/ingredients/:id"
             element={<IngredientDetails fule={true} />}
           />
-          <Route
-            path="/orders/:id"
-            element={<OrderExplication order={id} inModal={false} />}
-          />
           <Route path="/feed" element={<FeedPage />} />
           <Route
             path="/feed/:id"
             element={<OrderExplication order={id} inModal={false} />}
+          />
+          <Route
+            path="/profile/orders/:id"
+            element={
+              <ProtectedRouteElement
+                element={<OrderExplication order={id} inModal={false} />}
+              />
+            }
           />
 
           <Route
             path="/profile/*"
             element={<ProtectedRouteElement element={<Profile />} />}
           >
-            <Route path="orders" element={<UserOrdersPage />} />
+            <Route
+              path="orders"
+              element={<ProtectedRouteElement element={<UserOrdersPage />} />}
+            />
           </Route>
 
           <Route
@@ -109,11 +116,15 @@ function App() {
       {background && (
         <Routes>
           <Route
-            path="/orders/:id"
+            path="/profile/orders/:id"
             element={
-              <Modal onClose={handleModalClose}>
-                <OrderExplication order={id} inModal={true} />
-              </Modal>
+              <ProtectedRouteElement
+                element={
+                  <Modal onClose={handleModalClose}>
+                    <OrderExplication order={id} inModal={true} />
+                  </Modal>
+                }
+              />
             }
           />
           <Route

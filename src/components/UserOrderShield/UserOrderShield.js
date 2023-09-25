@@ -5,7 +5,7 @@ import { formatDate } from "../../utils/constants";
 import OrderImage from "../OrderImage/OrderImage";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./UserOrderShield.module.css";
-import { useNavigate, useMatch, useLocation } from "react-router-dom";
+import { useNavigate, useMatch, useLocation, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const UserOrderShield = React.memo(({ order }) => {
@@ -61,7 +61,7 @@ const UserOrderShield = React.memo(({ order }) => {
   }
   const handleClick = () => {
     if (id !== order._id) {
-      navigate(`/orders/${order._id}`, {
+      navigate(`/profile/orders/${order._id}`, {
         state: { modal: true, background: location },
       });
     }
