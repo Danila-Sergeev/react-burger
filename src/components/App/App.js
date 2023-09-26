@@ -67,7 +67,7 @@ function App() {
           <Route path="/" element={<HomePage />}></Route>
 
           <Route
-            path="/ingredients/:id"
+            path="/ingredients/:ingredientId"
             element={<IngredientDetails fule={true} />}
           />
           <Route path="/feed" element={<FeedPage />} />
