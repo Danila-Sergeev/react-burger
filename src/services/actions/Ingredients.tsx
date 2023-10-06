@@ -1,6 +1,7 @@
 import { getCookie } from "../../utils/cookie";
 import { checkResponse, fetchWithRefresh } from "../api";
 import { BURGER_API_URL, request } from "../../utils/constants";
+import { AppDispatch } from "../types";
 export const GET_INGREDIENTS_REQUEST = "GET_INGREDIENTS_REQUEST";
 export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";
 export const GET_INGREDIENTS_FAILED = "GET_INGREDIENTS_FAILED";
@@ -13,8 +14,39 @@ export const GET_ORDER_SUCCESS = "GET_ORDER_SUCCESS";
 export const GET_ORDER_FAILED = "GET_ORDER_FAILED";
 export const RESET_ORDER = "RESET_ORDER";
 
+export interface IIngredient {
+  _id: string;
+  name: string;
+  type: string;
+  proteins: number;
+  fat: number;
+  carbohydrates: number;
+  calories: number;
+  price: number;
+  image: string;
+  image_mobile: string;
+  image_large: string;
+  __v: number;
+
+  map?: any;
+  ingridient?: any;
+  key?: any;
+  index?: any;
+}
+
+interface IGetIngredientsRequest {
+  readonly type: typeof GET_INGREDIENTS_REQUEST;
+}
+interface IgetIngredientsSuccess {
+  readonly type: typeof GET_INGREDIENTS_SUCCESS;
+  readonly payload: Array<IIngredient>;
+}
+interface IgetIngredientsFailed {
+  readonly type: typeof GET_INGREDIENTS_FAILED;
+}
+
 export function getIngredients() {
-  return async (dispatch) => {
+  return async (dispatch: AppDispatch) => {
     dispatch({
       type: GET_INGREDIENTS_REQUEST,
     });
@@ -34,10 +66,24 @@ export function getIngredients() {
     }
   };
 }
-export function getOrder(itemsId) {
-  const accessTokenWithBearer = getCookie("token");
+
+interface IPostOrderRequest {
+  readonly type: typeof GET_ORDER_REQUEST;
+}
+interface IPostOrderSuccess {
+  readonly type: typeof GET_ORDER_SUCCESS;
+  readonly payload: any;
+}
+interface IPostOrderFailed {
+  readonly type: typeof GET_ORDER_FAILED;
+}
+interface IPostOrderReset {
+  readonly type: typeof RESET_ORDER;
+}
+export function getOrder(itemsId: Array<string>) {
+  const accessTokenWithBearer: any = getCookie("token");
   const accessToken = accessTokenWithBearer.replace("Bearer ", "");
-  return async (dispatch) => {
+  return async (dispatch: AppDispatch) => {
     dispatch({
       type: GET_ORDER_REQUEST,
     });
@@ -67,3 +113,12 @@ export function getOrder(itemsId) {
     }
   };
 }
+
+export type IIngredientsActions =
+  | IGetIngredientsRequest
+  | IgetIngredientsSuccess
+  | IgetIngredientsFailed
+  | IPostOrderRequest
+  | IPostOrderSuccess
+  | IPostOrderFailed
+  | IPostOrderReset;

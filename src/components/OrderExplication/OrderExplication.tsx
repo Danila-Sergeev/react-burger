@@ -1,19 +1,23 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useMemo, useEffect, useMatch } from "react";
+import { useMemo, useEffect, useMatch, FC } from "react";
 import {
   startWsConnection,
   wsConnectionClosed,
 } from "../../services/actions/WebSocket";
 import { formatDate, wsUrl } from "../../utils/constants";
-import OrderImage from "..//OrderImage/OrderImage";
+import OrderImage from "../OrderImage/OrderImage";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./OrderExplication.module.css";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { getCookie } from "../../utils/cookie";
+import { Interface } from "readline";
 
-const OrderExplication = React.memo(({ inModal }) => {
+interface IOrderExplication {
+  inModal: Boolean;
+}
+const OrderExplication: FC<IOrderExplication> = React.memo(({ inModal }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const accessToken = getCookie("token");

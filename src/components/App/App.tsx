@@ -1,5 +1,5 @@
 import AppStyles from "./App.module.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FC } from "react";
 import Header from "../AppHeader/AppHeader";
 import {
   Routes,
@@ -27,13 +27,23 @@ import { FeedPage } from "../../pages/Feed/Feed";
 import { UserOrdersPage } from "../../pages/UserOrdersPage/UserOrdersPage";
 
 import OrderExplication from "../OrderExplication/OrderExplication";
-function App() {
-  const dispatch = useDispatch();
+import { useTypedDispatch } from "../../utils/hoc";
+const App: FC = () => {
+  const dispatch = useTypedDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const background = location.state && location.state.background;
   const { id } = useParams();
-  const [state, setState] = useState({
+  interface HeaderDataItem {
+    profile: string;
+    navText_constuctor: string;
+    navText_thread: string;
+  }
+
+  interface IState {
+    headerData: HeaderDataItem[];
+  }
+  const [state, setState] = useState<IState>({
     headerData: [
       {
         profile: "Личный кабинет",
@@ -73,13 +83,13 @@ function App() {
           <Route path="/feed" element={<FeedPage />} />
           <Route
             path="/feed/:id"
-            element={<OrderExplication order={id} inModal={false} />}
+            element={<OrderExplication inModal={false} />}
           />
           <Route
             path="/profile/orders/:id"
             element={
               <ProtectedRouteElement
-                element={<OrderExplication order={id} inModal={false} />}
+                element={<OrderExplication inModal={false} />}
               />
             }
           />
@@ -121,7 +131,7 @@ function App() {
               <ProtectedRouteElement
                 element={
                   <Modal onClose={handleModalClose}>
-                    <OrderExplication order={id} inModal={true} />
+                    <OrderExplication inModal={true} />
                   </Modal>
                 }
               />
@@ -131,7 +141,7 @@ function App() {
             path="/feed/:id"
             element={
               <Modal onClose={handleModalClose}>
-                <OrderExplication order={id} inModal={true} />
+                <OrderExplication inModal={true} />
               </Modal>
             }
           />
@@ -147,6 +157,6 @@ function App() {
       )}
     </div>
   );
-}
+};
 
 export default App;
