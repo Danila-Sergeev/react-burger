@@ -14,6 +14,7 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientDetails from "../../IngredientDetails/IngredientDetails";
+import { useLocation, Link } from "react-router-dom";
 function IngredientElement(props) {
   const { item, count } = props;
   const dispatch = useDispatch();
@@ -33,14 +34,10 @@ function IngredientElement(props) {
   const [modal, setModal] = useState(false);
 
   /*  Обработчики открытия/закрытия попапа */
-  const handleOpenModal = () => {
-    setModal(true);
-    setData(item);
-  };
-  const handleCloseModal = () => {
-    setModal(false);
-    deleteData();
-  };
+
+  const location = useLocation();
+
+  const ingredientId = item["_id"];
 
   /*  Обработчики открытия/закрытия попапа */
 
@@ -52,33 +49,41 @@ function IngredientElement(props) {
     }),
   });
   return (
-    <div>
-      <li
-        className={`${IngredientsStiles.element} mb-8`}
-        onClick={handleOpenModal}
-        ref={dragRef}
-      >
-        {count !== 0 ? (
-          <Counter count={count} size="default" extraClass="m-1" />
-        ) : (
-          ""
-        )}
-        <img className="mb-1" src={item.image} alt={item.name} />
-        <div className={IngredientsStiles.price}>
-          <p className="text text_type_digits-default mb-1">{item.price}</p>
-          <CurrencyIcon type="primary" />
-        </div>
-        <p className={`${IngredientsStiles.title} text text_type_main-default`}>
-          {item.name}
-        </p>
-      </li>
-      {modal && (
+    <Link
+      key={ingredientId}
+      // Тут мы формируем динамический путь для нашего ингредиента
+      to={`/ingredients/${ingredientId}`}
+      // а также сохраняем в свойство background роут,
+      // на котором была открыта наша модалка
+      state={{ background: location }}
+      className={IngredientsStiles.link}
+    >
+      <div>
+        <li className={`${IngredientsStiles.element} mb-8`} ref={dragRef}>
+          {count !== 0 ? (
+            <Counter count={count} size="default" extraClass="m-1" />
+          ) : (
+            ""
+          )}
+          <img className="mb-1" src={item.image} alt={item.name} />
+          <div className={IngredientsStiles.price}>
+            <p className="text text_type_digits-default mb-1">{item.price}</p>
+            <CurrencyIcon type="primary" />
+          </div>
+          <p
+            className={`${IngredientsStiles.title} text text_type_main-default`}
+          >
+            {item.name}
+          </p>
+        </li>
+        {/*  {modal && (
         <Modal onClose={handleCloseModal} setModal={setModal}>
           {" "}
           <IngredientDetails />
         </Modal>
-      )}
-    </div>
+      )} */}
+      </div>
+    </Link>
   );
 }
 IngredientElement.propTypes = {

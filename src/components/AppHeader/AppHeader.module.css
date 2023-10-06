@@ -28,11 +28,12 @@
   color: inherit;
   background-color: transparent;
   cursor: pointer;
+  text-decoration: none;
   /*  сброс стиля кнопки  ^*/
 }
 .profile_button {
   display: flex;
-
+  text-decoration: none;
   align-items: center;
   /*  сброс стиля кнопки */
   padding: 0;

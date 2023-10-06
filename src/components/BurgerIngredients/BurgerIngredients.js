@@ -7,12 +7,10 @@ import { getIngredients } from "../../services/actions/Ingredients";
 import { useInView } from "react-intersection-observer";
 import IngredientElement from "./IngredientElement/IngredientElement";
 
+//Пропсом передаются названия секций
 function BurgerIngredients({ ingredientsData }) {
   const [current, setCurrent] = React.useState("one");
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
+
   const ingredients = useSelector((store) => store.ingredients.ingredients);
   /* Определяем зону просмотра */
   const [bunRef, bunView] = useInView({ threshold: 0.1 });

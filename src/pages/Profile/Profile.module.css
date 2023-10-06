@@ -1,0 +1,29 @@
+.main {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  padding: 120px 380px 0;
+  margin: 0;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: 60px;
+}
+.link {
+  text-decoration: none;
+}
+.info {
+  max-width: 320px;
+  text-align: start;
+}
+.activeLink {
+  color: inherit;
+  text-decoration: none;
+}
+.inputBox {
+  align-items: end;
+  display: flex;
+  flex-direction: column;
+}

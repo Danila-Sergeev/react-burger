@@ -18,6 +18,9 @@
   display: flex;
   gap: 30px;
 }
+.titleFule {
+  margin-top: 120px;
+}
 .listItem {
   display: flex;
   align-items: center;

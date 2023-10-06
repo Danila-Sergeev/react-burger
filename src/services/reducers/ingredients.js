@@ -24,7 +24,7 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         ingredientsFailed: false,
-        ingredients: action.ingredients,
+        ingredients: action.ingredients.data,
         ingredientsRequest: false,
       };
     }

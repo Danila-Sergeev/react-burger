@@ -5,6 +5,7 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal";
+import { useNavigate, useLocation } from "react-router-dom";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrder } from "../../services/actions/Ingredients";
@@ -16,6 +17,9 @@ import { RESET_ORDER } from "../../services/actions/Ingredients";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 
 function BurgerConstructor() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isAuthenticated = useSelector((state) => state.user.isAuthChecked);
   const bunLocked = useSelector((store) => store.constr.bun);
   const mains = useSelector((store) => store.constr.items);
   /* Обработчик состояния попапа */
@@ -44,7 +48,14 @@ function BurgerConstructor() {
     resetOrder();
   };
   const onClick = () => {
-    handleOpenModal();
+    if (isAuthenticated) {
+      handleOpenModal();
+    } else {
+      navigate("/login", {
+        replace: true,
+        state: { from: location.pathname },
+      });
+    }
   };
   /*  Добавление перетаскиваемого элемента в конструктор */
   const [, dropTarget] = useDrop({

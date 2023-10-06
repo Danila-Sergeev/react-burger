@@ -1,15 +1,14 @@
 import React from "react";
+import headerStiles from "./AppHeader.module.css";
+import Navigation from "./Navigation/Navigation";
+import PropTypes from "prop-types";
 import {
   BurgerIcon,
   ListIcon,
   Logo,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import headerStiles from "./AppHeader.module.css";
-import Navigation from "./Navigation/Navigation";
-import PropTypes from "prop-types";
 
-//Компонент header
 function Header(props) {
   return (
     <header className={`${headerStiles.header}`}>
@@ -18,13 +17,15 @@ function Header(props) {
         <nav className={`${headerStiles.navigation_elements}`}>
           {/* Компонент Navigation */}
           <Navigation
-            className="mr-5"
+            className={"mr-5"}
+            path={""}
             icon={BurgerIcon}
             textElement={props.headerData.map((el) => {
               return el.navText_constuctor;
             })}
-          />
+          ></Navigation>
           <Navigation
+            path={"feed"}
             icon={ListIcon}
             textElement={props.headerData.map((el) => {
               return el.navText_thread;
@@ -32,14 +33,13 @@ function Header(props) {
           />
         </nav>
 
-        <button className={headerStiles.profile_button}>
-          <ProfileIcon />
-          <p className="pl-2 text text_type_main-default">
-            {props.headerData.map((el) => {
-              return el.profile;
-            })}
-          </p>
-        </button>
+        <Navigation
+          path={"profile"}
+          icon={ProfileIcon}
+          textElement={props.headerData.map((el) => {
+            return el.profile;
+          })}
+        />
       </div>
     </header>
   );
