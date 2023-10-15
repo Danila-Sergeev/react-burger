@@ -1,15 +1,20 @@
 import ModalStiles from "./Modal.module.css";
 import PropTypes from "prop-types";
-import React, { useEffect } from "react";
+import React, { FC, useEffect, ReactNode } from "react";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ReactDOM from "react-dom";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 const modalRoot = document.getElementById("react-modals");
 
-function Modal({ onClose, children }) {
+interface ModalProps {
+  onClose: () => void;
+  children: ReactNode;
+}
+
+const Modal: FC<ModalProps> = ({ onClose, children }) => {
   /* Обработчик закрытия попапа на Esc */
   useEffect(() => {
-    function handleEscapeKey(event) {
+    function handleEscapeKey(event: any) {
       if (event.code === "Escape") {
         onClose();
       }
@@ -18,6 +23,10 @@ function Modal({ onClose, children }) {
     document.addEventListener("keydown", handleEscapeKey);
     return () => document.removeEventListener("keydown", handleEscapeKey);
   }, []);
+
+  if (!modalRoot) {
+    return null;
+  }
 
   return ReactDOM.createPortal(
     <>
@@ -33,11 +42,6 @@ function Modal({ onClose, children }) {
     </>,
     modalRoot
   );
-}
-
-Modal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
 };
 
 export default Modal;

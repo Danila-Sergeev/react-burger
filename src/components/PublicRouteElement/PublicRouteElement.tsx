@@ -1,8 +1,13 @@
 import PropTypes from "prop-types";
 import { Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { FC } from "react";
 
-const PublicRouteElement = ({ element }) => {
+interface IPublicRouteElement {
+  element: any;
+}
+
+const PublicRouteElement: FC<IPublicRouteElement> = ({ element }) => {
   const isLoggedIn = useSelector((store) => store.user.isAuthChecked);
   const location = useLocation();
 

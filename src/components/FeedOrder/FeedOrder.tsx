@@ -1,21 +1,22 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { useMemo } from "react";
-import { formatDate } from "../../utils/constants";
-import OrderImage from "../OrderImage/OrderImage";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./UserOrderShield.module.css";
-import { useNavigate, useMatch, useLocation, Link } from "react-router-dom";
+import styles from "./FeedOrder.module.css";
+import React, { FC } from "react";
+import { useSelector } from "react-redux";
+import { useMemo, useEffect } from "react";
+import { formatDate } from "../../utils/constants";
+import { useNavigate, useMatch, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
-
-const UserOrderShield = React.memo(({ order }) => {
-  const ingredientList = useSelector((state) => state.ingredients.ingredients);
+import OrderImage from "../OrderImage/OrderImage";
+import { useTypedSelector } from "../../utils/hoc";
+const FeedOrder: FC = ({ order }) => {
+  const ingredientList = useTypedSelector(
+    (state) => state.ingredients.ingredients
+  );
+  let totalPrice = 0;
   const navigate = useNavigate();
   const location = useLocation();
-  const match = useMatch("/feed/:id");
+  const match = useMatch("/orders/:id");
   const { id } = match?.params || {};
-  let totalPrice = 0;
-
   const ingredients = order.ingredients;
   const ingredientCounts = {};
 
@@ -46,22 +47,10 @@ const UserOrderShield = React.memo(({ order }) => {
       );
     });
   });
-  let statusText = "";
-  let statusStyle = "";
 
-  if (order.status === "done") {
-    statusText = "Выполнен";
-    statusStyle = styles.done;
-  } else if (order.status === "pending") {
-    statusText = "Готовится";
-    statusStyle = styles.pending;
-  } else if (order.status === "created") {
-    statusText = "Создан";
-    statusStyle = styles.created;
-  }
   const handleClick = () => {
     if (id !== order._id) {
-      navigate(`/profile/orders/${order._id}`, {
+      navigate(`/feed/${order._id}`, {
         state: { modal: true, background: location },
       });
     }
@@ -75,10 +64,7 @@ const UserOrderShield = React.memo(({ order }) => {
           {formatDate(order.updatedAt)}
         </p>
       </div>
-      <p className={`text text_type_main-small mb-2 mt-2 ${statusStyle}`}>
-        {statusText}
-      </p>
-      <h2 className="text text_type_main-medium mb-6 mt-2">{order.name}</h2>
+      <h2 className="text text_type_main-medium mb-6 mt-6">{order.name}</h2>
       <div className={styles.ingredients__container}>
         <div className={styles.image__container}>{ingredientsMarkup}</div>
         <div className={styles.price__container}>
@@ -90,10 +76,5 @@ const UserOrderShield = React.memo(({ order }) => {
       </div>
     </div>
   );
-});
-
-UserOrderShield.propTypes = {
-  order: PropTypes.object.isRequired,
 };
-
-export default UserOrderShield;
+export default FeedOrder;

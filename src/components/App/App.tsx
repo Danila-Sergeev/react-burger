@@ -28,30 +28,14 @@ import { UserOrdersPage } from "../../pages/UserOrdersPage/UserOrdersPage";
 
 import OrderExplication from "../OrderExplication/OrderExplication";
 import { useTypedDispatch } from "../../utils/hoc";
+
 const App: FC = () => {
   const dispatch = useTypedDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const background = location.state && location.state.background;
   const { id } = useParams();
-  interface HeaderDataItem {
-    profile: string;
-    navText_constuctor: string;
-    navText_thread: string;
-  }
 
-  interface IState {
-    headerData: HeaderDataItem[];
-  }
-  const [state, setState] = useState<IState>({
-    headerData: [
-      {
-        profile: "Личный кабинет",
-        navText_constuctor: "Конструктор",
-        navText_thread: "Лента заказов",
-      },
-    ],
-  });
   useEffect(() => {
     dispatch(getIngredients());
   }, []);
@@ -71,7 +55,7 @@ const App: FC = () => {
 
   return (
     <div className={AppStyles.App}>
-      <Header headerData={state.headerData} />
+      <Header />
       <main className={AppStyles.main_section}>
         <Routes location={background || location}>
           <Route path="/" element={<HomePage />}></Route>

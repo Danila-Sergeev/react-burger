@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, FC } from "react";
 import PropTypes from "prop-types";
 import IngredientsStiles from "./BurgerIngredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -6,12 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { getIngredients } from "../../services/actions/Ingredients";
 import { useInView } from "react-intersection-observer";
 import IngredientElement from "./IngredientElement/IngredientElement";
+import { type } from "os";
+import { useTypedSelector } from "../../utils/hoc";
 
 //Пропсом передаются названия секций
-function BurgerIngredients({ ingredientsData }) {
+const BurgerIngredients: FC = () => {
   const [current, setCurrent] = React.useState("one");
 
-  const ingredients = useSelector((store) => store.ingredients.ingredients);
+  const ingredients = useTypedSelector(
+    (store) => store.ingredients.ingredients
+  );
   /* Определяем зону просмотра */
   const [bunRef, bunView] = useInView({ threshold: 0.1 });
   const [sauceRef, sauceView] = useInView({ threshold: 0.1 });
@@ -47,10 +51,10 @@ function BurgerIngredients({ ingredientsData }) {
     [ingredients]
   );
 
-  const bunCart = [useSelector((store) => store.constr.bun)];
-  const mainsCart = useSelector((store) => store.constr.items);
+  const bunCart = [useTypedSelector((store) => store.constr.bun)];
+  const mainsCart = useTypedSelector((store) => store.constr.items);
 
-  const tabClick = (type) => {
+  const tabClick = (type: string) => {
     setCurrent(type);
     const section = document.getElementById(type);
     if (section) {
@@ -61,8 +65,16 @@ function BurgerIngredients({ ingredientsData }) {
     ingredientScroll();
   }, [bunView, sauceView, mainView]);
 
-  const countCart = (ingredient, cart) => {
-    const count = cart.reduce((acc, item) => {
+  type Titem = {
+    _id: string;
+  };
+  interface Ingredient {
+    _id: string;
+    type: string;
+  }
+
+  const countCart = (ingredient: Ingredient, cart: any) => {
+    const count = cart.reduce((acc: number, item: Titem) => {
       if (item._id === ingredient._id) {
         ingredient.type !== "bun" ? (acc += 1) : (acc += 2);
       }
@@ -75,64 +87,35 @@ function BurgerIngredients({ ingredientsData }) {
       <h1
         className={`${IngredientsStiles.title} text text_type_main-large mb-5`}
       >
-        {ingredientsData.map((el) => {
-          return el.title;
-        })}
+        "Соберите бургер"
       </h1>
       <div className={`${IngredientsStiles.header_box} mt-10 mb-10`}>
         <nav className={IngredientsStiles.Ingredients_box}>
-          <a
-            href={`#${ingredientsData.map((el) => {
-              return el.frstElement;
-            })}`}
-            className={IngredientsStiles.link}
-          >
+          <a href={"#Булки"} className={IngredientsStiles.link}>
             <Tab
-              value={ingredientsData.map((el) => {
-                return el.firstNavText;
-              })}
+              value="Булки"
               active={current === "bun"}
               onClick={() => tabClick("bun")}
             >
-              {ingredientsData.map((el) => {
-                return el.firstNavText;
-              })}
+              "Булки"
             </Tab>
           </a>
-          <a
-            href={`#${ingredientsData.map((el) => {
-              return el.sndElement;
-            })}`}
-            className={IngredientsStiles.link}
-          >
+          <a href={"#Соусы"} className={IngredientsStiles.link}>
             <Tab
-              value={ingredientsData.map((el) => {
-                return el.secNavText;
-              })}
+              value="Соусы"
               active={current === "sauce"}
               onClick={() => tabClick("sauce")}
             >
-              {ingredientsData.map((el) => {
-                return el.secNavText;
-              })}
+              "Соусы"
             </Tab>
           </a>
-          <a
-            href={`#${ingredientsData.map((el) => {
-              return el.thrdNavText;
-            })}`}
-            className={IngredientsStiles.link}
-          >
+          <a href={"#Начинки"} className={IngredientsStiles.link}>
             <Tab
-              value={ingredientsData.map((el) => {
-                return el.thrdNavText;
-              })}
+              value="Начинки"
               active={current === "main"}
               onClick={() => tabClick("main")}
             >
-              {ingredientsData.map((el) => {
-                return el.thrdNavText;
-              })}
+              "Начинки"
             </Tab>
           </a>
         </nav>
@@ -190,20 +173,6 @@ function BurgerIngredients({ ingredientsData }) {
       </div>
     </section>
   );
-}
-
-BurgerIngredients.propTypes = {
-  ingredientsData: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      firstNavText: PropTypes.string.isRequired,
-      secNavText: PropTypes.string.isRequired,
-      thrdNavText: PropTypes.string.isRequired,
-      frstElement: PropTypes.string.isRequired,
-      sndElement: PropTypes.string.isRequired,
-      thrdElement: PropTypes.string.isRequired,
-    })
-  ).isRequired,
 };
 
 export default BurgerIngredients;

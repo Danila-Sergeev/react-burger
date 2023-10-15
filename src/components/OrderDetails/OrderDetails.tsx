@@ -1,8 +1,8 @@
 import OrderStyles from "./OrderDetails.module.css";
 import logo from "../../images/order accpeted/graphics.svg";
-
+import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
-function OrderDetails() {
+const OrderDetails: FC = () => {
   const orderNumder = useSelector((store) => store.order.orderNumber);
   return (
     <div className={OrderStyles.mainBox}>
@@ -23,5 +23,5 @@ function OrderDetails() {
       </h3>
     </div>
   );
-}
+};
 export default OrderDetails;

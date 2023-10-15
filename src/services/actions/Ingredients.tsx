@@ -2,36 +2,27 @@ import { getCookie } from "../../utils/cookie";
 import { checkResponse, fetchWithRefresh } from "../api";
 import { BURGER_API_URL, request } from "../../utils/constants";
 import { AppDispatch } from "../types";
-export const GET_INGREDIENTS_REQUEST = "GET_INGREDIENTS_REQUEST";
-export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";
-export const GET_INGREDIENTS_FAILED = "GET_INGREDIENTS_FAILED";
-export const RESET_INGREDIENTS = "RESET_INGREDIENTS";
-export const SET_INGREDIENT_DETAILS = "SET_INGREDIENT_DETAILS";
-export const DELETE_INGREDIENT_DETAILS = "DELETE_INGREDIENT_DETAILS";
-export const SET_ORDER_NUMBER = "SET_ORDER_NUMBER";
-export const GET_ORDER_REQUEST = "GET_ORDER_REQUEST";
-export const GET_ORDER_SUCCESS = "GET_ORDER_SUCCESS";
-export const GET_ORDER_FAILED = "GET_ORDER_FAILED";
-export const RESET_ORDER = "RESET_ORDER";
+import { IIngredient } from "../constants/constants";
 
-export interface IIngredient {
-  _id: string;
-  name: string;
-  type: string;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-  calories: number;
-  price: number;
-  image: string;
-  image_mobile: string;
-  image_large: string;
-  __v: number;
+export const GET_INGREDIENTS_REQUEST: "GET_INGREDIENTS_REQUEST" =
+  "GET_INGREDIENTS_REQUEST";
+export const GET_INGREDIENTS_SUCCESS: "GET_INGREDIENTS_SUCCESS" =
+  "GET_INGREDIENTS_SUCCESS";
+export const GET_INGREDIENTS_FAILED: "GET_INGREDIENTS_FAILED" =
+  "GET_INGREDIENTS_FAILED";
+export const RESET_INGREDIENTS: "RESET_INGREDIENTS" = "RESET_INGREDIENTS";
+export const SET_INGREDIENT_DETAILS: "SET_INGREDIENT_DETAILS" =
+  "SET_INGREDIENT_DETAILS";
+export const DELETE_INGREDIENT_DETAILS: "DELETE_INGREDIENT_DETAILS" =
+  "DELETE_INGREDIENT_DETAILS";
+export const SET_ORDER_NUMBER: "SET_ORDER_NUMBER" = "SET_ORDER_NUMBER";
+export const GET_ORDER_REQUEST: "GET_ORDER_REQUEST" = "GET_ORDER_REQUEST";
+export const GET_ORDER_SUCCESS: "GET_ORDER_SUCCESS" = "GET_ORDER_SUCCESS";
+export const GET_ORDER_FAILED: "GET_ORDER_FAILED" = "GET_ORDER_FAILED";
+export const RESET_ORDER: "RESET_ORDER" = "RESET_ORDER";
 
-  map?: any;
-  ingridient?: any;
-  key?: any;
-  index?: any;
+export interface IIngredientType {
+  type: IIngredient;
 }
 
 interface IGetIngredientsRequest {
@@ -39,7 +30,7 @@ interface IGetIngredientsRequest {
 }
 interface IgetIngredientsSuccess {
   readonly type: typeof GET_INGREDIENTS_SUCCESS;
-  readonly payload: Array<IIngredient>;
+  readonly ingredients: Array<IIngredient>;
 }
 interface IgetIngredientsFailed {
   readonly type: typeof GET_INGREDIENTS_FAILED;
@@ -72,7 +63,7 @@ interface IPostOrderRequest {
 }
 interface IPostOrderSuccess {
   readonly type: typeof GET_ORDER_SUCCESS;
-  readonly payload: any;
+  readonly orderNumber: any;
 }
 interface IPostOrderFailed {
   readonly type: typeof GET_ORDER_FAILED;

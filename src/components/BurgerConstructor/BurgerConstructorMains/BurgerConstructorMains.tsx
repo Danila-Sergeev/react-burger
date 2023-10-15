@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import BurgerCosructorStiles from "../BurgerConstructor.module.css";
 import {
   ConstructorElement,
@@ -10,11 +10,27 @@ import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { REMOVE_ITEM, MOVE_ITEM } from "../../../services/actions/constructor";
 import PropTypes from "prop-types";
-export default function BurgerConstructorMains({ ingredient, index }) {
+
+interface Ingredient {
+  id4: string;
+  name: string;
+  price: number;
+  image: string;
+}
+
+interface IBurgerConstructorMains {
+  ingredient: Ingredient;
+  index: number;
+}
+
+const BurgerConstructorMains: FC<IBurgerConstructorMains> = ({
+  ingredient,
+  index,
+}) => {
   const dispatch = useDispatch();
   const ref = useRef(null);
   const ingredients = useSelector((store) => store.constr.items);
-  const removeItemId = (id4) => {
+  const removeItemId = (id4: string) => {
     dispatch({ type: REMOVE_ITEM, id4 });
   };
 
@@ -29,16 +45,16 @@ export default function BurgerConstructorMains({ ingredient, index }) {
   /* Отпускаем элемент */
   const [, drop] = useDrop({
     accept: "mains",
-    drop(item) {
+    drop(item: { index: number }) {
       dropItem(item);
     },
   });
 
-  const moveIngredient = (dragIndex, hoverIndex) => {
+  const moveIngredient = (dragIndex: number, hoverIndex: number) => {
     const dragIngredient = ingredients[dragIndex];
     dispatch({ type: MOVE_ITEM, dragIndex, hoverIndex, dragIngredient });
   };
-  const dropItem = (item) => {
+  const dropItem = (item: { index: number }) => {
     const dragIndex = item.index;
     const hoverIndex = index;
     if (dragIndex === hoverIndex) {
@@ -61,9 +77,6 @@ export default function BurgerConstructorMains({ ingredient, index }) {
       />
     </li>
   );
-}
-
-BurgerConstructorMains.propTypes = {
-  ingredient: PropTypes.object.isRequired,
-  index: PropTypes.number.isRequired,
 };
+
+export { BurgerConstructorMains };

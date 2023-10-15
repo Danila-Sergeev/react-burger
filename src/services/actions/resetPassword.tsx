@@ -1,8 +1,26 @@
 import { BURGER_API_URL, request } from "../../utils/constants";
 import { checkResponse } from "../api";
-export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";
-export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
-export const RESET_PASSWORD_FAILED = "RESET_PASSWORD_FAILED";
+export const RESET_PASSWORD_REQUEST: "RESET_PASSWORD_REQUEST" =
+  "RESET_PASSWORD_REQUEST";
+export const RESET_PASSWORD_SUCCESS: "RESET_PASSWORD_SUCCESS" =
+  "RESET_PASSWORD_SUCCESS";
+export const RESET_PASSWORD_FAILED: "RESET_PASSWORD_FAILED" =
+  "RESET_PASSWORD_FAILED";
+
+interface IResetPasswordRequest {
+  readonly type: typeof RESET_PASSWORD_REQUEST;
+}
+interface IResetPasswordSucces {
+  readonly type: typeof RESET_PASSWORD_SUCCESS;
+}
+interface IResetPasswordFailed {
+  readonly type: typeof RESET_PASSWORD_FAILED;
+}
+
+export type TResetPasswordActions =
+  | IResetPasswordRequest
+  | IResetPasswordSucces
+  | IResetPasswordFailed;
 
 export function getResetPassword(password, token) {
   return async (dispatch) => {

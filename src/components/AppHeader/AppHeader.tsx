@@ -21,38 +21,29 @@ interface HeaderProps {
   icon?: any;
   textElement?: any;
   headerData?: HeaderDataItem[];
+  className?: string;
 }
 
-const Header: FC<HeaderProps> = (props) => {
+const Header: FC<HeaderProps> = () => {
   return (
     <header className={`${headerStiles.header}`}>
       <Logo />
       <div className={headerStiles.main_info}>
         <nav className={`${headerStiles.navigation_elements}`}>
           {/* Компонент Navigation */}
-          <Link
-            className={"mr-5"}
-            to={""}
-            /*  icon={BurgerIcon} */
-            /* textElement={props.headerData.map((el) => {
-              return el.navText_constuctor;
-            })} */
-          ></Link>
-          <Link
-            to={"feed"}
-            /*  icon={ListIcon} */
-            /*   textElement={props.headerData.map((el: HeaderDataItem) => {
-              return el.navText_thread;
-            })} */
-          />
+          <Navigation
+            className="mr-5"
+            path={""}
+            icon={BurgerIcon}
+            textElement="Личный кабинет"
+          ></Navigation>
+          <Navigation path={"feed"} icon={ListIcon} textElement="Конструктор" />
         </nav>
 
-        <Link
-          to={"profile"}
-          /*  icon={ProfileIcon} */
-          /* textElement={props.headerData.map((el: HeaderDataItem) => {
-            return el.profile;
-          })} */
+        <Navigation
+          path={"profile"}
+          icon={ProfileIcon}
+          textElement="Лента заказов"
         />
       </div>
     </header>

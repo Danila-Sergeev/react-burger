@@ -1,13 +1,13 @@
 import styles from "./OrdersStatusInfo.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, FC } from "react";
 import {
   startWsConnection,
   wsConnectionClosed,
 } from "../../services/actions/WebSocket";
 import { wsUrl } from "../../utils/constants";
 
-const OrderStatusInfo = () => {
+const OrderStatusInfo: FC = () => {
   const dispatch = useDispatch();
   const { orders, total, totalToday } = useSelector((state) => state.ws);
 
@@ -39,8 +39,8 @@ const OrderStatusInfo = () => {
     }
   }, [orders]);
 
-  function chunkArray(array, size) {
-    const result = [];
+  function chunkArray<T>(array: T[], size: number): T[][] {
+    const result: T[][] = [];
     for (let i = 0; i < array.length; i += size) {
       result.push(array.slice(i, i + size));
     }

@@ -3,16 +3,27 @@ import PropTypes from "prop-types";
 import ingredientType from "../../utils/types";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useMatch } from "react-router-dom";
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { getIngredients } from "../../services/actions/Ingredients";
-function IngredientDetails(props) {
+import { useTypedSelector } from "../../utils/hoc";
+
+interface IIngredientDetails {
+  fule: boolean;
+}
+
+const IngredientDetails: FC<IIngredientDetails> = (props) => {
   //const item = useSelector((store) => store.ingredient.currentIngredient);
 
-  const allIngredients = useSelector((store) => store.ingredients.ingredients);
+  const allIngredients = useTypedSelector(
+    (store) => store.ingredients.ingredients
+  );
   const { ingredientId } = useParams();
 
+  type Tingredient = {
+    _id: string;
+  };
   const item = allIngredients.find(
-    (ingredient) => ingredient._id === ingredientId
+    (ingredient: Tingredient) => ingredient._id === ingredientId
   );
 
   if (!item) {
@@ -68,6 +79,6 @@ function IngredientDetails(props) {
       </ul>
     </div>
   );
-}
+};
 
 export default IngredientDetails;

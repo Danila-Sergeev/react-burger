@@ -1,16 +1,17 @@
 import styles from "./FeedOrderMain.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 import {
   startWsConnection,
   wsConnectionClosed,
 } from "../../services/actions/WebSocket";
 import FeedOrder from "../FeedOrder/FeedOrder";
 import { wsUrl } from "../../utils/constants";
+import { useTypedSelector } from "../../utils/hoc";
 
-const OrderFeed = () => {
+const OrderFeed: FC = () => {
   const dispatch = useDispatch();
-  const { orders, total, totalToday } = useSelector((state) => state.ws);
+  const { orders, total, totalToday } = useTypedSelector((state) => state.ws);
 
   useEffect(() => {
     dispatch(startWsConnection(`${wsUrl}/all`));

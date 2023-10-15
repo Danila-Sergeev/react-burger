@@ -1,8 +1,27 @@
 import { BURGER_API_URL, request } from "../../utils/constants";
 import { checkResponse } from "../api";
-export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
-export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
-export const FORGOT_PASSWORD_FAILED = "FORGOT_PASSWORD_FAILED";
+export const FORGOT_PASSWORD_REQUEST: "FORGOT_PASSWORD_REQUEST" =
+  "FORGOT_PASSWORD_REQUEST";
+export const FORGOT_PASSWORD_SUCCESS: "FORGOT_PASSWORD_SUCCESS" =
+  "FORGOT_PASSWORD_SUCCESS";
+export const FORGOT_PASSWORD_FAILED: "FORGOT_PASSWORD_FAILED" =
+  "FORGOT_PASSWORD_FAILED";
+
+interface IForgotPasswordRequest {
+  readonly type: typeof FORGOT_PASSWORD_REQUEST;
+}
+interface IForgotPasswordSucces {
+  readonly type: typeof FORGOT_PASSWORD_SUCCESS;
+  readonly payload: boolean;
+}
+interface IForgotPasswordFailed {
+  readonly type: typeof FORGOT_PASSWORD_FAILED;
+}
+
+export type TForgotPasswordActions =
+  | IForgotPasswordRequest
+  | IForgotPasswordSucces
+  | IForgotPasswordFailed;
 
 export function getPassword(email) {
   return async (dispatch) => {

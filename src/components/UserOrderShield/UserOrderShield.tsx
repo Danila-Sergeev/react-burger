@@ -1,19 +1,24 @@
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./FeedOrder.module.css";
-import React from "react";
+import React, { FC } from "react";
 import { useSelector } from "react-redux";
-import { useMemo, useEffect } from "react";
+import { useMemo } from "react";
 import { formatDate } from "../../utils/constants";
-import { useNavigate, useMatch, useLocation } from "react-router-dom";
-import PropTypes from "prop-types";
 import OrderImage from "../OrderImage/OrderImage";
-const FeedOrder = ({ order }) => {
+import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import styles from "./UserOrderShield.module.css";
+import { useNavigate, useMatch, useLocation, Link } from "react-router-dom";
+import PropTypes from "prop-types";
+interface IUserOrderShield {
+  order: any;
+}
+
+const UserOrderShield: FC<IUserOrderShield> = React.memo(({ order }) => {
   const ingredientList = useSelector((state) => state.ingredients.ingredients);
-  let totalPrice = 0;
   const navigate = useNavigate();
   const location = useLocation();
-  const match = useMatch("/orders/:id");
+  const match = useMatch("/feed/:id");
   const { id } = match?.params || {};
+  let totalPrice = 0;
+
   const ingredients = order.ingredients;
   const ingredientCounts = {};
 
@@ -44,10 +49,22 @@ const FeedOrder = ({ order }) => {
       );
     });
   });
+  let statusText = "";
+  let statusStyle = "";
 
+  if (order.status === "done") {
+    statusText = "Выполнен";
+    statusStyle = styles.done;
+  } else if (order.status === "pending") {
+    statusText = "Готовится";
+    statusStyle = styles.pending;
+  } else if (order.status === "created") {
+    statusText = "Создан";
+    statusStyle = styles.created;
+  }
   const handleClick = () => {
     if (id !== order._id) {
-      navigate(`/feed/${order._id}`, {
+      navigate(`/profile/orders/${order._id}`, {
         state: { modal: true, background: location },
       });
     }
@@ -61,7 +78,10 @@ const FeedOrder = ({ order }) => {
           {formatDate(order.updatedAt)}
         </p>
       </div>
-      <h2 className="text text_type_main-medium mb-6 mt-6">{order.name}</h2>
+      <p className={`text text_type_main-small mb-2 mt-2 ${statusStyle}`}>
+        {statusText}
+      </p>
+      <h2 className="text text_type_main-medium mb-6 mt-2">{order.name}</h2>
       <div className={styles.ingredients__container}>
         <div className={styles.image__container}>{ingredientsMarkup}</div>
         <div className={styles.price__container}>
@@ -73,5 +93,10 @@ const FeedOrder = ({ order }) => {
       </div>
     </div>
   );
+});
+
+UserOrderShield.propTypes = {
+  order: PropTypes.object.isRequired,
 };
-export default FeedOrder;
+
+export default UserOrderShield;

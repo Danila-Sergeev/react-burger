@@ -1,5 +1,5 @@
 import BurgerCosructorStiles from "./BurgerConstructor.module.css";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, FC } from "react";
 import {
   Button,
   CurrencyIcon,
@@ -16,7 +16,7 @@ import { ADD_ITEM, RESET_ITEM } from "../../services/actions/constructor";
 import { RESET_ORDER } from "../../services/actions/Ingredients";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 
-function BurgerConstructor() {
+const BurgerConstructor: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const isAuthenticated = useSelector((state) => state.user.isAuthChecked);
@@ -129,6 +129,6 @@ function BurgerConstructor() {
       )}
     </section>
   );
-}
+};
 
 export default BurgerConstructor;

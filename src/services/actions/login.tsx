@@ -1,12 +1,26 @@
 import { BURGER_API_URL, request } from "../../utils/constants";
 import { checkResponse } from "../api";
-export const GET_LOGIN_REQUEST = "GET_LOGIN_REQUEST";
-export const GET_LOGIN_SUCCESS = "GET_LOGIN_SUCCESS";
-export const GET_LOGIN_FAILED = "GET_LOGIN_FAILED";
+import { IUserData } from "../constants/constants";
+export const GET_LOGIN_REQUEST: "GET_LOGIN_REQUEST" = "GET_LOGIN_REQUEST";
+export const GET_LOGIN_SUCCESS: "GET_LOGIN_SUCCESS" = "GET_LOGIN_SUCCESS";
+export const GET_LOGIN_FAILED: "GET_LOGIN_FAILED" = "GET_LOGIN_FAILED";
 export const LOGOUT = "LOGOUT";
 export const logoutStatus = () => ({
   type: LOGOUT,
 });
+
+interface ILoginRequest {
+  readonly type: typeof GET_LOGIN_REQUEST;
+}
+interface ILoginSuccess {
+  readonly type: typeof GET_LOGIN_SUCCESS;
+  readonly payload: IUserData;
+}
+interface ILoginFailed {
+  readonly type: typeof GET_LOGIN_FAILED;
+}
+
+export type TLoginActions = ILoginRequest | ILoginSuccess | ILoginFailed;
 
 export function getLogin(email, password) {
   return async (dispatch) => {

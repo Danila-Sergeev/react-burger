@@ -1,14 +1,16 @@
 import { getCookie, deleteCookie } from "../../utils/cookie";
 import { fetchWithRefresh, checkResponse } from "../api";
 import { BURGER_API_URL, request } from "../../utils/constants";
-export const GET_USER_REQUEST = "GET_USER_REQUEST";
-export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
-export const GET_USER_FAILED = "GET_USER_FAILED";
-export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
-export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
-export const LOGOUT_FAILED = "LOGOUT_FAILED";
-export const ISAUTH_CHECKED = "ISAUTH_CHECKED";
-export const ISAUTH_CHECKED_FAILD = "ISAUTH_CHECKED_FAILD";
+import { IUserData } from "../constants/constants";
+export const GET_USER_REQUEST: "GET_USER_REQUEST" = "GET_USER_REQUEST";
+export const GET_USER_SUCCESS: "GET_USER_SUCCESS" = "GET_USER_SUCCESS";
+export const GET_USER_FAILED: "GET_USER_FAILED" = "GET_USER_FAILED";
+export const LOGOUT_REQUEST: "LOGOUT_REQUEST" = "LOGOUT_REQUEST";
+export const LOGOUT_SUCCESS: "LOGOUT_SUCCESS" = "LOGOUT_SUCCESS";
+export const LOGOUT_FAILED: "LOGOUT_FAILED" = "LOGOUT_FAILED";
+export const ISAUTH_CHECKED: "ISAUTH_CHECKED" = "ISAUTH_CHECKED";
+export const ISAUTH_CHECKED_FAILD: "ISAUTH_CHECKED_FAILD" =
+  "ISAUTH_CHECKED_FAILD";
 export const isAuthChecked = (isAuthenticated) => ({
   type: ISAUTH_CHECKED,
   payload: isAuthenticated,
@@ -18,6 +20,41 @@ export const isAuthFailed = (err) => ({
   payload: err,
 });
 
+interface IGetUserRequest {
+  readonly type: typeof GET_USER_REQUEST;
+}
+interface IGetUserSuccess {
+  readonly type: typeof GET_USER_SUCCESS;
+  readonly payload: IUserData;
+}
+interface IGetUserFailed {
+  readonly type: typeof GET_USER_FAILED;
+}
+interface ILogoutRequest {
+  readonly type: typeof LOGOUT_REQUEST;
+}
+interface ILogoutSuccess {
+  readonly type: typeof LOGOUT_SUCCESS;
+  readonly payload: string;
+}
+interface ILogoutFailed {
+  readonly type: typeof LOGOUT_FAILED;
+}
+interface IIsAuthChecked {
+  readonly type: typeof ISAUTH_CHECKED;
+  readonly payload: boolean;
+}
+interface ISetAuthCheckedFailed {
+  readonly type: typeof ISAUTH_CHECKED_FAILD;
+}
+
+export type TUserActions =
+  | ILogoutRequest
+  | ILogoutSuccess
+  | ILogoutFailed
+  | IGetUserRequest
+  | IGetUserSuccess
+  | IGetUserFailed;
 export function getUser() {
   return async (dispatch) => {
     dispatch({

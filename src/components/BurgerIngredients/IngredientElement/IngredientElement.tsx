@@ -1,6 +1,6 @@
 import IngredientsStiles from "../BurgerIngredients.module.css";
 import Modal from "../../Modal/Modal";
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import ingredientType from "../../../utils/types";
 import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
@@ -15,10 +15,24 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientDetails from "../../IngredientDetails/IngredientDetails";
 import { useLocation, Link } from "react-router-dom";
-function IngredientElement(props) {
+
+interface Iitem {
+  image: string;
+  name: string;
+  price: number;
+  _id?: string;
+}
+
+interface IIngredientElement {
+  item: Iitem;
+  count: number;
+  key: string;
+}
+
+const IngredientElement: FC<IIngredientElement> = (props) => {
   const { item, count } = props;
   const dispatch = useDispatch();
-  const setData = (item) => {
+  const setData = (item: object) => {
     dispatch({
       type: SET_INGREDIENT_DETAILS,
       item,
@@ -85,14 +99,5 @@ function IngredientElement(props) {
       </div>
     </Link>
   );
-}
-IngredientElement.propTypes = {
-  item: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    id: PropTypes.string,
-  }).isRequired,
-  count: PropTypes.number.isRequired,
 };
 export default IngredientElement;

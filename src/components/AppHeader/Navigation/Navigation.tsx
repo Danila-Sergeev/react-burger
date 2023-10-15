@@ -1,9 +1,16 @@
-import React from "react";
+import React, { FC } from "react";
 import headerStiles from "../AppHeader.module.css";
 import PropTypes from "prop-types";
 import { NavLink, useMatch } from "react-router-dom";
 
-function Navigation(props) {
+interface Inavigation {
+  className?: string;
+  path?: string;
+  icon?: any;
+  textElement: any;
+}
+
+const Navigation: FC<Inavigation> = (props) => {
   const isProfile = useMatch(`/${props.path}/*`);
   return (
     <NavLink
@@ -22,7 +29,7 @@ function Navigation(props) {
       </p>
     </NavLink>
   );
-}
+};
 Navigation.propTypes = {
   textElement: PropTypes.array.isRequired,
   icon: PropTypes.func.isRequired,
