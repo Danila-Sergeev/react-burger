@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, FC } from "react";
 import PropTypes from "prop-types";
 import forgotPasswordStylesUsual from "../Login/Login.module.css";
 import resetPasswordStyles from "./ResetPassword.module.css";
@@ -12,7 +12,7 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useForm } from "../../utils/hoc";
-export default function ResetPassword() {
+export const ResetPassword: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const success = useSelector((store) => store.resetPassword.success);
@@ -47,7 +47,7 @@ export default function ResetPassword() {
         type={"text"}
         placeholder={"Введите код из письма"}
         onChange={handleChange}
-        icon={""}
+        icon={undefined}
         value={values.code}
         name={"code"}
         error={false}
@@ -73,4 +73,4 @@ export default function ResetPassword() {
       </p>
     </div>
   );
-}
+};

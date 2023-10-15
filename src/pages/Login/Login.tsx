@@ -1,36 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, FC } from "react";
 import PropTypes from "prop-types";
 import loginStyles from "./Login.module.css";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { getLogin } from "../../services/actions/login";
 import { setCookie } from "../../utils/cookie";
 import { useLocation } from "react-router-dom";
 import { checkUserAuth } from "../../services/actions/user";
+import { useTypedDispatch, useTypedSelector } from "../../utils/hoc";
 import {
   EmailInput,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useForm } from "../../utils/hoc";
-export default function Login() {
+const Login: FC = () => {
   const navigate = useNavigate();
   function goToNewPage() {
     navigate("/", { replace: false });
   }
-  const dispatch = useDispatch();
+  const dispatch = useTypedDispatch();
   const location = useLocation();
-  const loginDetails = useSelector((store) => store.login);
-  const token = useSelector((store) => store.login.token);
-  const reftoken = useSelector((store) => store.login.refreshToken);
-  const isLoggedIn = useSelector((store) => store.user.isAuthChecked);
+  const loginDetails = useTypedSelector((store) => store.login);
+  const token = useTypedSelector((store) => store.login.token);
+  const reftoken = useTypedSelector((store) => store.login.refreshToken);
+  const isLoggedIn = useTypedSelector((store) => store.user.isAuthChecked);
   const { values, handleChange, setValues } = useForm({
     email: "",
     password: "",
   });
 
-  function onSubmitFrom(e) {
+  function onSubmitFrom(e: any) {
     e.preventDefault();
     dispatch(getLogin(values.email, values.password));
   }
@@ -81,4 +81,5 @@ export default function Login() {
       </p>
     </form>
   );
-}
+};
+export default { Login };

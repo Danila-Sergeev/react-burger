@@ -1,5 +1,6 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { rootReducer } from "./reducers/rootReducer";
+import { ActionCreator } from "redux";
 import { IIngredientsActions } from "./actions/Ingredients";
 import { TConstructorActions } from "./actions/constructor";
 import { TForgotPasswordActions } from "./actions/forgotPassword";
@@ -18,5 +19,9 @@ type TApplicationActions =
   | TResetPasswordActions
   | TUserActions
   | TWSActions;
+
+export type AppThunk<ReturnType = void> = ActionCreator<
+  ThunkAction<ReturnType, RootState, unknown, TApplicationActions>
+>;
 
 export type AppDispatch = ThunkDispatch<RootState, never, TApplicationActions>;

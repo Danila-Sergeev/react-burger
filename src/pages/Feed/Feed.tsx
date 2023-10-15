@@ -1,8 +1,9 @@
 import styles from "./Feed.module.css";
 import OrderStatusInfo from "../../components/OrdersStatusInfo/OrdersStatusInfo";
 import OrderFeed from "../../components/FeedOrderMain/FeedOrderMain";
+import { FC } from "react";
 
-const FeedPage = () => {
+const FeedPage: FC = () => {
   return (
     <section className={styles.section}>
       <h2 className={`text text_type_main-large ${styles.title}`}>

@@ -1,3 +1,4 @@
+import { v4 } from "uuid";
 import { IIngredient } from "../constants/constants";
 
 export const ADD_ITEM: "ADD_ITEM" = "ADD_ITEM";
@@ -7,7 +8,6 @@ export const MOVE_ITEM: "MOVE_ITEM" = "MOVE_ITEM";
 
 interface IAddIngridientAction {
   readonly type: typeof ADD_ITEM;
-  readonly ingridient: IIngredient;
   readonly item: any;
 }
 interface IDeleteIngredientAction {
@@ -25,6 +25,20 @@ interface IMoveIngredientAction {
 interface IResetIngredientAction {
   readonly type: typeof RESET_ITEM;
 }
+
+export const addIngridientAction = (
+  ingridient: IIngredient
+): IAddIngridientAction => {
+  const key = v4();
+
+  return {
+    type: ADD_ITEM,
+    item: {
+      ...ingridient,
+      key,
+    },
+  };
+};
 
 export type TConstructorActions =
   | IAddIngridientAction

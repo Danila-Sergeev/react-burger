@@ -23,7 +23,7 @@ export type TResetPasswordActions =
   | IResetPasswordSucces
   | IResetPasswordFailed;
 
-export function getResetPassword(password, token) {
+export function getResetPassword(password: string, token: string) {
   return async (dispatch) => {
     dispatch({
       type: RESET_PASSWORD_REQUEST,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, FC } from "react";
 import PropTypes from "prop-types";
 import forgotPasswordStylesUsual from "../Login/Login.module.css";
 import forgotPasswordStyles from "./ForgotPassword.module.css";
@@ -11,7 +11,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useForm } from "../../utils/hoc";
-export default function ForgotPassword() {
+const ForgotPassword: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const success = useSelector((store) => store.forgotPassword.success);
@@ -57,4 +57,5 @@ export default function ForgotPassword() {
       </p>
     </div>
   );
-}
+};
+export default { ForgotPassword };

@@ -8,12 +8,11 @@ import {
   useParams,
   useNavigate,
 } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import Login from "../../pages/Login/Login";
 import Register from "../../pages/Register/Register";
 import ForgotPassword from "../../pages/ForgotPassword/ForgotPassword";
-import ResetPassword from "../../pages/ResetPassword/ResetPassword";
-import Profile from "../../pages/Profile/Profile";
+import { ResetPassword } from "../../pages/ResetPassword/ResetPassword";
+import { Profile } from "../../pages/Profile/Profile";
 import { getCookie } from "../../utils/cookie";
 import ProtectedRouteElement from "../ProtectedRouteElement/ProtectedRouteElement";
 import PublicRouteElement from "../PublicRouteElement/PublicRouteElement";

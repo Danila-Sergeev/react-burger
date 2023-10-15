@@ -2,11 +2,12 @@ import { format, isToday, isYesterday } from "date-fns";
 
 export const BURGER_API_URL = "https://norma.nomoreparties.space/api";
 export const wsUrl = "wss://norma.nomoreparties.space/orders";
-export const request = (endpoint, fetchType, options) => {
+
+export const request = (endpoint: string, fetchType: any, options: any) => {
   return fetchType(`${BURGER_API_URL}${endpoint}`, options);
 };
 
-export const formatDate = (isoString) => {
+export const formatDate = (isoString: any) => {
   const date = new Date(isoString);
 
   let formattedDate;

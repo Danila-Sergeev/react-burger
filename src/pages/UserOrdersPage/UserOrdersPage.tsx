@@ -1,7 +1,7 @@
 import styles from "./UserOrdersPage.module.css";
 import UserOrderFeed from "../../components/UserOrderFeed/UserOrderFeed";
-
-const UserOrdersPage = () => {
+import { FC } from "react";
+const UserOrdersPage: FC = () => {
   return (
     <section className={styles.section}>
       <div className={styles.orders__section}>

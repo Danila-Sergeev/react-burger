@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FC } from "react";
 import PropTypes from "prop-types";
 import registerStyles from "../Login/Login.module.css";
 import { NavLink } from "react-router-dom";
@@ -12,7 +12,7 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useForm } from "../../utils/hoc";
-export default function Register() {
+const Register: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const success = useSelector((store) => store.register.registerSuccess);
@@ -75,4 +75,5 @@ export default function Register() {
       </p>
     </div>
   );
-}
+};
+export default Register;

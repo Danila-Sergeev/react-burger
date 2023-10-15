@@ -2,9 +2,9 @@ import BurgerIngredients from "../../components/BurgerIngredients/BurgerIngredie
 import BurgerConstructor from "../../components/BurgerConstructor/BurgerConstructor";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
-import { useState } from "react";
+import { FC, useState } from "react";
 
-const HomePage = () => {
+const HomePage: FC = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <BurgerIngredients />

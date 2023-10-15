@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, FC, useMemo } from "react";
 import PropTypes from "prop-types";
 import profiledStyles from "./Profile.module.css";
 import { useParams } from "react-router-dom";
@@ -15,7 +15,7 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { UserOrdersPage } from "../UserOrdersPage/UserOrdersPage";
-export default function Profile() {
+export const Profile: FC = () => {
   const dispatch = useDispatch();
   const name = useSelector((store) => store.user.name);
   const email = useSelector((store) => store.user.email);
@@ -135,4 +135,4 @@ export default function Profile() {
       </div>
     </section>
   );
-}
+};

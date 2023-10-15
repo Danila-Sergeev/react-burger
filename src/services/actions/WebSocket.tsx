@@ -10,7 +10,7 @@ export const WS_CONNECTION_CLOSED: "WS_CONNECTION_CLOSED" =
 export const WS_SEND_DATA: "WS_SEND_DATA" = "WS_SEND_DATA";
 export const CLEAR_WS_DATA: "CLEAR_WS_DATA" = "CLEAR_WS_DATA";
 
-export const startWsConnection = (url) => ({
+export const startWsConnection = (url: string) => ({
   type: WS_CONNECTION_START,
   payload: url,
 });
@@ -59,7 +59,7 @@ export const wsConnectionError = () => ({ type: WS_CONNECTION_ERROR });
 
 export const wsConnectionClosed = () => ({ type: WS_CONNECTION_CLOSED });
 
-export const wsGetMessage = (message) => ({
+export const wsGetMessage = (message: string) => ({
   type: WS_GET_DATA,
   payload: message,
 });

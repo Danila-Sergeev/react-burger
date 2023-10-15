@@ -7,25 +7,30 @@ import {
 import Modal from "../Modal/Modal";
 import { useNavigate, useLocation } from "react-router-dom";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import { useDispatch, useSelector } from "react-redux";
 import { getOrder } from "../../services/actions/Ingredients";
-import BurgerConstructorMains from "./BurgerConstructorMains/BurgerConstructorMains";
+import { BurgerConstructorMains } from "./BurgerConstructorMains/BurgerConstructorMains";
 import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
-import { ADD_ITEM, RESET_ITEM } from "../../services/actions/constructor";
+import {
+  ADD_ITEM,
+  RESET_ITEM,
+  addIngridientAction,
+} from "../../services/actions/constructor";
 import { RESET_ORDER } from "../../services/actions/Ingredients";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-
+import { useTypedDispatch, useTypedSelector } from "../../utils/hoc";
 const BurgerConstructor: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const isAuthenticated = useSelector((state) => state.user.isAuthChecked);
-  const bunLocked = useSelector((store) => store.constr.bun);
-  const mains = useSelector((store) => store.constr.items);
+  const isAuthenticated = useTypedSelector((state) => state.user.isAuthChecked);
+  const bunLocked = useTypedSelector((store) => store.constr.bun);
+  const mains = useTypedSelector((store) => store.constr.items);
   /* Обработчик состояния попапа */
   const [modal, setModal] = useState(false);
-  const ingredients = useSelector((store) => store.ingredients.ingredients);
-  const dispatch = useDispatch();
+  const ingredients = useTypedSelector(
+    (store) => store.ingredients.ingredients
+  );
+  const dispatch = useTypedDispatch();
   /*  Обработчики открытия/закрытия попапа */
   const handleOpenModal = () => {
     if (Object.keys(bunLocked).length !== 0) {
@@ -60,8 +65,9 @@ const BurgerConstructor: FC = () => {
   /*  Добавление перетаскиваемого элемента в конструктор */
   const [, dropTarget] = useDrop({
     accept: "ingredient",
-    drop(item) {
-      dispatch({ type: ADD_ITEM, item: { ...item, id4: uuidv4() } });
+    drop(item: any) {
+      dispatch(addIngridientAction(item.ingredient));
+      /*   dispatch({ type: ADD_ITEM, item: { ...item, id4: uuidv4() } }); */
     },
   });
 

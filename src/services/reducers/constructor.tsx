@@ -9,7 +9,7 @@ import { IIngredientType } from "../actions/Ingredients.js";
 import { IIngredient } from "../constants/constants.js";
 
 type TConstructorState = {
-  bun: IIngredientType | null;
+  bun: IIngredient | null;
   items: Array<IIngredient>;
 };
 

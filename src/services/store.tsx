@@ -14,7 +14,7 @@ import {
   WS_CONNECTION_CLOSED,
   WS_GET_DATA,
   WS_SEND_DATA,
-} from "../services/actions/WebSocket";
+} from "./actions/WebSocket";
 
 export const WS_ACTIONS = {
   wsStart: WS_CONNECTION_START,

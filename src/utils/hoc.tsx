@@ -12,6 +12,7 @@ interface ICustomNavLink {
   to: string;
   activeClass: string;
   children: React.ReactNode;
+  onClick?: () => void;
 }
 
 export const CustomNavLink: FC<ICustomNavLink> = ({
@@ -30,7 +31,7 @@ export const CustomNavLink: FC<ICustomNavLink> = ({
     </NavLink>
   );
 };
-export function useForm(inputValues = {}) {
+export function useForm(inputValues: any) {
   const [values, setValues] = useState(inputValues);
 
   const handleChange = (event: any) => {

@@ -1,7 +1,9 @@
 import { BURGER_API_URL } from "../utils/constants";
 import { getCookie, setCookie } from "../utils/cookie";
-export const checkResponse = (res) => {
-  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+export const checkResponse = (res: any) => {
+  return res.ok
+    ? res.json()
+    : res.json().then((err: string) => Promise.reject(err));
 };
 
 export const refreshToken = () => {
@@ -53,14 +55,14 @@ async function refreshTokenApi() {
   return { accessToken, refreshToken: newRefreshToken };
 }
 
-export const fetchWithRefresh = async (url, options) => {
+export const fetchWithRefresh = async (url: string, options: any) => {
   try {
     const res = await fetch(url, options);
 
     const response = await checkResponse(res);
 
     return response;
-  } catch (err) {
+  } catch (err: any) {
     if (err.message === "jwt expired") {
       const refreshData = await refreshTokenApi();
       localStorage.setItem("refreshToken", refreshData.refreshToken);

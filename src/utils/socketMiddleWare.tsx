@@ -1,6 +1,12 @@
-export const socketMiddleware = (wsUrl, wsActions) => {
+import { IWebSocket } from "../services/actions/WebSocket";
+import { Middleware } from "redux";
+
+export const socketMiddleware = (
+  wsUrl: string,
+  wsActions: IWebSocket
+): Middleware => {
   return (store) => {
-    let socket = null;
+    let socket: WebSocket | null = null;
     let url = undefined;
 
     return (next) => (action) => {
@@ -28,7 +34,7 @@ export const socketMiddleware = (wsUrl, wsActions) => {
           const parsedData = JSON.parse(data);
           dispatch({ type: onMessage, payload: parsedData });
         };
-        socket.onClose = (event) => {
+        socket.onclose = (event) => {
           dispatch({ type: onClose, payload: event });
         };
 
