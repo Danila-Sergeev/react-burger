@@ -5,8 +5,20 @@ import {
   LOGOUT_SUCCESS,
   ISAUTH_CHECKED,
   ISAUTH_CHECKED_FAILD,
+  TUserActions,
 } from "../actions/user";
-const initialState = {
+
+type TUserState = {
+  name: string;
+  email: string;
+  userRequest: boolean;
+  userFailed: boolean;
+  isAuthChecked: boolean;
+  user: null;
+  authError: null;
+};
+
+const initialState: TUserState = {
   name: "",
   email: "",
   userRequest: false,
@@ -16,7 +28,10 @@ const initialState = {
   authError: null,
 };
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (
+  state = initialState,
+  action: TUserActions
+): TUserState => {
   switch (action.type) {
     case GET_USER_REQUEST: {
       return {

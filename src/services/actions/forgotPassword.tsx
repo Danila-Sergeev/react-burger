@@ -12,7 +12,7 @@ interface IForgotPasswordRequest {
 }
 interface IForgotPasswordSucces {
   readonly type: typeof FORGOT_PASSWORD_SUCCESS;
-  readonly payload: boolean;
+  readonly data: any;
 }
 interface IForgotPasswordFailed {
   readonly type: typeof FORGOT_PASSWORD_FAILED;

@@ -4,15 +4,19 @@ export interface IUserData {
   user: any;
   isAuthChecked: boolean;
   accessToken: string;
+  success: boolean;
+  refreshToken: string;
 }
 export interface IRegisterUser {
   name: string;
   email: string;
   password: string;
   user: any;
+  success: boolean;
 }
 export interface IIngredient {
   _id: string;
+  id4: string;
   name: string;
   type: string;
   proteins: number;
@@ -24,6 +28,7 @@ export interface IIngredient {
   image_mobile: string;
   image_large: string;
   __v: number;
+  data: any;
 
   map?: any;
   ingridient?: any;

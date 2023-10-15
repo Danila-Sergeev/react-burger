@@ -25,7 +25,7 @@ interface IGetUserRequest {
 }
 interface IGetUserSuccess {
   readonly type: typeof GET_USER_SUCCESS;
-  readonly payload: IUserData;
+  readonly data: IUserData;
 }
 interface IGetUserFailed {
   readonly type: typeof GET_USER_FAILED;
@@ -54,7 +54,9 @@ export type TUserActions =
   | ILogoutFailed
   | IGetUserRequest
   | IGetUserSuccess
-  | IGetUserFailed;
+  | IGetUserFailed
+  | IIsAuthChecked
+  | ISetAuthCheckedFailed;
 export function getUser() {
   return async (dispatch) => {
     dispatch({

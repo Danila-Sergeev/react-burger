@@ -3,8 +3,19 @@ import {
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_REQUEST,
   RESET_INGREDIENTS,
+  IIngredientsActions,
 } from "../actions/Ingredients.js";
-const initialState = {
+import { IIngredient } from "../constants/constants.js";
+
+type TIngredientsState = {
+  ingredients: Array<IIngredient>;
+  ingredientsRequest: boolean;
+  ingredientsFailed: boolean;
+  constructorIngredients: Array<IIngredient>;
+  order: object;
+};
+
+const initialState: TIngredientsState = {
   ingredients: [],
   ingredientsRequest: false,
   ingredientsFailed: false,
@@ -12,7 +23,10 @@ const initialState = {
   order: {},
 };
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (
+  state = initialState,
+  action: IIngredientsActions
+): TIngredientsState => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {

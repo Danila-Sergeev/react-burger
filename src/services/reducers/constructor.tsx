@@ -5,7 +5,8 @@ import {
   ADD_ITEM,
   TConstructorActions,
 } from "../actions/constructor.js";
-import { IIngredient, IIngredientType } from "../actions/Ingredients.js";
+import { IIngredientType } from "../actions/Ingredients.js";
+import { IIngredient } from "../constants/constants.js";
 
 type TConstructorState = {
   bun: IIngredientType | null;
@@ -20,7 +21,7 @@ const initialState: TConstructorState = {
 export const constructorReducer = (
   state = initialState,
   action: TConstructorActions
-) => {
+): TConstructorState => {
   switch (action.type) {
     case ADD_ITEM: {
       return {
@@ -35,7 +36,7 @@ export const constructorReducer = (
     case RESET_ITEM: {
       return {
         ...state,
-        bun: {},
+        bun: null,
         items: [],
       };
     }

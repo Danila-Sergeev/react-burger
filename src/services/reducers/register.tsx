@@ -2,20 +2,37 @@ import {
   GET_REGISTER_FAILED,
   GET_REGISTER_REQUEST,
   GET_REGISTER_SUCCESS,
+  TRegisterActions,
 } from "../actions/register";
 
-const initialState = {
-  email: [],
-  password: [],
+type TRegisterState = {
+  email: string;
+  password: string;
 
-  name: [],
+  name: string;
+  errorMessage: string;
+  registerRequest: boolean;
+  registerFailed: boolean;
+  registerSuccess: boolean | undefined;
+  loginSuccess: boolean;
+};
+
+const initialState: TRegisterState = {
+  email: "",
+  password: "",
+
+  name: "",
   errorMessage: "",
   registerRequest: false,
   registerFailed: false,
   registerSuccess: undefined,
+  loginSuccess: false,
 };
 
-export const registerReducer = (state = initialState, action) => {
+export const registerReducer = (
+  state = initialState,
+  action: TRegisterActions
+): TRegisterState => {
   switch (action.type) {
     case GET_REGISTER_REQUEST: {
       return {

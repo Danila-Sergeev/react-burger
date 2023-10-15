@@ -12,6 +12,7 @@ interface IResetPasswordRequest {
 }
 interface IResetPasswordSucces {
   readonly type: typeof RESET_PASSWORD_SUCCESS;
+  readonly data: any;
 }
 interface IResetPasswordFailed {
   readonly type: typeof RESET_PASSWORD_FAILED;

@@ -8,15 +8,19 @@ export const MOVE_ITEM: "MOVE_ITEM" = "MOVE_ITEM";
 interface IAddIngridientAction {
   readonly type: typeof ADD_ITEM;
   readonly ingridient: IIngredient;
+  readonly item: any;
 }
 interface IDeleteIngredientAction {
   readonly type: typeof REMOVE_ITEM;
   readonly index: number;
   readonly ingridient: IIngredient;
+  readonly id4: string;
 }
 interface IMoveIngredientAction {
   readonly type: typeof MOVE_ITEM;
-  readonly data: any;
+  readonly dragIndex: any;
+  readonly hoverIndex: any;
+  readonly dragIngredient: any;
 }
 interface IResetIngredientAction {
   readonly type: typeof RESET_ITEM;

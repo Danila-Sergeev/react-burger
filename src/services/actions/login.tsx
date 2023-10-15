@@ -4,7 +4,7 @@ import { IUserData } from "../constants/constants";
 export const GET_LOGIN_REQUEST: "GET_LOGIN_REQUEST" = "GET_LOGIN_REQUEST";
 export const GET_LOGIN_SUCCESS: "GET_LOGIN_SUCCESS" = "GET_LOGIN_SUCCESS";
 export const GET_LOGIN_FAILED: "GET_LOGIN_FAILED" = "GET_LOGIN_FAILED";
-export const LOGOUT = "LOGOUT";
+export const LOGOUT: "LOGOUT" = "LOGOUT";
 export const logoutStatus = () => ({
   type: LOGOUT,
 });
@@ -14,13 +14,21 @@ interface ILoginRequest {
 }
 interface ILoginSuccess {
   readonly type: typeof GET_LOGIN_SUCCESS;
-  readonly payload: IUserData;
+  readonly data: IUserData;
 }
 interface ILoginFailed {
   readonly type: typeof GET_LOGIN_FAILED;
+  readonly error: any;
+}
+interface ILogout {
+  readonly type: typeof LOGOUT;
 }
 
-export type TLoginActions = ILoginRequest | ILoginSuccess | ILoginFailed;
+export type TLoginActions =
+  | ILoginRequest
+  | ILoginSuccess
+  | ILoginFailed
+  | ILogout;
 
 export function getLogin(email, password) {
   return async (dispatch) => {

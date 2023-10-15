@@ -3,9 +3,21 @@ import {
   GET_LOGIN_REQUEST,
   GET_LOGIN_SUCCESS,
   LOGOUT,
+  TLoginActions,
 } from "../actions/login.js";
-const initialState = {
-  email: [],
+
+type TloginState = {
+  email: string;
+  status: boolean;
+  loginRequest: boolean;
+  loginFailed: boolean;
+  loginSuccess: boolean | undefined;
+  token: string;
+  refreshToken: string;
+};
+
+const initialState: TloginState = {
+  email: "",
   status: false,
   loginRequest: false,
   loginFailed: false,
@@ -14,7 +26,10 @@ const initialState = {
   refreshToken: "",
 };
 
-export const loginReducer = (state = initialState, action) => {
+export const loginReducer = (
+  state = initialState,
+  action: TLoginActions
+): TloginState => {
   switch (action.type) {
     case GET_LOGIN_REQUEST: {
       return {
@@ -37,8 +52,8 @@ export const loginReducer = (state = initialState, action) => {
 
     case GET_LOGIN_FAILED: {
       return {
-        status: false,
         ...state,
+        status: false,
         loginFailed: true,
         loginRequest: false,
         loginSuccess: action.error.success,

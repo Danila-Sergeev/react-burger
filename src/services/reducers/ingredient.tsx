@@ -1,12 +1,22 @@
 import {
   SET_INGREDIENT_DETAILS,
   DELETE_INGREDIENT_DETAILS,
+  IIngredientsActions,
 } from "../actions/Ingredients.js";
-const initialState = {
-  currentIngredient: {},
+import { IIngredient } from "../constants/constants.js";
+
+type TIngredientState = {
+  currentIngredient: IIngredient | undefined;
 };
 
-export const ingredientReducer = (state = initialState, action) => {
+const initialState: TIngredientState = {
+  currentIngredient: undefined,
+};
+
+export const ingredientReducer = (
+  state = initialState,
+  action: IIngredientsActions
+): TIngredientState => {
   switch (action.type) {
     case SET_INGREDIENT_DETAILS: {
       return {
@@ -17,7 +27,7 @@ export const ingredientReducer = (state = initialState, action) => {
     case DELETE_INGREDIENT_DETAILS: {
       return {
         ...state,
-        currentIngredient: {},
+        currentIngredient: undefined,
       };
     }
     default: {

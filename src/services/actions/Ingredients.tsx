@@ -35,6 +35,16 @@ interface IgetIngredientsSuccess {
 interface IgetIngredientsFailed {
   readonly type: typeof GET_INGREDIENTS_FAILED;
 }
+interface IResetIngredients {
+  readonly type: typeof RESET_INGREDIENTS;
+}
+interface IsetIngredientsDetails {
+  readonly type: typeof SET_INGREDIENT_DETAILS;
+  readonly item: IIngredient;
+}
+interface IDeleteIngredientsDetails {
+  readonly type: typeof DELETE_INGREDIENT_DETAILS;
+}
 
 export function getIngredients() {
   return async (dispatch: AppDispatch) => {
@@ -112,4 +122,7 @@ export type IIngredientsActions =
   | IPostOrderRequest
   | IPostOrderSuccess
   | IPostOrderFailed
-  | IPostOrderReset;
+  | IPostOrderReset
+  | IsetIngredientsDetails
+  | IDeleteIngredientsDetails
+  | IResetIngredients;

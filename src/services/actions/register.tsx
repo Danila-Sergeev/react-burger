@@ -12,11 +12,11 @@ interface IRegisterRequest {
 }
 interface IRegisterSuccess {
   readonly type: typeof GET_REGISTER_SUCCESS;
-  readonly payload: IRegisterUser;
+  readonly data: IRegisterUser;
 }
 interface IRegisterFailed {
   readonly type: typeof GET_REGISTER_FAILED;
-  readonly payload: string;
+  readonly error: any;
 }
 
 export type TRegisterActions =

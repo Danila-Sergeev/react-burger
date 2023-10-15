@@ -5,8 +5,20 @@ import {
   WS_GET_DATA,
   WS_CONNECTION_CLOSED,
   CLEAR_WS_DATA,
+  TWSActions,
 } from "../actions/WebSocket";
-const initialState = {
+import { IOrderDetails } from "../constants/constants";
+
+type TWsState = {
+  wsConnected: boolean;
+  orders: Array<IOrderDetails>;
+  total: number;
+  totalToday: number;
+  error: boolean | undefined;
+  errMessage: string | null;
+};
+
+const initialState: TWsState = {
   wsConnected: false,
   orders: [],
   total: 0,
@@ -15,7 +27,10 @@ const initialState = {
   errMessage: null,
 };
 
-export const wsReducer = (state = initialState, action) => {
+export const wsReducer = (
+  state = initialState,
+  action: TWSActions
+): TWsState => {
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:
       return {
