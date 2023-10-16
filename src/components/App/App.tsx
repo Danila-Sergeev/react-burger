@@ -8,9 +8,9 @@ import {
   useParams,
   useNavigate,
 } from "react-router-dom";
-import Login from "../../pages/Login/Login";
+import { Login } from "../../pages/Login/Login";
 import Register from "../../pages/Register/Register";
-import ForgotPassword from "../../pages/ForgotPassword/ForgotPassword";
+import { ForgotPassword } from "../../pages/ForgotPassword/ForgotPassword";
 import { ResetPassword } from "../../pages/ResetPassword/ResetPassword";
 import { Profile } from "../../pages/Profile/Profile";
 import { getCookie } from "../../utils/cookie";

@@ -2,6 +2,7 @@ import { getCookie, deleteCookie } from "../../utils/cookie";
 import { fetchWithRefresh, checkResponse } from "../api";
 import { BURGER_API_URL, request } from "../../utils/constants";
 import { IUserData } from "../constants/constants";
+import { AppDispatch } from "../types";
 export const GET_USER_REQUEST: "GET_USER_REQUEST" = "GET_USER_REQUEST";
 export const GET_USER_SUCCESS: "GET_USER_SUCCESS" = "GET_USER_SUCCESS";
 export const GET_USER_FAILED: "GET_USER_FAILED" = "GET_USER_FAILED";
@@ -11,11 +12,11 @@ export const LOGOUT_FAILED: "LOGOUT_FAILED" = "LOGOUT_FAILED";
 export const ISAUTH_CHECKED: "ISAUTH_CHECKED" = "ISAUTH_CHECKED";
 export const ISAUTH_CHECKED_FAILD: "ISAUTH_CHECKED_FAILD" =
   "ISAUTH_CHECKED_FAILD";
-export const isAuthChecked = (isAuthenticated) => ({
+export const isAuthChecked = (isAuthenticated: boolean) => ({
   type: ISAUTH_CHECKED,
   payload: isAuthenticated,
 });
-export const isAuthFailed = (err) => ({
+export const isAuthFailed = (err: any) => ({
   type: ISAUTH_CHECKED_FAILD,
   payload: err,
 });
@@ -35,7 +36,7 @@ interface ILogoutRequest {
 }
 interface ILogoutSuccess {
   readonly type: typeof LOGOUT_SUCCESS;
-  readonly payload: string;
+  readonly payload?: string;
 }
 interface ILogoutFailed {
   readonly type: typeof LOGOUT_FAILED;
@@ -58,7 +59,7 @@ export type TUserActions =
   | IIsAuthChecked
   | ISetAuthCheckedFailed;
 export function getUser() {
-  return async (dispatch) => {
+  return async (dispatch: AppDispatch) => {
     dispatch({
       type: GET_USER_REQUEST,
     });
@@ -88,8 +89,8 @@ export function getUser() {
   };
 }
 
-export function setUser(name, email) {
-  return async (dispatch) => {
+export function setUser(name: string, email: string) {
+  return async (dispatch: AppDispatch) => {
     dispatch({
       type: GET_USER_REQUEST,
     });
@@ -119,7 +120,7 @@ export function setUser(name, email) {
 }
 
 export const logoutApi = () => {
-  return async (dispatch) => {
+  return async (dispatch: AppDispatch) => {
     try {
       dispatch({ type: LOGOUT_REQUEST });
 
@@ -153,7 +154,7 @@ export const logoutApi = () => {
 };
 
 export const checkUserAuth = () => {
-  return function (dispatch) {
+  return function (dispatch: AppDispatch) {
     if (getCookie("token")) {
       dispatch(isAuthChecked(true));
     } else {

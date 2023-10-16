@@ -1,19 +1,23 @@
 import styles from "./OrdersStatusInfo.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useTypedDispatch, useTypedSelector } from "../../utils/hoc";
 import { useEffect, useState, useMemo, FC } from "react";
 import {
   startWsConnection,
   wsConnectionClosed,
 } from "../../services/actions/WebSocket";
 import { wsUrl } from "../../utils/constants";
+import { IOrderDetails } from "../../services/constants/constants";
 
 const OrderStatusInfo: FC = () => {
-  const dispatch = useDispatch();
-  const { orders, total, totalToday } = useSelector((state) => state.ws);
+  const dispatch = useTypedDispatch();
+  const { orders, total, totalToday } = useTypedSelector((state) => state.ws);
 
-  const [newOrdersReady, setNewOrdersReady] = useState([]);
-  const [newOrdersInProgress, setNewOrdersInProgress] = useState([]);
+  const [newOrdersReady, setNewOrdersReady] = useState<IOrderDetails[]>([]);
+  const [newOrdersInProgress, setNewOrdersInProgress] = useState<
+    IOrderDetails[]
+  >([]);
 
+  const NewOrders = orders.map((i) => i.orders);
   useEffect(() => {
     dispatch(startWsConnection(`${wsUrl}/all`));
     return () => {
@@ -22,11 +26,11 @@ const OrderStatusInfo: FC = () => {
   }, []);
 
   useEffect(() => {
-    if (orders && orders.orders) {
+    if (orders && NewOrders) {
       const updatedOrdersReady = [];
       const updatedOrdersInProgress = [];
 
-      for (let order of orders.orders) {
+      for (let order of NewOrders) {
         if (order.status === "done") {
           updatedOrdersReady.push(order);
         } else {
@@ -63,7 +67,10 @@ const OrderStatusInfo: FC = () => {
         }
         return count;
       },
-      { doneList: [], preparingList: [] }
+      { doneList: [], preparingList: [] } as {
+        doneList: number[];
+        preparingList: number[];
+      }
     );
   }, [orders]);
 

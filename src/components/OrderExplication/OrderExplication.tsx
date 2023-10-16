@@ -1,6 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useMemo, useEffect, useMatch, FC } from "react";
+import { useMemo, useEffect, FC } from "react";
 import {
   startWsConnection,
   wsConnectionClosed,
@@ -13,18 +12,20 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { getCookie } from "../../utils/cookie";
 import { Interface } from "readline";
-
+import { useTypedDispatch, useTypedSelector } from "../../utils/hoc";
 interface IOrderExplication {
   inModal: Boolean;
 }
 const OrderExplication: FC<IOrderExplication> = React.memo(({ inModal }) => {
-  const dispatch = useDispatch();
+  const dispatch = useTypedDispatch();
   const navigate = useNavigate();
   const accessToken = getCookie("token");
-  const ingredientList = useSelector((state) => state.ingredients.ingredients);
+  const ingredientList = useTypedSelector(
+    (state) => state.ingredients.ingredients
+  );
   const { id } = useParams();
   const location = useLocation();
-  const orders = useSelector((state) => state.ws.orders);
+  const orders = useTypedSelector((state) => state.ws.orders);
 
   const order = orders?.find((order) => order._id === id);
 
@@ -44,7 +45,7 @@ const OrderExplication: FC<IOrderExplication> = React.memo(({ inModal }) => {
   let totalPrice = 0;
 
   const ingredients = order?.ingredients;
-  const ingredientCounts = {};
+  const ingredientCounts: { [key: string]: number } = {};
 
   if (ingredients) {
     ingredients.forEach((ingredientId) => {
@@ -56,33 +57,38 @@ const OrderExplication: FC<IOrderExplication> = React.memo(({ inModal }) => {
     });
   }
 
-  const ingredientsMarkup = useMemo(() => {
-    return Object.entries(ingredientCounts).map(([ingredientId, count]) => {
-      const ingredient = ingredientList.find(
-        (item) => item._id === ingredientId
-      );
-      if (!ingredient) return null;
+  const { ingredientsMarkup, totalPrices } = useMemo(() => {
+    let totalPrices = 0;
+    const ingredientsMarkup = Object.entries(ingredientCounts).map(
+      ([ingredientId, count]) => {
+        const ingredient = ingredientList.find(
+          (item) => item._id === ingredientId
+        );
+        if (!ingredient) return null;
 
-      totalPrice += ingredient.price * count;
+        totalPrices += ingredient.price * count;
 
-      return (
-        <li key={ingredientId} className={styles.ingredient__container}>
-          <OrderImage
-            alt={ingredient.name}
-            image={ingredient.image}
-            count={count > 1 ? `+${count}` : ""}
-            extraCountClass={styles.explicit}
-          />
-          <span className={`${styles.name} text text_type_main-small`}>
-            {ingredient.name}
-          </span>
-          <span className={`${styles.price} text text_type_digits-default`}>
-            {`${count} x ${ingredient.price}`} <CurrencyIcon type="primary" />{" "}
-          </span>
-        </li>
-      );
-    });
-  });
+        return (
+          <li key={ingredientId} className={styles.ingredient__container}>
+            <OrderImage
+              alt={ingredient.name}
+              image={ingredient.image}
+              count={count > 1 ? count : 0}
+              extraCountClass={styles.explicit}
+            />
+            <span className={`${styles.name} text text_type_main-small`}>
+              {ingredient.name}
+            </span>
+            <span className={`${styles.price} text text_type_digits-default`}>
+              {`${count} x ${ingredient.price}`} <CurrencyIcon type="primary" />{" "}
+            </span>
+          </li>
+        );
+      }
+    );
+    return { ingredientsMarkup, totalPrices };
+  }, [ingredientCounts, ingredientList]);
+
   let statusText = "";
   let statusStyle = "";
   if (!order) {
@@ -102,9 +108,13 @@ const OrderExplication: FC<IOrderExplication> = React.memo(({ inModal }) => {
   return (
     <div className={containerStyles}>
       <div className={styles.upper__box}>
-        <p className="text text_type_digits-default mb-15">{`#${order.number}`}</p>
+        <p className="text text_type_digits-default mb-15">
+          {order ? `#${order.number}` : ""}
+        </p>
       </div>
-      <h2 className="text text_type_main-medium mb-6 mt-2">{order.name}</h2>
+      <h2 className="text text_type_main-medium mb-6 mt-2">
+        {order ? order.name : ""}
+      </h2>
       <p className={`text text_type_main-small mb-15 ${statusStyle}`}>
         {statusText}
       </p>
@@ -114,10 +124,10 @@ const OrderExplication: FC<IOrderExplication> = React.memo(({ inModal }) => {
       </div>
       <div className={styles.price__container}>
         <p className="text text_type_main-small text_color_inactive">
-          {formatDate(order.updatedAt)}
+          {formatDate(order ? order.updatedAt : "")}
         </p>
         <p className={`${styles.price} text text_type_digits-default`}>
-          {totalPrice}
+          {totalPrices}
           <CurrencyIcon type="primary" />
         </p>
       </div>
@@ -125,7 +135,4 @@ const OrderExplication: FC<IOrderExplication> = React.memo(({ inModal }) => {
   );
 });
 
-OrderExplication.propTypes = {
-  inModal: PropTypes.bool.isRequired,
-};
 export default OrderExplication;

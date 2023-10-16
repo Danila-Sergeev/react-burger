@@ -4,17 +4,17 @@ import forgotPasswordStylesUsual from "../Login/Login.module.css";
 import forgotPasswordStyles from "./ForgotPassword.module.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { getPassword } from "../../services/actions/forgotPassword";
-import { useDispatch, useSelector } from "react-redux";
+import { useTypedDispatch, useTypedSelector } from "../../utils/hoc";
 import {
   EmailInput,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useForm } from "../../utils/hoc";
-const ForgotPassword: FC = () => {
-  const dispatch = useDispatch();
+export const ForgotPassword: FC = () => {
+  const dispatch = useTypedDispatch();
   const navigate = useNavigate();
-  const success = useSelector((store) => store.forgotPassword.success);
+  const success = useTypedSelector((store) => store.forgotPassword.success);
   const { values, handleChange, setValues } = useForm({
     email: "",
   });
@@ -58,4 +58,3 @@ const ForgotPassword: FC = () => {
     </div>
   );
 };
-export default { ForgotPassword };

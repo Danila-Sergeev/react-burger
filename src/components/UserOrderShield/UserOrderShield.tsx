@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { useSelector } from "react-redux";
+import { useTypedSelector } from "../../utils/hoc";
 import { useMemo } from "react";
 import { formatDate } from "../../utils/constants";
 import OrderImage from "../OrderImage/OrderImage";
@@ -7,12 +7,15 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import styles from "./UserOrderShield.module.css";
 import { useNavigate, useMatch, useLocation, Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { IOrderDetails } from "../../services/constants/constants";
 interface IUserOrderShield {
-  order: any;
+  order: IOrderDetails;
 }
 
 const UserOrderShield: FC<IUserOrderShield> = React.memo(({ order }) => {
-  const ingredientList = useSelector((state) => state.ingredients.ingredients);
+  const ingredientList = useTypedSelector(
+    (state) => state.ingredients.ingredients
+  );
   const navigate = useNavigate();
   const location = useLocation();
   const match = useMatch("/feed/:id");
@@ -20,7 +23,7 @@ const UserOrderShield: FC<IUserOrderShield> = React.memo(({ order }) => {
   let totalPrice = 0;
 
   const ingredients = order.ingredients;
-  const ingredientCounts = {};
+  const ingredientCounts: { [key: string]: number } = {};
 
   ingredients.forEach((ingredientId) => {
     if (ingredientCounts[ingredientId]) {
@@ -30,25 +33,30 @@ const UserOrderShield: FC<IUserOrderShield> = React.memo(({ order }) => {
     }
   });
 
-  const ingredientsMarkup = useMemo(() => {
-    return Object.entries(ingredientCounts).map(([ingredientId, count]) => {
-      const ingredient = ingredientList.find(
-        (item) => item._id === ingredientId
-      );
-      if (!ingredient) return null;
+  const { ingredientsMarkup, totalPrices } = useMemo(() => {
+    let totalPrices = 0;
+    const ingredientsMarkup = Object.entries(ingredientCounts).map(
+      ([ingredientId, count]) => {
+        const ingredient = ingredientList.find(
+          (item) => item._id === ingredientId
+        );
+        if (!ingredient) return null;
 
-      totalPrice += ingredient.price * count;
+        totalPrices += ingredient.price * count;
 
-      return (
-        <OrderImage
-          key={ingredientId}
-          alt={ingredient.name}
-          image={ingredient.image}
-          count={count > 1 ? `+${count}` : ""}
-        />
-      );
-    });
-  });
+        return (
+          <OrderImage
+            key={ingredientId}
+            alt={ingredient.name}
+            image={ingredient.image}
+            count={count > 1 ? count : 0}
+          />
+        );
+      }
+    );
+    return { ingredientsMarkup, totalPrices };
+  }, [ingredientCounts, ingredientList]);
+
   let statusText = "";
   let statusStyle = "";
 
@@ -86,7 +94,7 @@ const UserOrderShield: FC<IUserOrderShield> = React.memo(({ order }) => {
         <div className={styles.image__container}>{ingredientsMarkup}</div>
         <div className={styles.price__container}>
           <p className={`${styles.price} text text_type_digits-default`}>
-            {totalPrice}
+            {totalPrices}
           </p>
           <CurrencyIcon type="primary" />
         </div>
@@ -94,9 +102,5 @@ const UserOrderShield: FC<IUserOrderShield> = React.memo(({ order }) => {
     </div>
   );
 });
-
-UserOrderShield.propTypes = {
-  order: PropTypes.object.isRequired,
-};
 
 export default UserOrderShield;

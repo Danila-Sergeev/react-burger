@@ -1,6 +1,6 @@
-/* import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-function BurgerConstructorRenderElement(props) {
+function BurgerConstructorRenderElement(props: any) {
   return (
     <ConstructorElement
       type={props.type}
@@ -19,4 +19,3 @@ BurgerConstructorRenderElement.propTypes = {
   isLocked: PropTypes.bool,
 };
 export default BurgerConstructorRenderElement;
- */

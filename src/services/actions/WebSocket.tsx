@@ -25,7 +25,7 @@ export interface IWebSocket {
 }
 
 export interface IWsMessage {
-  orders: Array<IOrderDetails>;
+  orders: IOrderDetails;
   success: boolean;
   total: number;
   totalToday: number;

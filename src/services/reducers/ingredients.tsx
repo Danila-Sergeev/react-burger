@@ -4,8 +4,8 @@ import {
   GET_INGREDIENTS_REQUEST,
   RESET_INGREDIENTS,
   IIngredientsActions,
-} from "../actions/Ingredients.js";
-import { IIngredient } from "../constants/constants.js";
+} from "../actions/Ingredients";
+import { IIngredient } from "../constants/constants";
 
 type TIngredientsState = {
   ingredients: Array<IIngredient>;
@@ -38,7 +38,7 @@ export const ingredientsReducer = (
       return {
         ...state,
         ingredientsFailed: false,
-        ingredients: action.ingredients.data,
+        ingredients: action.ingredients,
         ingredientsRequest: false,
       };
     }

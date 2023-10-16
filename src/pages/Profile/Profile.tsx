@@ -2,7 +2,7 @@ import React, { useEffect, FC, useMemo } from "react";
 import PropTypes from "prop-types";
 import profiledStyles from "./Profile.module.css";
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useTypedDispatch, useTypedSelector } from "../../utils/hoc";
 import { NotFoundPage } from "../notFoundPage/notFoundPage";
 import { getUser, setUser } from "../../services/actions/user";
 import { logoutApi, isAuthChecked } from "../../services/actions/user";
@@ -16,9 +16,9 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { UserOrdersPage } from "../UserOrdersPage/UserOrdersPage";
 export const Profile: FC = () => {
-  const dispatch = useDispatch();
-  const name = useSelector((store) => store.user.name);
-  const email = useSelector((store) => store.user.email);
+  const dispatch = useTypedDispatch();
+  const name = useTypedSelector((store) => store.user.name);
+  const email = useTypedSelector((store) => store.user.email);
 
   let { "*": subpath } = useParams();
   useEffect(() => {

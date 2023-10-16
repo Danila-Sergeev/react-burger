@@ -1,15 +1,15 @@
 import styles from "./UserOrderFeed.module.css";
 import UserOrderShield from "../../components/UserOrderShield/UserOrderShield";
-import { useDispatch, useSelector } from "react-redux";
+import { useTypedDispatch, useTypedSelector } from "../../utils/hoc";
 import { FC, useEffect } from "react";
 import { getCookie } from "../../utils/cookie";
 import { startWsConnection } from "../../services/actions/WebSocket";
 import { wsUrl } from "../../utils/constants";
 
 const UserOrderFeed: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useTypedDispatch();
   const accessToken = getCookie("token");
-  const orders = useSelector((state) => state.ws.orders);
+  const orders = useTypedSelector((state) => state.ws.orders);
   useEffect(() => {
     dispatch(startWsConnection(`${wsUrl}?token=${accessToken}`));
   }, [dispatch, accessToken]);

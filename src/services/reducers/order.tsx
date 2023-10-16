@@ -4,7 +4,7 @@ import {
   GET_ORDER_FAILED,
   RESET_ORDER,
   IIngredientsActions,
-} from "../actions/Ingredients.js";
+} from "../actions/Ingredients";
 
 type TOrderState = {
   orderNumber: number;

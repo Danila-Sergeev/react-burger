@@ -1,5 +1,5 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useTypedSelector } from "../../utils/hoc";
 import { FC } from "react";
 
 interface IProtectedRouteElement {
@@ -7,8 +7,8 @@ interface IProtectedRouteElement {
 }
 
 const ProtectedRouteElement: FC<IProtectedRouteElement> = ({ element }) => {
-  const isLoggedIn = useSelector((store) => store.user.isAuthChecked);
-  const authError = useSelector((store) => store.user.authError);
+  const isLoggedIn = useTypedSelector((store) => store.user.isAuthChecked);
+  const authError = useTypedSelector((store) => store.user.authError);
 
   const location = useLocation();
 

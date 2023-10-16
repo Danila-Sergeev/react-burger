@@ -14,7 +14,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useForm } from "../../utils/hoc";
-const Login: FC = () => {
+export const Login: FC = () => {
   const navigate = useNavigate();
   function goToNewPage() {
     navigate("/", { replace: false });
@@ -82,4 +82,3 @@ const Login: FC = () => {
     </form>
   );
 };
-export default { Login };

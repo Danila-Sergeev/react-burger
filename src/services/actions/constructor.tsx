@@ -12,8 +12,8 @@ interface IAddIngridientAction {
 }
 interface IDeleteIngredientAction {
   readonly type: typeof REMOVE_ITEM;
-  readonly index: number;
-  readonly ingridient: IIngredient;
+  readonly index?: number;
+  readonly ingridien?: IIngredient;
   readonly id4: string;
 }
 interface IMoveIngredientAction {
@@ -39,6 +39,15 @@ export const addIngridientAction = (
     },
   };
 };
+
+/* export const deleteIngredientAction = (
+  id4: string
+): IDeleteIngredientAction => {
+  return {
+    type: REMOVE_ITEM,
+    id4,
+  };
+}; */
 
 export type TConstructorActions =
   | IAddIngridientAction

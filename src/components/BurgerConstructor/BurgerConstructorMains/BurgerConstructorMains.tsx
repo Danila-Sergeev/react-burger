@@ -5,7 +5,8 @@ import {
   Button,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+
+import { useTypedDispatch, useTypedSelector } from "../../../utils/hoc";
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { REMOVE_ITEM, MOVE_ITEM } from "../../../services/actions/constructor";
@@ -27,9 +28,9 @@ const BurgerConstructorMains: FC<IBurgerConstructorMains> = ({
   ingredient,
   index,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useTypedDispatch();
   const ref = useRef(null);
-  const ingredients = useSelector((store) => store.constr.items);
+  const ingredients = useTypedSelector((store) => store.constr.items);
   const removeItemId = (id4: string) => {
     dispatch({ type: REMOVE_ITEM, id4 });
   };

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Navigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useTypedSelector } from "../../utils/hoc";
 import { FC } from "react";
 
 interface IPublicRouteElement {
@@ -8,7 +8,7 @@ interface IPublicRouteElement {
 }
 
 const PublicRouteElement: FC<IPublicRouteElement> = ({ element }) => {
-  const isLoggedIn = useSelector((store) => store.user.isAuthChecked);
+  const isLoggedIn = useTypedSelector((store) => store.user.isAuthChecked);
   const location = useLocation();
 
   if (isLoggedIn) {

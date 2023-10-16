@@ -1,6 +1,7 @@
 import { BURGER_API_URL, request } from "../../utils/constants";
 import { checkResponse } from "../api";
 import { IUserData } from "../constants/constants";
+import { AppDispatch } from "../types";
 export const GET_LOGIN_REQUEST: "GET_LOGIN_REQUEST" = "GET_LOGIN_REQUEST";
 export const GET_LOGIN_SUCCESS: "GET_LOGIN_SUCCESS" = "GET_LOGIN_SUCCESS";
 export const GET_LOGIN_FAILED: "GET_LOGIN_FAILED" = "GET_LOGIN_FAILED";
@@ -30,8 +31,8 @@ export type TLoginActions =
   | ILoginFailed
   | ILogout;
 
-export function getLogin(email, password) {
-  return async (dispatch) => {
+export function getLogin(email: string, password: string) {
+  return async (dispatch: AppDispatch) => {
     dispatch({
       type: GET_LOGIN_REQUEST,
     });

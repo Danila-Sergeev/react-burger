@@ -1,5 +1,6 @@
 import { BURGER_API_URL, request } from "../../utils/constants";
 import { checkResponse } from "../api";
+import { AppDispatch } from "../types";
 export const RESET_PASSWORD_REQUEST: "RESET_PASSWORD_REQUEST" =
   "RESET_PASSWORD_REQUEST";
 export const RESET_PASSWORD_SUCCESS: "RESET_PASSWORD_SUCCESS" =
@@ -24,7 +25,7 @@ export type TResetPasswordActions =
   | IResetPasswordFailed;
 
 export function getResetPassword(password: string, token: string) {
-  return async (dispatch) => {
+  return async (dispatch: AppDispatch) => {
     dispatch({
       type: RESET_PASSWORD_REQUEST,
     });

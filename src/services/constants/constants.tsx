@@ -43,7 +43,7 @@ export interface IOrderDetails {
   readonly createdAt: string | number | Date;
   readonly updatedAt: string;
   readonly number: number;
-  readonly order?: any;
+  readonly orders?: any;
 }
 
 export interface IOrderData {

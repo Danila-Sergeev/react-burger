@@ -3,7 +3,7 @@ import { format, isToday, isYesterday } from "date-fns";
 export const BURGER_API_URL = "https://norma.nomoreparties.space/api";
 export const wsUrl = "wss://norma.nomoreparties.space/orders";
 
-export const request = (endpoint: string, fetchType: any, options: any) => {
+export const request = (endpoint: string, fetchType: any, options?: any) => {
   return fetchType(`${BURGER_API_URL}${endpoint}`, options);
 };
 

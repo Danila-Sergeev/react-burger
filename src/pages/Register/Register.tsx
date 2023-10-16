@@ -4,7 +4,8 @@ import registerStyles from "../Login/Login.module.css";
 import { NavLink } from "react-router-dom";
 import { getRegister } from "../../services/actions/register";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useTypedDispatch, useTypedSelector } from "../../utils/hoc";
+
 import {
   EmailInput,
   PasswordInput,
@@ -14,8 +15,8 @@ import {
 import { useForm } from "../../utils/hoc";
 const Register: FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const success = useSelector((store) => store.register.registerSuccess);
+  const dispatch = useTypedDispatch();
+  const success = useTypedSelector((store) => store.register.registerSuccess);
 
   const { values, handleChange, setValues } = useForm({
     email: "",

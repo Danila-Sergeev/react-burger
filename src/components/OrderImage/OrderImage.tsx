@@ -7,6 +7,7 @@ interface IOrderImage {
   image?: string;
   count: number;
   extraCountClass?: any;
+  alt?: any;
 }
 
 const OrderImage: FC<IOrderImage> = ({

@@ -2,8 +2,8 @@ import {
   SET_INGREDIENT_DETAILS,
   DELETE_INGREDIENT_DETAILS,
   IIngredientsActions,
-} from "../actions/Ingredients.js";
-import { IIngredient } from "../constants/constants.js";
+} from "../actions/Ingredients";
+import { IIngredient } from "../constants/constants";
 
 type TIngredientState = {
   currentIngredient: IIngredient | undefined;

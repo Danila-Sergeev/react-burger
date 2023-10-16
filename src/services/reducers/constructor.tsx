@@ -4,7 +4,7 @@ import {
   RESET_ITEM,
   ADD_ITEM,
   TConstructorActions,
-} from "../actions/constructor.js";
+} from "../actions/constructor";
 import { IIngredientType } from "../actions/Ingredients.js";
 import { IIngredient } from "../constants/constants.js";
 

@@ -8,7 +8,11 @@ import { useNavigate, useMatch, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import OrderImage from "../OrderImage/OrderImage";
 import { useTypedSelector } from "../../utils/hoc";
-const FeedOrder: FC = ({ order }) => {
+import { IOrderDetails } from "../../services/constants/constants";
+interface IFeedOrder {
+  order: IOrderDetails;
+}
+const FeedOrder: FC<IFeedOrder> = ({ order }) => {
   const ingredientList = useTypedSelector(
     (state) => state.ingredients.ingredients
   );
@@ -18,7 +22,7 @@ const FeedOrder: FC = ({ order }) => {
   const match = useMatch("/orders/:id");
   const { id } = match?.params || {};
   const ingredients = order.ingredients;
-  const ingredientCounts = {};
+  const ingredientCounts: { [key: string]: number } = {};
 
   ingredients.forEach((ingredientId) => {
     if (ingredientCounts[ingredientId]) {
@@ -28,26 +32,30 @@ const FeedOrder: FC = ({ order }) => {
     }
   });
 
-  const ingredientsMarkup = useMemo(() => {
-    return Object.entries(ingredientCounts).map(([ingredientId, count]) => {
-      const ingredient = ingredientList.find(
-        (item) => item._id === ingredientId
-      );
-      if (!ingredient) return null;
+  const { ingredientsMarkup, totalPrices } = useMemo(() => {
+    let totalPrices = 0;
+    const ingredientsMarkup = Object.entries(ingredientCounts).map(
+      ([ingredientId, count]) => {
+        const ingredient = ingredientList.find(
+          (item) => item._id === ingredientId
+        );
+        if (!ingredient) return null;
 
-      totalPrice += ingredient.price * count;
+        totalPrices += ingredient.price * count;
 
-      return (
-        <OrderImage
-          key={ingredientId}
-          alt={ingredient.name}
-          image={ingredient.image}
-          count={count > 1 ? `+${count}` : ""}
-        />
-      );
-    });
-  });
+        return (
+          <OrderImage
+            key={ingredientId}
+            alt={ingredient.name}
+            image={ingredient.image}
+            count={count > 1 ? count : 0}
+          />
+        );
+      }
+    );
 
+    return { ingredientsMarkup, totalPrices };
+  }, [ingredientCounts, ingredientList]);
   const handleClick = () => {
     if (id !== order._id) {
       navigate(`/feed/${order._id}`, {
@@ -69,7 +77,7 @@ const FeedOrder: FC = ({ order }) => {
         <div className={styles.image__container}>{ingredientsMarkup}</div>
         <div className={styles.price__container}>
           <p className={`${styles.price} text text_type_digits-default`}>
-            {totalPrice}
+            {totalPrices}
           </p>
           <CurrencyIcon type="primary" />
         </div>

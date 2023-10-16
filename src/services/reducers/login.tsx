@@ -4,7 +4,7 @@ import {
   GET_LOGIN_SUCCESS,
   LOGOUT,
   TLoginActions,
-} from "../actions/login.js";
+} from "../actions/login";
 
 type TloginState = {
   email: string;

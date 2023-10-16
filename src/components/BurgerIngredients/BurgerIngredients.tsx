@@ -2,7 +2,6 @@ import React, { useEffect, FC } from "react";
 import PropTypes from "prop-types";
 import IngredientsStiles from "./BurgerIngredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
 import { getIngredients } from "../../services/actions/Ingredients";
 import { useInView } from "react-intersection-observer";
 import IngredientElement from "./IngredientElement/IngredientElement";

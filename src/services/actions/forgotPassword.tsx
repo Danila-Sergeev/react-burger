@@ -1,5 +1,6 @@
 import { BURGER_API_URL, request } from "../../utils/constants";
 import { checkResponse } from "../api";
+import { AppDispatch } from "../types";
 export const FORGOT_PASSWORD_REQUEST: "FORGOT_PASSWORD_REQUEST" =
   "FORGOT_PASSWORD_REQUEST";
 export const FORGOT_PASSWORD_SUCCESS: "FORGOT_PASSWORD_SUCCESS" =
@@ -23,8 +24,8 @@ export type TForgotPasswordActions =
   | IForgotPasswordSucces
   | IForgotPasswordFailed;
 
-export function getPassword(email) {
-  return async (dispatch) => {
+export function getPassword(email: string) {
+  return async (dispatch: AppDispatch) => {
     dispatch({
       type: FORGOT_PASSWORD_REQUEST,
     });

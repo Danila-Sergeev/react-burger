@@ -1,6 +1,7 @@
 import { BURGER_API_URL, request } from "../../utils/constants";
 import { checkResponse } from "../api";
 import { IRegisterUser } from "../constants/constants";
+import { AppDispatch } from "../types";
 export const GET_REGISTER_REQUEST: "GET_REGISTER_REQUEST" =
   "GET_REGISTER_REQUEST";
 export const GET_REGISTER_SUCCESS: "GET_REGISTER_SUCCESS" =
@@ -24,8 +25,8 @@ export type TRegisterActions =
   | IRegisterSuccess
   | IRegisterFailed;
 
-export function getRegister(email, password, name) {
-  return async (dispatch) => {
+export function getRegister(email: string, password: string, name: string) {
+  return async (dispatch: AppDispatch) => {
     dispatch({
       type: GET_REGISTER_REQUEST,
     });

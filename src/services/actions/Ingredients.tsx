@@ -81,7 +81,7 @@ interface IPostOrderFailed {
 interface IPostOrderReset {
   readonly type: typeof RESET_ORDER;
 }
-export function getOrder(itemsId: Array<string>) {
+export function getOrder(itemsId: Array<string | undefined>) {
   const accessTokenWithBearer: any = getCookie("token");
   const accessToken = accessTokenWithBearer.replace("Bearer ", "");
   return async (dispatch: AppDispatch) => {

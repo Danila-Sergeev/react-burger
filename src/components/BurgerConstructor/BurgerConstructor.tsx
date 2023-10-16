@@ -33,14 +33,12 @@ const BurgerConstructor: FC = () => {
   const dispatch = useTypedDispatch();
   /*  Обработчики открытия/закрытия попапа */
   const handleOpenModal = () => {
-    if (Object.keys(bunLocked).length !== 0) {
-      const cartItems = [];
-      cartItems.push(bunLocked?._id);
-      mains.forEach((item) => cartItems.push(item._id));
-      cartItems.push(bunLocked?._id);
-      dispatch(getOrder(cartItems));
-      setModal(true);
-    }
+    const cartItems = [];
+    cartItems.push(bunLocked?._id);
+    mains.forEach((item) => cartItems.push(item._id));
+    cartItems.push(bunLocked?._id);
+    dispatch(getOrder(cartItems));
+    setModal(true);
   };
   const resetOrder = () => {
     dispatch({ type: RESET_ORDER });
@@ -66,8 +64,7 @@ const BurgerConstructor: FC = () => {
   const [, dropTarget] = useDrop({
     accept: "ingredient",
     drop(item: any) {
-      dispatch(addIngridientAction(item.ingredient));
-      /*   dispatch({ type: ADD_ITEM, item: { ...item, id4: uuidv4() } }); */
+      dispatch({ type: ADD_ITEM, item: { ...item, id4: uuidv4() } });
     },
   });
 
@@ -76,7 +73,7 @@ const BurgerConstructor: FC = () => {
   const orderSum = useMemo(() => {
     let sum = 0;
     mains.forEach((item) => (sum += item.price));
-    sum += bunLocked?.price * 2;
+    bunLocked ? (sum += bunLocked?.price * 2) : (sum = 0);
     return sum ? sum : 0;
   }, [mains, bunLocked]);
 
@@ -87,12 +84,26 @@ const BurgerConstructor: FC = () => {
           type="top"
           isLocked={true}
           text={
-            Object.keys(bunLocked).length !== 0
-              ? bunLocked.name + " (верх)"
-              : "Добавьте булку !"
+            bunLocked
+              ? Object.keys(bunLocked).length !== 0
+                ? bunLocked.name + " (верх)"
+                : "Добавьте булку !"
+              : ""
           }
-          price={Object.keys(bunLocked).length ? bunLocked.price : ""}
-          thumbnail={Object.keys(bunLocked).length ? bunLocked.image : ""}
+          price={
+            bunLocked
+              ? Object.keys(bunLocked).length
+                ? bunLocked.price
+                : 0
+              : 0
+          }
+          thumbnail={
+            bunLocked
+              ? Object.keys(bunLocked).length
+                ? bunLocked.image
+                : ""
+              : ""
+          }
         />
       </div>
       <ul className={BurgerCosructorStiles.ingredients}>
@@ -111,12 +122,26 @@ const BurgerConstructor: FC = () => {
           type="bottom"
           isLocked={true}
           text={
-            Object.keys(bunLocked).length
-              ? bunLocked.name + " (верх)"
-              : "Добавьте булку !"
+            bunLocked
+              ? Object.keys(bunLocked).length !== 0
+                ? bunLocked.name + " (верх)"
+                : "Добавьте булку !"
+              : ""
           }
-          price={Object.keys(bunLocked).length ? bunLocked.price : ""}
-          thumbnail={Object.keys(bunLocked).length ? bunLocked.image : ""}
+          price={
+            bunLocked
+              ? Object.keys(bunLocked).length
+                ? bunLocked.price
+                : 0
+              : 0
+          }
+          thumbnail={
+            bunLocked
+              ? Object.keys(bunLocked).length
+                ? bunLocked.image
+                : ""
+              : ""
+          }
         />
       </div>
       <div className={`${BurgerCosructorStiles.price} mt-10 mr-4`}>

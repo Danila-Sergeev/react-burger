@@ -25,12 +25,12 @@ export const WS_ACTIONS = {
   wsSend: WS_SEND_DATA,
 };
 
-const composeEnhancers =
+/* const composeEnhancers =
   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
-
-const enhancer = composeEnhancers(
+ */
+const enhancer = composeWithDevTools(
   applyMiddleware(thunk, socketMiddleware(wsUrl, WS_ACTIONS))
 );
 

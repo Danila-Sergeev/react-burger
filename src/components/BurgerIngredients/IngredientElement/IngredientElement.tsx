@@ -4,7 +4,7 @@ import React, { useState, FC } from "react";
 import ingredientType from "../../../utils/types";
 import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
-import { useDispatch } from "react-redux";
+import { useTypedDispatch } from "../../../utils/hoc";
 import {
   SET_INGREDIENT_DETAILS,
   DELETE_INGREDIENT_DETAILS,
@@ -31,13 +31,13 @@ interface IIngredientElement {
 
 const IngredientElement: FC<IIngredientElement> = (props) => {
   const { item, count } = props;
-  const dispatch = useDispatch();
-  const setData = (item: object) => {
+  const dispatch = useTypedDispatch();
+  /*  const setData = (item) => {
     dispatch({
       type: SET_INGREDIENT_DETAILS,
       item,
     });
-  };
+  }; */
   const deleteData = () => {
     dispatch({
       type: DELETE_INGREDIENT_DETAILS,

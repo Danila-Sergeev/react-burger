@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 import forgotPasswordStylesUsual from "../Login/Login.module.css";
 import resetPasswordStyles from "./ResetPassword.module.css";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { getResetPassword } from "../../services/actions/resetPassword";
+import { useTypedDispatch, useTypedSelector } from "../../utils/hoc";
+
 import {
   EmailInput,
   PasswordInput,
@@ -14,8 +15,8 @@ import {
 import { useForm } from "../../utils/hoc";
 export const ResetPassword: FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const success = useSelector((store) => store.resetPassword.success);
+  const dispatch = useTypedDispatch();
+  const success = useTypedSelector((store) => store.resetPassword.success);
 
   const { values, handleChange, setValues } = useForm({
     password: "",
