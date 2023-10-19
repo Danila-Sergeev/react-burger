@@ -30,7 +30,7 @@ interface IGetIngredientsRequest {
 }
 interface IgetIngredientsSuccess {
   readonly type: typeof GET_INGREDIENTS_SUCCESS;
-  readonly ingredients: Array<IIngredient>;
+  readonly ingredients: IIngredient[];
 }
 interface IgetIngredientsFailed {
   readonly type: typeof GET_INGREDIENTS_FAILED;
@@ -55,7 +55,7 @@ export function getIngredients() {
       const data = await request(`/ingredients`, fetchWithRefresh);
       dispatch({
         type: GET_INGREDIENTS_SUCCESS,
-        ingredients: data,
+        ingredients: data.data,
       });
     } catch (error) {
       dispatch({

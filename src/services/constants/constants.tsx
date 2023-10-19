@@ -43,16 +43,14 @@ export interface IOrderDetails {
   readonly createdAt: string | number | Date;
   readonly updatedAt: string;
   readonly number: number;
-  readonly orders?: any;
+  readonly orders: IOrderData[];
 }
 
 export interface IOrderData {
-  readonly order: {
-    readonly _id: string;
-    readonly ingredients: Array<string>;
-    readonly status: string;
-    readonly name: string;
-    readonly createdAt: string | number | Date;
-    readonly updatedAt: string;
-  };
+  readonly _id: string;
+  readonly ingredients: Array<string>;
+  readonly status: string;
+  readonly name: string;
+  readonly createdAt: string | number | Date;
+  readonly updatedAt: string;
 }

@@ -11,7 +11,7 @@ import { IOrderDetails } from "../constants/constants";
 
 type TWsState = {
   wsConnected: boolean;
-  orders: Array<IOrderDetails>;
+  orders: IOrderDetails[];
   total: number;
   totalToday: number;
   error: boolean | undefined;
@@ -55,7 +55,7 @@ export const wsReducer = (
       return {
         ...state,
         error: undefined,
-        orders: [action.payload.orders],
+        orders: action.payload.orders,
         total: action.payload.total,
         totalToday: action.payload.totalToday,
       };

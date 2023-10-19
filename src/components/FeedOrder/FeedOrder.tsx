@@ -21,7 +21,10 @@ const FeedOrder: FC<IFeedOrder> = ({ order }) => {
   const location = useLocation();
   const match = useMatch("/orders/:id");
   const { id } = match?.params || {};
+
   const ingredients = order.ingredients;
+  console.log(ingredientList);
+  /*  order.map((i) => console.log(i)) */
   const ingredientCounts: { [key: string]: number } = {};
 
   ingredients.forEach((ingredientId) => {

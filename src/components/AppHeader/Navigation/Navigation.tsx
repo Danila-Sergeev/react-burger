@@ -7,7 +7,7 @@ interface Inavigation {
   className?: string;
   path?: string;
   icon?: any;
-  textElement: any;
+  textElement: string;
 }
 
 const Navigation: FC<Inavigation> = (props) => {
@@ -29,10 +29,6 @@ const Navigation: FC<Inavigation> = (props) => {
       </p>
     </NavLink>
   );
-};
-Navigation.propTypes = {
-  textElement: PropTypes.array.isRequired,
-  icon: PropTypes.func.isRequired,
 };
 
 export default Navigation;

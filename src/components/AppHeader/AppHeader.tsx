@@ -17,11 +17,7 @@ interface HeaderDataItem {
 }
 interface HeaderProps {
   items?: string[];
-  path?: string;
-  icon?: any;
-  textElement?: any;
   headerData?: HeaderDataItem[];
-  className?: string;
 }
 
 const Header: FC<HeaderProps> = () => {

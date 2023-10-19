@@ -11,6 +11,7 @@ import { useTypedSelector, useTypedDispatch } from "../../utils/hoc";
 const OrderFeed: FC = () => {
   const dispatch = useTypedDispatch();
   const { orders, total, totalToday } = useTypedSelector((state) => state.ws);
+  /*   console.log(orders); */
 
   useEffect(() => {
     dispatch(startWsConnection(`${wsUrl}/all`));

@@ -8,7 +8,7 @@ import {
 import { IIngredient } from "../constants/constants";
 
 type TIngredientsState = {
-  ingredients: Array<IIngredient>;
+  ingredients: IIngredient[];
   ingredientsRequest: boolean;
   ingredientsFailed: boolean;
   constructorIngredients: Array<IIngredient>;

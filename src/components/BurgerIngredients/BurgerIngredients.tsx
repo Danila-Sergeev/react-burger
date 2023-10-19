@@ -34,19 +34,29 @@ const BurgerIngredients: FC = () => {
         break;
     }
   };
+  const arr = null;
   useEffect(() => {
     ingredientScroll();
   }, [bunView, sauceView, mainView]);
   const buns = React.useMemo(
-    () => ingredients.filter((item) => item.type === "bun"),
+    () =>
+      Array.isArray(ingredients)
+        ? ingredients.filter((item) => item.type === "bun")
+        : [],
     [ingredients]
   );
   const sauces = React.useMemo(
-    () => ingredients.filter((item) => item.type === "sauce"),
+    () =>
+      Array.isArray(ingredients)
+        ? ingredients.filter((item) => item.type === "sauce")
+        : [],
     [ingredients]
   );
   const mains = React.useMemo(
-    () => ingredients.filter((item) => item.type === "main"),
+    () =>
+      Array.isArray(ingredients)
+        ? ingredients.filter((item) => item.type === "main")
+        : [],
     [ingredients]
   );
 

@@ -7,6 +7,7 @@ import {
 } from "../../services/actions/WebSocket";
 import { wsUrl } from "../../utils/constants";
 import { IOrderDetails } from "../../services/constants/constants";
+import { log } from "console";
 
 const OrderStatusInfo: FC = () => {
   const dispatch = useTypedDispatch();
@@ -24,13 +25,14 @@ const OrderStatusInfo: FC = () => {
       dispatch(wsConnectionClosed());
     };
   }, []);
-
+  console.log(NewOrders);
   useEffect(() => {
     if (orders && NewOrders) {
       const updatedOrdersReady = [];
       const updatedOrdersInProgress = [];
 
       for (let order of NewOrders) {
+        console.log(order);
         if (order.status === "done") {
           updatedOrdersReady.push(order);
         } else {
