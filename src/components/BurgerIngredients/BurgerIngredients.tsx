@@ -7,6 +7,7 @@ import { useInView } from "react-intersection-observer";
 import IngredientElement from "./IngredientElement/IngredientElement";
 import { type } from "os";
 import { useTypedSelector } from "../../utils/hoc";
+import { IIngredient } from "../../services/constants/constants";
 
 //Пропсом передаются названия секций
 const BurgerIngredients: FC = () => {
@@ -60,9 +61,10 @@ const BurgerIngredients: FC = () => {
     [ingredients]
   );
 
-  const bunCart = [useTypedSelector((store) => store.constr.bun)];
+  const bunCart = useTypedSelector((store) => store.constr.bun);
   const mainsCart = useTypedSelector((store) => store.constr.items);
-
+  console.log(bunCart);
+  console.log(mainsCart);
   const tabClick = (type: string) => {
     setCurrent(type);
     const section = document.getElementById(type);
@@ -74,21 +76,23 @@ const BurgerIngredients: FC = () => {
     ingredientScroll();
   }, [bunView, sauceView, mainView]);
 
-  type Titem = {
-    _id: string;
-  };
   interface Ingredient {
     _id: string;
     type: string;
   }
 
-  const countCart = (ingredient: Ingredient, cart: any) => {
-    const count = cart.reduce((acc: number, item: Titem) => {
+  const countCart = (
+    ingredient: Ingredient,
+    cart: Array<IIngredient>
+  ): number => {
+    const count = cart.reduce((acc, item) => {
       if (item._id === ingredient._id) {
         ingredient.type !== "bun" ? (acc += 1) : (acc += 2);
       }
       return acc;
     }, 0);
+
+    // Если count равен null, вернуть 0 вместо null
     return count;
   };
   return (

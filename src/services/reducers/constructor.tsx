@@ -9,13 +9,13 @@ import { IIngredientType } from "../actions/Ingredients.js";
 import { IIngredient } from "../constants/constants.js";
 
 type TConstructorState = {
-  bun: IIngredient | null;
+  bun: Array<IIngredient>;
   items: Array<IIngredient>;
 };
 
 const initialState: TConstructorState = {
   items: [],
-  bun: null,
+  bun: [],
 };
 
 export const constructorReducer = (
@@ -30,13 +30,13 @@ export const constructorReducer = (
           action.item.type !== "bun"
             ? [...state.items, action.item]
             : state.items,
-        bun: action.item.type === "bun" ? action.item : state.bun,
+        bun: action.item.type === "bun" ? [action.item] : state.bun,
       };
     }
     case RESET_ITEM: {
       return {
         ...state,
-        bun: null,
+        bun: [],
         items: [],
       };
     }

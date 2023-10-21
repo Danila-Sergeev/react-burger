@@ -23,7 +23,6 @@ const FeedOrder: FC<IFeedOrder> = ({ order }) => {
   const { id } = match?.params || {};
 
   const ingredients = order.ingredients;
-  console.log(ingredientList);
   /*  order.map((i) => console.log(i)) */
   const ingredientCounts: { [key: string]: number } = {};
 

@@ -10,7 +10,6 @@ import { useTypedDispatch, useTypedSelector } from "../../../utils/hoc";
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { REMOVE_ITEM, MOVE_ITEM } from "../../../services/actions/constructor";
-import PropTypes from "prop-types";
 
 interface Ingredient {
   id4: string;

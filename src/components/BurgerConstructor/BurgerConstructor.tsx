@@ -1,5 +1,5 @@
 import BurgerCosructorStiles from "./BurgerConstructor.module.css";
-import React, { useState, useMemo, FC } from "react";
+import React, { useState, useMemo, FC, useEffect } from "react";
 import {
   Button,
   CurrencyIcon,
@@ -32,11 +32,28 @@ const BurgerConstructor: FC = () => {
   );
   const dispatch = useTypedDispatch();
   /*  Обработчики открытия/закрытия попапа */
+  // console.log(bunLocked ? bunLocked.forEach((item) => item._id) : null);
+  let bunLId = "";
+  let bunPricce = 0;
+  let bunImage = "";
+  let bunName = "";
+
+  if (bunLocked) {
+    bunLocked.forEach(({ _id, price, name, image }) => {
+      bunLId = _id;
+      console.log(_id, price, image, name);
+
+      bunPricce = price;
+      bunImage = image;
+      bunName = name;
+    });
+  }
+
   const handleOpenModal = () => {
     const cartItems = [];
-    cartItems.push(bunLocked?._id);
+    cartItems.push(bunLId);
     mains.forEach((item) => cartItems.push(item._id));
-    cartItems.push(bunLocked?._id);
+    cartItems.push(bunLId);
     dispatch(getOrder(cartItems));
     setModal(true);
   };
@@ -73,7 +90,7 @@ const BurgerConstructor: FC = () => {
   const orderSum = useMemo(() => {
     let sum = 0;
     mains.forEach((item) => (sum += item.price));
-    bunLocked ? (sum += bunLocked?.price * 2) : (sum = 0);
+    bunLocked ? (sum += bunPricce * 2) : (sum = 0);
     return sum ? sum : 0;
   }, [mains, bunLocked]);
 
@@ -86,23 +103,15 @@ const BurgerConstructor: FC = () => {
           text={
             bunLocked
               ? Object.keys(bunLocked).length !== 0
-                ? bunLocked.name + " (верх)"
+                ? bunName + " (верх)"
                 : "Добавьте булку !"
               : ""
           }
           price={
-            bunLocked
-              ? Object.keys(bunLocked).length
-                ? bunLocked.price
-                : 0
-              : 0
+            bunLocked ? (Object.keys(bunLocked).length ? bunPricce : 0) : 0
           }
           thumbnail={
-            bunLocked
-              ? Object.keys(bunLocked).length
-                ? bunLocked.image
-                : ""
-              : ""
+            bunLocked ? (Object.keys(bunLocked).length ? bunImage : "") : ""
           }
         />
       </div>
@@ -124,23 +133,15 @@ const BurgerConstructor: FC = () => {
           text={
             bunLocked
               ? Object.keys(bunLocked).length !== 0
-                ? bunLocked.name + " (верх)"
+                ? bunName + " (верх)"
                 : "Добавьте булку !"
               : ""
           }
           price={
-            bunLocked
-              ? Object.keys(bunLocked).length
-                ? bunLocked.price
-                : 0
-              : 0
+            bunLocked ? (Object.keys(bunLocked).length ? bunPricce : 0) : 0
           }
           thumbnail={
-            bunLocked
-              ? Object.keys(bunLocked).length
-                ? bunLocked.image
-                : ""
-              : ""
+            bunLocked ? (Object.keys(bunLocked).length ? bunImage : "") : ""
           }
         />
       </div>

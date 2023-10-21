@@ -18,20 +18,19 @@ const OrderStatusInfo: FC = () => {
     IOrderDetails[]
   >([]);
 
-  const NewOrders = orders.map((i) => i.orders);
   useEffect(() => {
     dispatch(startWsConnection(`${wsUrl}/all`));
     return () => {
       dispatch(wsConnectionClosed());
     };
   }, []);
-  console.log(NewOrders);
-  useEffect(() => {
-    if (orders && NewOrders) {
+
+  /*  useEffect(() => {
+    if (orders && orders.orders) {
       const updatedOrdersReady = [];
       const updatedOrdersInProgress = [];
 
-      for (let order of NewOrders) {
+      for (let order of orders.orders) {
         console.log(order);
         if (order.status === "done") {
           updatedOrdersReady.push(order);
@@ -44,7 +43,7 @@ const OrderStatusInfo: FC = () => {
       setNewOrdersInProgress(updatedOrdersInProgress);
     }
   }, [orders]);
-
+ */
   function chunkArray<T>(array: T[], size: number): T[][] {
     const result: T[][] = [];
     for (let i = 0; i < array.length; i += size) {
