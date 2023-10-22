@@ -1,7 +1,7 @@
 export interface IUserData {
   name: string;
   email: string;
-  user: any;
+  user: IRegisterUser;
   isAuthChecked: boolean;
   accessToken: string;
   success: boolean;
@@ -11,7 +11,7 @@ export interface IRegisterUser {
   name: string;
   email: string;
   password: string;
-  user: any;
+  user: IUserData;
   success: boolean;
 }
 export interface IIngredient {
@@ -32,7 +32,7 @@ export interface IIngredient {
 
   map?: any;
   ingridient?: any;
-  key?: any;
+  key?: string;
   index?: any;
 }
 export interface IOrderDetails {

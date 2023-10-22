@@ -6,7 +6,6 @@ import OrderImage from "../OrderImage/OrderImage";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./UserOrderShield.module.css";
 import { useNavigate, useMatch, useLocation, Link } from "react-router-dom";
-import PropTypes from "prop-types";
 import { IOrderDetails } from "../../services/constants/constants";
 interface IUserOrderShield {
   order: IOrderDetails;

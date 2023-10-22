@@ -9,7 +9,6 @@ import OrderImage from "../OrderImage/OrderImage";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./OrderExplication.module.css";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import PropTypes from "prop-types";
 import { getCookie } from "../../utils/cookie";
 import { Interface } from "readline";
 import { useTypedDispatch, useTypedSelector } from "../../utils/hoc";

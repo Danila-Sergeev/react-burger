@@ -1,10 +1,9 @@
-import PropTypes from "prop-types";
 import { Navigate, useLocation } from "react-router-dom";
 import { useTypedSelector } from "../../utils/hoc";
-import { FC } from "react";
+import { FC, ReactElement } from "react";
 
 interface IPublicRouteElement {
-  element: any;
+  element: ReactElement | null;
 }
 
 const PublicRouteElement: FC<IPublicRouteElement> = ({ element }) => {
@@ -17,10 +16,6 @@ const PublicRouteElement: FC<IPublicRouteElement> = ({ element }) => {
   }
 
   return element;
-};
-
-PublicRouteElement.propTypes = {
-  element: PropTypes.element.isRequired,
 };
 
 export default PublicRouteElement;

@@ -1,6 +1,6 @@
 import { NavLink, useMatch } from "react-router-dom";
 import styles from "../pages/Profile/Profile.module.css";
-import { useState, FC } from "react";
+import { useState, FC, ChangeEvent } from "react";
 import {
   TypedUseSelectorHook,
   useDispatch as dispatchHook,
@@ -34,7 +34,7 @@ export const CustomNavLink: FC<ICustomNavLink> = ({
 export function useForm(inputValues: any) {
   const [values, setValues] = useState(inputValues);
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
     setValues({ ...values, [name]: value });
   };

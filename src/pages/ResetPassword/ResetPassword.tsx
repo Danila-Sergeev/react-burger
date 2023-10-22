@@ -1,5 +1,5 @@
 import React, { useEffect, FC } from "react";
-import PropTypes from "prop-types";
+
 import forgotPasswordStylesUsual from "../Login/Login.module.css";
 import resetPasswordStyles from "./ResetPassword.module.css";
 import { NavLink, useNavigate } from "react-router-dom";

@@ -1,9 +1,9 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useTypedSelector } from "../../utils/hoc";
-import { FC } from "react";
+import { FC, ReactElement } from "react";
 
 interface IProtectedRouteElement {
-  element: any;
+  element: ReactElement | null;
 }
 
 const ProtectedRouteElement: FC<IProtectedRouteElement> = ({ element }) => {

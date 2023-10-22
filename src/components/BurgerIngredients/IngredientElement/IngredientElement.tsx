@@ -1,8 +1,6 @@
 import IngredientsStiles from "../BurgerIngredients.module.css";
 import Modal from "../../Modal/Modal";
 import React, { useState, FC } from "react";
-import ingredientType from "../../../utils/types";
-import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
 import { useTypedDispatch } from "../../../utils/hoc";
 import {

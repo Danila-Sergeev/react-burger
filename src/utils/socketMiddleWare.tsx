@@ -1,5 +1,6 @@
 import { IWebSocket } from "../services/actions/WebSocket";
-import { Middleware } from "redux";
+import { Middleware, MiddlewareAPI } from "redux";
+import { AppDispatch } from "../services/types";
 
 export const socketMiddleware = (
   wsUrl: string,

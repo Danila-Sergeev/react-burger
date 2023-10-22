@@ -18,8 +18,8 @@ interface IDeleteIngredientAction {
 }
 interface IMoveIngredientAction {
   readonly type: typeof MOVE_ITEM;
-  readonly dragIndex: any;
-  readonly hoverIndex: any;
+  readonly dragIndex: number;
+  readonly hoverIndex: number;
   readonly dragIngredient: any;
 }
 interface IResetIngredientAction {

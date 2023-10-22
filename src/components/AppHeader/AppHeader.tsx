@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import headerStiles from "./AppHeader.module.css";
 import Navigation from "./Navigation/Navigation";
-import PropTypes from "prop-types";
+
 import {
   BurgerIcon,
   ListIcon,
@@ -31,7 +31,7 @@ const Header: FC<HeaderProps> = () => {
             className="mr-5"
             path={""}
             icon={BurgerIcon}
-            textElement="Личный кабинет"
+            textElement="Лента заказов"
           ></Navigation>
           <Navigation path={"feed"} icon={ListIcon} textElement="Конструктор" />
         </nav>
@@ -39,7 +39,7 @@ const Header: FC<HeaderProps> = () => {
         <Navigation
           path={"profile"}
           icon={ProfileIcon}
-          textElement="Лента заказов"
+          textElement="Личный кабинет"
         />
       </div>
     </header>

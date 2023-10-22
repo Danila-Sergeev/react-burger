@@ -1,13 +1,12 @@
 import { FC } from "react";
 import styles from "./OrderImage.module.css";
-import PropTypes from "prop-types";
 
 interface IOrderImage {
   name?: string;
   image?: string;
   count: number;
-  extraCountClass?: any;
-  alt?: any;
+  extraCountClass?: string;
+  alt?: string;
 }
 
 const OrderImage: FC<IOrderImage> = ({
@@ -28,10 +27,6 @@ const OrderImage: FC<IOrderImage> = ({
       )}
     </div>
   );
-};
-OrderImage.propTypes = {
-  image: PropTypes.string.isRequired,
-  extraCountClass: PropTypes.string,
 };
 
 export default OrderImage;

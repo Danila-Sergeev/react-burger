@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import headerStiles from "../AppHeader.module.css";
-import PropTypes from "prop-types";
 import { NavLink, useMatch } from "react-router-dom";
 
 interface Inavigation {

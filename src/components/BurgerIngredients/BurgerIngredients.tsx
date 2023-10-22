@@ -1,5 +1,4 @@
 import React, { useEffect, FC } from "react";
-import PropTypes from "prop-types";
 import IngredientsStiles from "./BurgerIngredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { getIngredients } from "../../services/actions/Ingredients";
@@ -63,8 +62,7 @@ const BurgerIngredients: FC = () => {
 
   const bunCart = useTypedSelector((store) => store.constr.bun);
   const mainsCart = useTypedSelector((store) => store.constr.items);
-  console.log(bunCart);
-  console.log(mainsCart);
+
   const tabClick = (type: string) => {
     setCurrent(type);
     const section = document.getElementById(type);
@@ -100,7 +98,7 @@ const BurgerIngredients: FC = () => {
       <h1
         className={`${IngredientsStiles.title} text text_type_main-large mb-5`}
       >
-        "Соберите бургер"
+        Соберите бургер
       </h1>
       <div className={`${IngredientsStiles.header_box} mt-10 mb-10`}>
         <nav className={IngredientsStiles.Ingredients_box}>

@@ -1,5 +1,4 @@
 import ModalStiles from "./Modal.module.css";
-import PropTypes from "prop-types";
 import React, { FC, useEffect, ReactNode } from "react";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ReactDOM from "react-dom";
@@ -14,7 +13,7 @@ interface ModalProps {
 const Modal: FC<ModalProps> = ({ onClose, children }) => {
   /* Обработчик закрытия попапа на Esc */
   useEffect(() => {
-    function handleEscapeKey(event: any) {
+    function handleEscapeKey(event: KeyboardEvent) {
       if (event.code === "Escape") {
         onClose();
       }
@@ -34,7 +33,7 @@ const Modal: FC<ModalProps> = ({ onClose, children }) => {
       <div className={ModalStiles.box}>
         <div className={ModalStiles.modal}>
           <button className={ModalStiles.close} onClick={onClose}>
-            <CloseIcon />
+            <CloseIcon type="primary" />
           </button>
           {children}
         </div>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, FC } from "react";
-import PropTypes from "prop-types";
 import registerStyles from "../Login/Login.module.css";
 import { NavLink } from "react-router-dom";
 import { getRegister } from "../../services/actions/register";

@@ -80,7 +80,7 @@ const BurgerConstructor: FC = () => {
   /*  Добавление перетаскиваемого элемента в конструктор */
   const [, dropTarget] = useDrop({
     accept: "ingredient",
-    drop(item: any) {
+    drop(item: object) {
       dispatch({ type: ADD_ITEM, item: { ...item, id4: uuidv4() } });
     },
   });

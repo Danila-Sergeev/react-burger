@@ -73,7 +73,7 @@ interface IPostOrderRequest {
 }
 interface IPostOrderSuccess {
   readonly type: typeof GET_ORDER_SUCCESS;
-  readonly orderNumber: any;
+  readonly orderNumber: number;
 }
 interface IPostOrderFailed {
   readonly type: typeof GET_ORDER_FAILED;
@@ -82,8 +82,10 @@ interface IPostOrderReset {
   readonly type: typeof RESET_ORDER;
 }
 export function getOrder(itemsId: Array<string | undefined>) {
-  const accessTokenWithBearer: any = getCookie("token");
-  const accessToken = accessTokenWithBearer.replace("Bearer ", "");
+  const accessTokenWithBearer: string | undefined = getCookie("token");
+  const accessToken = accessTokenWithBearer
+    ? accessTokenWithBearer.replace("Bearer ", "")
+    : "";
   return async (dispatch: AppDispatch) => {
     dispatch({
       type: GET_ORDER_REQUEST,

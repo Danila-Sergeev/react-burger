@@ -1,10 +1,6 @@
 import IngredientStyle from "./IngredientDetails.module.css";
-import PropTypes from "prop-types";
-import ingredientType from "../../utils/types";
-import { useSelector, useDispatch } from "react-redux";
-import { useParams, useMatch } from "react-router-dom";
-import { FC, useEffect } from "react";
-import { getIngredients } from "../../services/actions/Ingredients";
+import { useParams } from "react-router-dom";
+import { FC } from "react";
 import { useTypedSelector } from "../../utils/hoc";
 
 interface IIngredientDetails {

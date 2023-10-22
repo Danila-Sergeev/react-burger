@@ -8,9 +8,6 @@ import reportWebVitals from "./reportWebVitals";
 import { compose, createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import thunk from "redux-thunk";
-import { rootReducer } from "./services/reducers/rootReducer";
-import { composeWithDevTools } from "redux-devtools-extension";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

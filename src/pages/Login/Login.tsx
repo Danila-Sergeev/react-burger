@@ -1,5 +1,4 @@
-import React, { useEffect, useState, FC } from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, useState, FC, FormEvent } from "react";
 import loginStyles from "./Login.module.css";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -30,7 +29,7 @@ export const Login: FC = () => {
     password: "",
   });
 
-  function onSubmitFrom(e: any) {
+  function onSubmitFrom(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     dispatch(getLogin(values.email, values.password));
   }

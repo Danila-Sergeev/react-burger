@@ -1,5 +1,4 @@
 import React, { useEffect, FC, useMemo } from "react";
-import PropTypes from "prop-types";
 import profiledStyles from "./Profile.module.css";
 import { useParams } from "react-router-dom";
 import { useTypedDispatch, useTypedSelector } from "../../utils/hoc";

@@ -1,6 +1,14 @@
-import PropTypes from "prop-types";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-function BurgerConstructorRenderElement(props: any) {
+
+interface BurgerConstructorRenderElement {
+  type: "top" | "bottom" | undefined;
+  price: number;
+  name: string;
+  thumbnail: string;
+  isLocked: boolean;
+}
+
+function BurgerConstructorRenderElement(props: BurgerConstructorRenderElement) {
   return (
     <ConstructorElement
       type={props.type}
@@ -11,11 +19,5 @@ function BurgerConstructorRenderElement(props: any) {
     />
   );
 }
-BurgerConstructorRenderElement.propTypes = {
-  type: PropTypes.string,
-  price: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  thumbnail: PropTypes.string.isRequired,
-  isLocked: PropTypes.bool,
-};
+
 export default BurgerConstructorRenderElement;

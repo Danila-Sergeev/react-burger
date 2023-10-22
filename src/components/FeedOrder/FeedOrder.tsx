@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { useMemo, useEffect } from "react";
 import { formatDate } from "../../utils/constants";
 import { useNavigate, useMatch, useLocation } from "react-router-dom";
-import PropTypes from "prop-types";
 import OrderImage from "../OrderImage/OrderImage";
 import { useTypedSelector } from "../../utils/hoc";
 import { IOrderDetails } from "../../services/constants/constants";
