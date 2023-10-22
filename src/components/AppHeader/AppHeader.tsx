@@ -31,9 +31,13 @@ const Header: FC<HeaderProps> = () => {
             className="mr-5"
             path={""}
             icon={BurgerIcon}
-            textElement="Лента заказов"
+            textElement="Конструктор"
           ></Navigation>
-          <Navigation path={"feed"} icon={ListIcon} textElement="Конструктор" />
+          <Navigation
+            path={"feed"}
+            icon={ListIcon}
+            textElement="Лента заказов"
+          />
         </nav>
 
         <Navigation
